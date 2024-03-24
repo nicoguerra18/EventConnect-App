@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Modal from "./Components/Modal";
 import axios from "axios";
 
+//testing cookie stuff
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -16,13 +18,13 @@ class App extends Component {
       },
     };
   }
-
   componentDidMount() {
     this.refreshList();
   }
 
   refreshList = () => {
     axios
+      
       .get("/api/UserProfile/")
       .then((res) => this.setState({ ProfileList: res.data }))
       .catch((err) => console.log(err));

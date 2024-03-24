@@ -13,7 +13,9 @@ class ProfileViewSet(viewsets.ModelViewSet):
     serializer_class = ProfileSerializer
     queryset = UserProfile.objects.all()
 
+from django.views.decorators.csrf import ensure_csrf_cookie
 
+@ensure_csrf_cookie
 @api_view(['GET','POST'])
 def ProfileView(request):
 
