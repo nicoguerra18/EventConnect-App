@@ -1,7 +1,9 @@
-import React, { Component } from "react";
-import Modal from "./Components/Modal";
-import axios from "axios";
+import React from "react";
+import { Button } from "react-bootstrap";
+import Page from "./Components/Page";
+import SSRProvider from "react-bootstrap/SSRProvider";
 
+<<<<<<< Updated upstream
 //testing cookie stuff
 
 class App extends Component {
@@ -160,6 +162,15 @@ class App extends Component {
       </main>
     );
   }
+=======
+
+function App() {
+  return (
+    <div>
+      <Page />
+    </div>
+  );
+>>>>>>> Stashed changes
 }
 
 export default App;
