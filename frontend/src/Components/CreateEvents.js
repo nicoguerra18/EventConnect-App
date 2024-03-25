@@ -45,7 +45,7 @@ function CreateEvents() {
       formdata.append("date", formData.date);
       formdata.append("selectedEvent", formData.selectedEvent);
 
-      const response = await fetch("http://localhost:8000/results", {
+      const response = await fetch("http://localhost:8000/EventDatabase", {
         method: "POST",
         body: formdata,
       });
@@ -164,7 +164,7 @@ function CreateEvents() {
             Close
           </Button>
           <CSRFToken />
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" onClick={handleSubmit}>
             Create Event
           </Button>
         </Modal.Footer>
