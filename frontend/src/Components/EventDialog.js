@@ -57,6 +57,10 @@ function EventDialog({ eventTitle }) {
               <Form.Label># People Attending</Form.Label>
               <Form.Control disabled type="number" value={attendees} />
             </Form.Group>
+            <Form.Group controlId="formCreator">
+              <Form.Label>Creator</Form.Label>
+              <Form.Control disabled type="text" />
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>

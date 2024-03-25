@@ -23,6 +23,9 @@ function ProfileTab() {
             <Tab eventKey="MyEvents" title="My Events">
               <MyEvents />
             </Tab>
+            <Tab eventKey="eventsJoined" title="Events Joined">
+              <MyEvents />
+            </Tab>
             <Tab eventKey="MyGroups" title="My Groups">
               Coming soon in feature 3!
             </Tab>

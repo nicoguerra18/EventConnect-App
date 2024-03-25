@@ -23,6 +23,7 @@ function CreateEvents() {
     location: "",
     date: "",
     selectedEvent: "",
+    username: "",
   });
 
   const handleChange = (e) => {
@@ -44,6 +45,7 @@ function CreateEvents() {
       formdata.append("location", formData.location);
       formdata.append("date", formData.date);
       formdata.append("selectedEvent", formData.selectedEvent);
+      formdata.append("username", formData.username);
 
       const response = await fetch("http://localhost:8000/EventDatabase", {
         method: "POST",
@@ -157,12 +159,17 @@ function CreateEvents() {
                 ))}
               </Form.Control>
             </Form.Group>
+            <Form.Group controlId="formUsername">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter your Username"
+                onChange={handleChange}
+              />
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
           <CSRFToken />
           <Button variant="primary" type="submit" onClick={handleSubmit}>
             Create Event
