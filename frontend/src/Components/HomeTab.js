@@ -12,38 +12,40 @@ import { Card } from "react-bootstrap";
 import logo192 from "./logo192.png";
 import "./styles.css";
 import { useEffect } from "react";
+import CSRFToken from "./crftoken";
 
 function HomeTab() {
-  // const events = [
-  //   { title: "Event 1" },
-  //   { title: "Event 2" },
-  //   { title: "Event 3" },
-  //   { title: "Event 4" },
-  //   { title: "Event 5" },
-  //   { title: "Event 6" },
-  //   { title: "Event 7" },
-  //   { title: "Event 8" },
-  // ];
+  const events = [
+    { title: "Event 1" },
+    { title: "Event 2" },
+    { title: "Event 3" },
+    { title: "Event 4" },
+    { title: "Event 5" },
+    { title: "Event 6" },
+    { title: "Event 7" },
+    { title: "Event 8" },
+  ];
 
-  const [events, setEvents] = useState([]);
+  // const [events, setEvents] = useState([]);
 
-  useEffect(() => {
-    fetchEventData(); // Fetch event data when component mounts
-  }, []);
+  // useEffect(() => {
+  //   fetchEventData(); // Fetch event data when component mounts
+  // }, []);
 
   // Function to fetch event data from the backend API
-  const fetchEventData = async () => {
-    try {
-      const response = await fetch("http://localhost:8000/api/EventDatabase/");
-      const eventData = await response.json();
-      setEvents(eventData);
-    } catch (error) {
-      console.error("Error fetching event data:", error);
-    }
-  };
+  // const fetchEventData = async () => {
+  //   try {
+  //     const response = await fetch("http://localhost:8000/api/EventDatabase/");
+  //     const eventData = await response.json();
+  //     setEvents(eventData);
+  //   } catch (error) {
+  //     console.error("Error fetching event data:", error);
+  //   }
+  // };
 
   return (
     <div>
+      <CSRFToken />
       <Row className="mx-auto">
         <Col md={4}>
           <Row>

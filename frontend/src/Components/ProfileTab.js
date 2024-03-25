@@ -62,6 +62,12 @@ function PersonalInfo() {
             <Form.Control as="textarea" />
           </Form.Group>
 
+          <Form.Group controlId="formEventImage">
+            <Form.Label>Profile Picture </Form.Label>
+            <Form.Control type="file" />
+          </Form.Group>
+          <br />
+
           <Button variant="primary" type="submit">
             Edit/Save
           </Button>
