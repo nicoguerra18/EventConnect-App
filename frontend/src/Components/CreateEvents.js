@@ -7,6 +7,7 @@ import { Col } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import { Table } from "react-bootstrap";
 import "./styles.css";
+import CSRFToken from "./crftoken";
 
 function CreateEvents() {
   const [show, setShow] = useState(false);
@@ -15,13 +16,45 @@ function CreateEvents() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    eventImage: null,
+    location: "",
+    date: "",
+    selectedEvent: "",
+  });
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+  };
+
+  const handleFileChange = (e) => {
+    setFormData({ ...formData, eventImage: e.target.files[0] });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      const formdata = new FormData();
+      formdata.append("title", formData.title);
+      formdata.append("description", formData.description);
+      formdata.append("eventImage", formData.eventImage);
+      formdata.append("location", formData.location);
+      formdata.append("date", formData.date);
+      formdata.append("selectedEvent", formData.selectedEvent);
+
+      const response = await fetch("http://localhost:8000/results", {
+        method: "POST",
+        body: formdata,
+      });
+
+      console.log(response);
+      setShow(false);
     } catch (error) {
       console.log(error);
     }
-    setShow(false);
   };
 
   const eventOptions = [
@@ -78,10 +111,14 @@ function CreateEvents() {
           <Modal.Title> Create An Event</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formTitle">
               <Form.Label>Event Title</Form.Label>
-              <Form.Control type="text" placeholder="Enter Event Title" />
+              <Form.Control
+                type="text"
+                placeholder="Enter Event Title"
+                onChange={handleChange}
+              />
             </Form.Group>
             <br />
             <Form.Group controlId="formDescription">
@@ -90,30 +127,28 @@ function CreateEvents() {
                 as="textarea"
                 placeholder="Event Decription"
                 rows={3}
+                onChange={handleChange}
               />
             </Form.Group>
             <br />
             <Form.Group controlId="formEventImage">
               <Form.Label>Event Image</Form.Label>
-              <Form.Control type="file" />
+              <Form.Control type="file" onChange={handleChange} />
             </Form.Group>
             <br />
             <Form.Group controlId="formLocation">
               <Form.Label>Event Location</Form.Label>
-              <Form.Control type="locationForm" />
+              <Form.Control type="locationForm" onChange={handleChange} />
             </Form.Group>
             <br />
             <Form.Group controlId="formDate">
               <Form.Label>Event Date</Form.Label>
-              <Form.Control type="date" />
+              <Form.Control type="date" onChange={handleChange} />
             </Form.Group>
             <br />
             <Form.Group controlId="formDate">
               <Form.Label>Keywords/Topic</Form.Label>
-              <Form.Control
-                as="select"
-                onChange={(e) => setSelectedEvent(e.target.value)}
-              >
+              <Form.Control as="select" onChange={handleChange}>
                 <option value="">Choose an event type...</option>
                 {eventOptions.map((option, index) => (
                   <option key={index} value={option}>
@@ -128,7 +163,8 @@ function CreateEvents() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleSubmit}>
+          <CSRFToken />
+          <Button variant="primary" type="submit">
             Create Event
           </Button>
         </Modal.Footer>
