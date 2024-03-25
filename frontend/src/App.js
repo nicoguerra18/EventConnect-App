@@ -1,8 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import Page from "./Components/Page";
-import SSRProvider from "react-bootstrap/SSRProvider";
-
 
 function App() {
   return (
