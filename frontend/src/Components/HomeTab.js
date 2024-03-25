@@ -11,19 +11,36 @@ import EventDialog from "./EventDialog";
 import { Card } from "react-bootstrap";
 import logo192 from "./logo192.png";
 import "./styles.css";
-
+import { useEffect } from "react";
 
 function HomeTab() {
-  const events = [
-    { title: "Event 1" },
-    { title: "Event 2" },
-    { title: "Event 3" },
-    { title: "Event 4" },
-    { title: "Event 5" },
-    { title: "Event 6" },
-    { title: "Event 7" },
-    { title: "Event 8" },
-  ];
+  // const events = [
+  //   { title: "Event 1" },
+  //   { title: "Event 2" },
+  //   { title: "Event 3" },
+  //   { title: "Event 4" },
+  //   { title: "Event 5" },
+  //   { title: "Event 6" },
+  //   { title: "Event 7" },
+  //   { title: "Event 8" },
+  // ];
+
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    fetchEventData(); // Fetch event data when component mounts
+  }, []);
+
+  // Function to fetch event data from the backend API
+  const fetchEventData = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/api/EventDatabase/");
+      const eventData = await response.json();
+      setEvents(eventData);
+    } catch (error) {
+      console.error("Error fetching event data:", error);
+    }
+  };
 
   return (
     <div>
@@ -73,6 +90,7 @@ function SearchEvents({ events, setFilteredEvents }) {
 
 function RightSideOfPage({ events }) {
   const [filteredEvents, setFilteredEvents] = useState([]);
+  // Get all events in data base to display in the EventCards component
 
   return (
     <>
@@ -92,29 +110,6 @@ function RightSideOfPage({ events }) {
     </>
   );
 }
-
-// function EventResultsTable({ events }) {
-//   return (
-//     <Table striped bordered hover>
-//       <thead>
-//         <tr>
-//           <th>Event Title</th>
-//           <th>Get Details</th>
-//         </tr>
-//       </thead>
-//       <tbody>
-//         {events.map((event, index) => (
-//           <tr key={index}>
-//             <td>{event.title}</td>
-//             <td>
-//               <EventDialog eventTitle={event.title} />
-//             </td>
-//           </tr>
-//         ))}
-//       </tbody>
-//     </Table>
-//   );
-// }
 
 function EventCards({ events }) {
   return (
@@ -142,29 +137,6 @@ function EventCards({ events }) {
   );
 }
 
-// function OffcanvasComponent() {
-//   const [show, setShow] = useState(false);
 
-//   const handleClose = () => setShow(false);
-//   const handleShow = () => setShow(true);
-
-//   return (
-//     <Row className="mx-auto">
-//       <Button variant="primary" onClick={handleShow}>
-//         Launch
-//       </Button>
-
-//       <Offcanvas show={show} onHide={handleClose}>
-//         <Offcanvas.Header closeButton>
-//           <Offcanvas.Title>Offcanvas</Offcanvas.Title>
-//         </Offcanvas.Header>
-//         <Offcanvas.Body>
-//           Some text as placeholder. In real life you can have the elements you
-//           have chosen. Like, text, images, lists, etc.
-//         </Offcanvas.Body>
-//       </Offcanvas>
-//     </Row>
-//   );
-// }
 
 export default HomeTab;

@@ -1,12 +1,7 @@
-import { Button, Container } from "react-bootstrap";
 import React from "react";
 import { useState } from "react";
-import { Modal } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 import { Col } from "react-bootstrap";
-import { Form } from "react-bootstrap";
-import { Table } from "react-bootstrap";
-import CreateEvents from "./CreateEvents";
 import EventDialog from "./EventDialog";
 import { Card } from "react-bootstrap";
 import logo192 from "./logo192.png";

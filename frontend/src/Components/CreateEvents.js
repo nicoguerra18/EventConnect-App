@@ -47,7 +47,8 @@ function CreateEvents() {
       formdata.append("selectedEvent", formData.selectedEvent);
       formdata.append("username", formData.username);
 
-      const response = await fetch("http://localhost:8000/EventDatabase", {
+      // send event form data to backend
+      const response = await fetch("http://localhost:8000/api/EventDatabase/", {
         method: "POST",
         body: formdata,
       });
@@ -55,7 +56,7 @@ function CreateEvents() {
       console.log(response);
       setShow(false);
     } catch (error) {
-      console.log(error);
+      console.log("Error sending event data form:", error);
     }
   };
 
