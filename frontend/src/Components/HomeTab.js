@@ -13,6 +13,7 @@ import logo192 from "./logo192.png";
 import "./styles.css";
 import { useEffect } from "react";
 import CSRFToken from "./crftoken";
+import sample_pic from "./sample_pic.png";
 
 function HomeTab() {
   const events = [
@@ -32,7 +33,7 @@ function HomeTab() {
   //   fetchEventData(); // Fetch event data when component mounts
   // }, []);
 
-  // Function to fetch event data from the backend API
+  // // Function to fetch event data from the backend API
   // const fetchEventData = async () => {
   //   try {
   //     const response = await fetch("http://localhost:8000/api/EventDatabase/");
@@ -120,7 +121,12 @@ function EventCards({ events }) {
         {events.map((event, index) => (
           <Col key={index}>
             <Card style={{ width: "17rem" }}>
-              <Card.Img variant="top" src={logo192} alt="logo192" />
+              <Card.Img
+                variant="top"
+                src={sample_pic}
+                alt="sample_pic"
+                className="card-img-top img-fluid"
+              />
               <Card.Body>
                 <Card.Title>{event.title}</Card.Title>
                 <Card.Text>

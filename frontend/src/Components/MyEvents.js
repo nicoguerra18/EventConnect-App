@@ -15,13 +15,19 @@ function MyEvents() {
     { title: "Event Im attending 2" },
     { title: "Event Im attending 3" },
   ];
+
   return (
     <div className="event-cards-container">
       <Row className="g-4">
         {myEventsMock.map((event, index) => (
           <Col key={index}>
             <Card style={{ width: "15rem" }}>
-              <Card.Img variant="top" src={logo192} alt="logo192" />
+              <Card.Img
+                variant="top"
+                src={logo192}
+                alt="logo192"
+                className="card-img-top img-fluid"
+              />
               <Card.Body>
                 <Card.Title>{event.title}</Card.Title>
                 <Card.Text>Text</Card.Text>
