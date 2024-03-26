@@ -18,10 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from CSDS393PROJECT import views
-router = routers.DefaultRouter()
-router.register(r'UserProfile', views.ProfileView, 'Profiles')
-router.register(r'EventDatabase', views.EventView, 'Events')
+#router = routers.DefaultRouter()
+#router.register(r'UserProfile', views.ProfileView, 'Profiles')
+#router.register(r'EventDatabase', views.EventView, 'Events')
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
+    path('profiles/', views.ProfileView),
+    path('EventDatabase/', views.EventView),
 ]
