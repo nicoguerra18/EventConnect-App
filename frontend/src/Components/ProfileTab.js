@@ -9,6 +9,7 @@ import MyEvents from "./MyEvents";
 import { Tabs } from "react-bootstrap";
 import { Tab } from "react-bootstrap";
 import { useState } from "react";
+import CSRFToken from "./crftoken";
 
 function ProfileTab() {
   return (
@@ -73,7 +74,7 @@ function PersonalInfo() {
       formDataToSend.append("bio", formData.bio);
       formDataToSend.append("profilePicture", formData.profilePicture);
 
-      const response = await fetch("/UserProfile", {
+      const response = await fetch("http://localhost:8000/profiles/", {
         method: "POST",
         body: formDataToSend,
       });
@@ -93,6 +94,7 @@ function PersonalInfo() {
   return (
     <Row className="mx-auto">
       <Card style={{ width: "34rem" }}>
+        <CSRFToken />
         <Card.Title>Profile</Card.Title>
         <Card.Img variant="top" src={logo192} alt="logo192" />
         <Form onSubmit={handleFormSubmit}>
@@ -137,11 +139,11 @@ function PersonalInfo() {
 
           <Form.Group controlId="formEventImage">
             <Form.Label>Profile Picture</Form.Label>
-            <Form.Control type="file" onChange={handleFileChange} />
+            <Form.Control type="file" onChange={handleFormChange} />
           </Form.Group>
           <br />
 
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" onClick={handleFormSubmit}>
             Edit/Save
           </Button>
         </Form>

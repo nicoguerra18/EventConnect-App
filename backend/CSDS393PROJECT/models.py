@@ -10,6 +10,7 @@ class UserProfile(models.Model):
     username = models.CharField(max_length = 100)
     bio = models.TextField()
     profilePicture = models.ImageField()
+    # currently my "update info" request on the front end just adds a new profile entry
     
     def __str__(self):
         return self.username
