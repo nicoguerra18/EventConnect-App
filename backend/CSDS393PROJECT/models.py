@@ -20,14 +20,17 @@ class UserProfile(models.Model):
 #Model for Events, primary key == id, same as above
 class Event(models.Model):
     name = models.CharField(max_length = 150)
-    date = models.TimeField()
+    # date = models.DateField()
+    date = models.CharField(max_length = 150)
     #location = LocationField(based_fields = ['city'], initial= Point(41.5043, 81.6084), zoom = 7) need to figure out installing gdal and getting it to work
     location = models.CharField(max_length = 200)
     creator = models.CharField(max_length = 100)
     description = models.TextField()
+    # add field for accpeting a keyword
+    # add field for image file
 
     #creates many to many with UserProfile
-    attendees = models.ManyToManyField(UserProfile)
+    #attendees = models.ManyToManyField(UserProfile)
 
     #Ex of how to use it: UserProfile.objects.filter(Events__id = 1) shoud get you all users in the event with id/pk == 1
 

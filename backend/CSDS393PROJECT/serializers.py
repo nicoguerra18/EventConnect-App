@@ -8,8 +8,9 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class EventSerializer(serializers.ModelSerializer):
 
-    profiles = ProfileSerializer(many = True, source = 'UserProfile')
+    #profiles = ProfileSerializer(many = True, source = 'UserProfile')
 
     class Meta:
         model = Event
-        fields = ('id', 'name',  'date', 'location', 'description', 'creator')
+        # I removed date and added profiles for now
+        fields = ('id', 'name', 'location', 'description', 'creator')
