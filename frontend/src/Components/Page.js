@@ -1,4 +1,4 @@
-import { Row } from "react-bootstrap";
+import { NavbarText, Row } from "react-bootstrap";
 import { Col } from "react-bootstrap";
 import { NavItem } from "react-bootstrap";
 import { Nav } from "react-bootstrap";
@@ -7,6 +7,7 @@ import { Tabs } from "react-bootstrap";
 import HomeTab from "./HomeTab";
 import ProfileTab from "./ProfileTab";
 import Navbar from "react-bootstrap/Navbar";
+import LightModeToggle from "./LightModeToggle";
 
 function Page() {
   return (
@@ -60,6 +61,9 @@ function NavHeader() {
           </svg>
           &nbsp;<b>EVENTS APP</b>
         </div>
+      </Navbar.Brand>
+      <Navbar.Brand>
+        <LightModeToggle />
       </Navbar.Brand>
     </Navbar>
   );
