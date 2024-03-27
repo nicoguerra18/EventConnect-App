@@ -38,6 +38,14 @@ def ProfileUpdate(request, pk):
         profile = UserProfile.objects.get(pk=pk)
     except UserProfile.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'PATCH':
+        serializer = ProfileSerializer(profile, data= request.data, partial = True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        print(serializer.errors)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
     if request.method == 'PUT':
         serializer = ProfileSerializer(profile, data = request.data)
@@ -85,14 +93,6 @@ def EventUpdate(request, pk):
         profile = UserProfile.objects.get(pk=pk)
     except UserProfile.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    
-    if request.method == 'PATCH':
-        serializer = ProfileSerializer(profile, data= request.data, partial = True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        print(serializer.errors)
-        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
     if request.method == 'PUT':
         serializer = ProfileSerializer(profile, data = request.data)
