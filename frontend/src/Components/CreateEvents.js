@@ -184,7 +184,7 @@ function CreateEvents() {
         </Modal.Body>
         <Modal.Footer>
           <CSRFToken />
-          <Button variant="primary" type="submit" onClick={handleSubmit}>
+          <Button variant="success" type="submit" onClick={handleSubmit}>
             Create Event
           </Button>
         </Modal.Footer>
