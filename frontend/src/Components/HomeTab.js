@@ -16,33 +16,34 @@ import CSRFToken from "./crftoken";
 import sample_pic from "./sample_pic.png";
 
 function HomeTab() {
-  const events = [
-    { title: "Event 1" },
-    { title: "Event 2" },
-    { title: "Event 3" },
-    { title: "Event 4" },
-    { title: "Event 5" },
-    { title: "Event 6" },
-    { title: "Event 7" },
-    { title: "Event 8" },
-  ];
+  // const events = [
+  //   { title: "Event 1" },
+  //   { title: "Event 2" },
+  //   { title: "Event 3" },
+  //   { title: "Event 4" },
+  //   { title: "Event 5" },
+  //   { title: "Event 6" },
+  //   { title: "Event 7" },
+  //   { title: "Event 8" },
+  // ];
 
-  // const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState([]);
 
-  // useEffect(() => {
-  //   fetchEventData(); // Fetch event data when component mounts
-  // }, []);
+  useEffect(() => {
+    fetchEventData(); // Fetch event data when component mounts
+  }, []);
 
-  // // Function to fetch event data from the backend API
-  // const fetchEventData = async () => {
-  //   try {
-  //     const response = await fetch("http://localhost:8000/api/EventDatabase/");
-  //     const eventData = await response.json();
-  //     setEvents(eventData);
-  //   } catch (error) {
-  //     console.error("Error fetching event data:", error);
-  //   }
-  // };
+  // Function to fetch event data from the backend API
+  const fetchEventData = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/EventDatabase/");
+      const eventData = await response.json();
+      // console.log(eventData);
+      setEvents(eventData);
+    } catch (error) {
+      console.error("Error fetching event data:", error);
+    }
+  };
 
   return (
     <div>
@@ -68,7 +69,7 @@ function SearchEvents({ events, setFilteredEvents }) {
 
   const handleSearch = () => {
     const filteredEvents = events.filter((event) =>
-      event.title.toLowerCase().includes(entry.toLowerCase())
+      event.name.toLowerCase().includes(entry.toLowerCase())
     );
     setFilteredEvents(filteredEvents);
   };
@@ -128,14 +129,15 @@ function EventCards({ events }) {
                 className="card-img-top img-fluid"
               />
               <Card.Body>
-                <Card.Title>{event.title}</Card.Title>
-                <Card.Text>
-                  Join us for an exhilarating outdoor adventure day! Our event,
-                  'Wilderness Wanderlust,' invites nature enthusiasts of all
-                  levels to explore the breathtaking landscapes of our local
-                  wilderness.{" "}
-                </Card.Text>
-                <EventDialog eventTitle={event.title} />
+                <Card.Title>{event.name}</Card.Title>
+                <Card.Text>{event.description}</Card.Text>
+                <EventDialog
+                  eventName={event.name}
+                  eventCreator={event.creator}
+                  eventDate={event.date}
+                  eventLocation={event.location}
+                  eventDescription={event.description}
+                />
               </Card.Body>
             </Card>
           </Col>

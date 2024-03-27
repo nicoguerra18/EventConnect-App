@@ -3,9 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Row } from "react-bootstrap";
-import { Col } from "react-bootstrap";
 import { Form } from "react-bootstrap";
-import { Table } from "react-bootstrap";
 import "./styles.css";
 import CSRFToken from "./crftoken";
 
@@ -17,13 +15,13 @@ function CreateEvents() {
   const handleShow = () => setShow(true);
 
   const [formData, setFormData] = useState({
-    title: "",
+    name: "",
+    date: "08-15-2323",
+    // eventImage: null,
+    location: null,
+    // selectedEvent: "",
+    creator: "",
     description: "",
-    eventImage: null,
-    location: "",
-    date: "",
-    selectedEvent: "",
-    username: "",
   });
 
   const handleChange = (e) => {
@@ -39,22 +37,23 @@ function CreateEvents() {
     event.preventDefault();
     try {
       const formdata = new FormData();
-      formdata.append("title", formData.title);
-      formdata.append("description", formData.description);
-      formdata.append("eventImage", formData.eventImage);
-      formdata.append("location", formData.location);
+      formdata.append("name", formData.name);
       formdata.append("date", formData.date);
-      formdata.append("selectedEvent", formData.selectedEvent);
-      formdata.append("username", formData.username);
+      formdata.append("location", formData.location);
+      formdata.append("creator", formData.creator);
+      formdata.append("description", formData.description);
+      // formdata.append("eventImage", formData.eventImage);
+      // formdata.append("selectedEvent", formData.selectedEvent);
 
       // send event form data to backend
-      const response = await fetch("http://localhost:8000/api/EventDatabase/", {
+      const response = await fetch("http://localhost:8000/EventDatabase/", {
         method: "POST",
         body: formdata,
       });
 
       console.log(response);
       setShow(false);
+      window.location.reload(); // refresh page
     } catch (error) {
       console.log("Error sending event data form:", error);
     }
@@ -115,7 +114,7 @@ function CreateEvents() {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="formTitle">
+            <Form.Group controlId="name">
               <Form.Label>Event Title</Form.Label>
               <Form.Control
                 type="text"
@@ -124,7 +123,7 @@ function CreateEvents() {
               />
             </Form.Group>
             <br />
-            <Form.Group controlId="formDescription">
+            <Form.Group controlId="description">
               <Form.Label>Event Description</Form.Label>
               <Form.Control
                 as="textarea"
@@ -134,22 +133,26 @@ function CreateEvents() {
               />
             </Form.Group>
             <br />
-            <Form.Group controlId="formEventImage">
+            {/* <Form.Group controlId="formEventImage">
               <Form.Label>Event Image</Form.Label>
               <Form.Control type="file" onChange={handleChange} />
-            </Form.Group>
+            </Form.Group> */}
             <br />
-            <Form.Group controlId="formLocation">
+            <Form.Group controlId="location">
               <Form.Label>Event Location</Form.Label>
               <Form.Control type="locationForm" onChange={handleChange} />
             </Form.Group>
             <br />
-            <Form.Group controlId="formDate">
+            <Form.Group controlId="date">
               <Form.Label>Event Date</Form.Label>
-              <Form.Control type="date" onChange={handleChange} />
+              <Form.Control
+                type="text"
+                onChange={handleChange}
+                placeholder="DD-MM-YYYY"
+              />
             </Form.Group>
             <br />
-            <Form.Group controlId="formDate">
+            {/* <Form.Group controlId="formDate">
               <Form.Label>Keywords/Topic</Form.Label>
               <Form.Control as="select" onChange={handleChange}>
                 <option value="">Choose an event type...</option>
@@ -159,9 +162,9 @@ function CreateEvents() {
                   </option>
                 ))}
               </Form.Control>
-            </Form.Group>
-            <Form.Group controlId="formUsername">
-              <Form.Label>Username</Form.Label>
+            </Form.Group> */}
+            <Form.Group controlId="creator">
+              <Form.Label>Creator</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter your Username"

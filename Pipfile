@@ -7,6 +7,8 @@ name = "pypi"
 django = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
+django-location-field = "*"
+six = "*"
 
 [dev-packages]
 
