@@ -11,7 +11,7 @@ class UserProfile(models.Model):
     username = models.CharField(max_length = 100)
     password = models.CharField(max_length = 100, null = True, blank = True)
     bio = models.TextField()
-    profilePicture = models.ImageField()
+    profilePicture = models.ImageField(null=True, blank=True)
     # currently my "update info" request on the front end just adds a new profile entry
     
     def __str__(self):

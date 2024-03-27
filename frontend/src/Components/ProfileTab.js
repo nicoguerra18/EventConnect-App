@@ -1,4 +1,4 @@
-import { Card, Container } from "react-bootstrap";
+import { Card, Container, ToastContainer } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { Row } from "react-bootstrap";
 import { Button } from "react-bootstrap";
@@ -11,9 +11,9 @@ import { Tab } from "react-bootstrap";
 import { useState } from "react";
 import CSRFToken from "./crftoken";
 import { useEffect } from "react";
+import Toast from "react-bootstrap/Toast";
 
-
-// NEED TO ADD A FILE IN ORDER FOR FOR THE PUT REQUEST TO GO THROUGH 
+// NEED TO ADD A FILE IN ORDER FOR FOR THE PUT REQUEST TO GO THROUGH
 
 function ProfileTab() {
   return (
@@ -53,6 +53,11 @@ function PersonalInfo() {
     profilePicture: null,
   });
 
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [showErrorToast, setShowErrorToast] = useState(false);
+  const toggleShowSuccessToast = () => setShowSuccessToast(!showSuccessToast);
+  const toggleShowErrorToast = () => setShowErrorToast(!showErrorToast);
+
   // DEAFULT PROFILE IS 1******
   // currently it always calls profile 1 data
   useEffect(() => {
@@ -88,6 +93,7 @@ function PersonalInfo() {
     });
   };
 
+  // Update profile method
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -107,9 +113,13 @@ function PersonalInfo() {
       if (response.ok) {
         // Profile updated successfully
         console.log("Profile updated successfully");
+        setShowSuccessToast(true);
+        setShowErrorToast(false);
       } else {
         // Handle error
         console.error("Error updating profile");
+        setShowErrorToast(true);
+        setShowSuccessToast(false);
       }
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -173,6 +183,29 @@ function PersonalInfo() {
           </Button>
         </Form>
       </Card>
+
+      <ToastContainer className="p-3" position="top-end" style={{ zIndex: 1 }}>
+        <Toast
+          show={showSuccessToast}
+          bg="success"
+          onClose={toggleShowSuccessToast}
+        >
+          <Toast.Header>
+            <strong className="me-auto">Success</strong>
+          </Toast.Header>
+          <Toast.Body className={"Dark" && "text-white"}>
+            Profile Information Updated Successfully!
+          </Toast.Body>
+        </Toast>
+        <Toast show={showErrorToast} bg="danger" onClose={toggleShowErrorToast}>
+          <Toast.Header>
+            <strong className="me-auto">Error</strong>
+          </Toast.Header>
+          <Toast.Body className={"Dark" && "text-white"}>
+            Error updating profile information
+          </Toast.Body>
+        </Toast>
+      </ToastContainer>
     </Row>
   );
 }
