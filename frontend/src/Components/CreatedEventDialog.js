@@ -6,7 +6,7 @@ import { Form } from "react-bootstrap";
 import logo192 from "./logo192.png";
 import CSRFToken from "./crftoken";
 
-function EventDialog({
+function CreatedEventDialog({
   eventName,
   eventDescription,
   eventDate,
@@ -34,7 +34,7 @@ function EventDialog({
   return (
     <>
       <CSRFToken />
-      <Button size="md" variant="secondary" onClick={handleShow}>
+      <Button size="md" variant="primary" onClick={handleShow}>
         View Event Info
       </Button>
       <Modal show={show} onHide={handleClose}>
@@ -72,16 +72,11 @@ function EventDialog({
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button
-            variant={joined ? "danger" : "success"} // Change variant based on joined state
-            onClick={toggleEvent}
-          >
-            {joined ? "Leave Event" : "Join Event"}
-          </Button>
+          <Button variant="danger">Delete This Event</Button>
         </Modal.Footer>
       </Modal>
     </>
   );
 }
 
-export default EventDialog;
+export default CreatedEventDialog;

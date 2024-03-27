@@ -12,7 +12,6 @@ import { useState } from "react";
 import CSRFToken from "./crftoken";
 import { useEffect } from "react";
 import Toast from "react-bootstrap/Toast";
-
 // NEED TO ADD A FILE IN ORDER FOR FOR THE PUT REQUEST TO GO THROUGH
 
 function ProfileTab() {
@@ -26,7 +25,7 @@ function ProfileTab() {
         </Col>
         <Col>
           <Tabs defaultActiveKey="MyEvents" id="ProfileTabs" className="mb-3">
-            <Tab eventKey="MyEvents" title="My Events">
+            <Tab eventKey="MyEvents" title="Created Events">
               <MyEvents />
             </Tab>
             <Tab eventKey="eventsJoined" title="Events Joined">

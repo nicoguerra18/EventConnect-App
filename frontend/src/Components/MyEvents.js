@@ -6,6 +6,7 @@ import EventDialog from "./EventDialog";
 import { Card } from "react-bootstrap";
 import logo192 from "./logo192.png";
 import "./styles.css";
+import CreatedEventDialog from "./CreatedEventDialog";
 
 // Order events based on Time, done on the backed tho?
 
@@ -31,7 +32,7 @@ function MyEvents() {
               <Card.Body>
                 <Card.Title>{event.title}</Card.Title>
                 <Card.Text>Text</Card.Text>
-                <EventDialog eventTitle={event.title} />
+                <CreatedEventDialog eventTitle={event.title} />
               </Card.Body>
             </Card>
           </Col>
