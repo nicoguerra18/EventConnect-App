@@ -7,7 +7,9 @@ from django.contrib.auth.models import User
 #Model for UserProfile, primary key == id (premade by Django and auto set to primary_key == True)
 class UserProfile(models.Model):
     #user = models.OneToOneField(User, on_delete = models.CASCADE)
+    profileName = models.CharField(max_length = 100, null = True, blank = True)
     username = models.CharField(max_length = 100)
+    password = models.CharField(max_length = 100, null = True, blank = True)
     bio = models.TextField()
     profilePicture = models.ImageField()
     # currently my "update info" request on the front end just adds a new profile entry
@@ -28,15 +30,21 @@ class Event(models.Model):
     creator = models.CharField(max_length = 100)
     description = models.TextField()
     # add field for accpeting a keyword
+    keyword = models.CharField(max_length = 100, blank = True, null = True )
     # add field for image file
+    image = models.ImageField(default = 'default.jpg')    
 
     #creates many to many with UserProfile
-    #attendees = models.ManyToManyField(UserProfile)
+    #attendees = models.ManyToManyField(UserProfile, related_name = 'profiles')
 
     #Ex of how to use it: UserProfile.objects.filter(Events__id = 1) shoud get you all users in the event with id/pk == 1
 
     def __str__(self):
         return self.name
+    
+    def attendees(self):
+        return UserProfile.objects.filter(pk = self.id)
+        #UserProfile JOIN Event WHERE 
     
     class Meta:
         ordering = ['id']

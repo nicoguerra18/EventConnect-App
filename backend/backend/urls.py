@@ -25,4 +25,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('profiles/', views.ProfileView),
     path('EventDatabase/', views.EventView),
+    path('updateprofile/', views.ProfileUpdate)
 ]

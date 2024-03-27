@@ -4,7 +4,7 @@ from .models import UserProfile, Event
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ('id', 'username', 'bio', 'profilePicture')
+        fields = ('id', 'profileName' , 'username', 'password', 'bio', 'profilePicture')
 
 class EventSerializer(serializers.ModelSerializer):
 
@@ -13,4 +13,4 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         # I removed date and added profiles for now
-        fields = ('id', 'name', 'location', 'description', 'creator')
+        fields = ('id', 'name', 'location', 'description', 'creator', 'keyword', 'image')
