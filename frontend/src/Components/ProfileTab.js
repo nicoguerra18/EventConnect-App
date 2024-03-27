@@ -12,6 +12,9 @@ import { useState } from "react";
 import CSRFToken from "./crftoken";
 import { useEffect } from "react";
 
+
+// NEED TO ADD A FILE IN ORDER FOR FOR THE PUT REQUEST TO GO THROUGH 
+
 function ProfileTab() {
   return (
     <Container>
@@ -50,6 +53,8 @@ function PersonalInfo() {
     profilePicture: null,
   });
 
+  // DEAFULT PROFILE IS 1******
+  // currently it always calls profile 1 data
   useEffect(() => {
     const fetchProfileData = async () => {
       try {

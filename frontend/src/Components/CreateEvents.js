@@ -17,9 +17,9 @@ function CreateEvents() {
   const [formData, setFormData] = useState({
     name: "",
     date: "08-15-2323",
-    // eventImage: null,
+    image: null,
     location: null,
-    // selectedEvent: "",
+    keyword: "",
     creator: "",
     description: "",
   });
@@ -133,10 +133,10 @@ function CreateEvents() {
               />
             </Form.Group>
             <br />
-            {/* <Form.Group controlId="formEventImage">
+            <Form.Group controlId="image">
               <Form.Label>Event Image</Form.Label>
               <Form.Control type="file" onChange={handleChange} />
-            </Form.Group> */}
+            </Form.Group>
             <br />
             <Form.Group controlId="location">
               <Form.Label>Event Location</Form.Label>
@@ -152,22 +152,19 @@ function CreateEvents() {
               />
             </Form.Group>
             <br />
-            {/* <Form.Group controlId="formDate">
-              <Form.Label>Keywords/Topic</Form.Label>
-              <Form.Control as="select" onChange={handleChange}>
-                <option value="">Choose an event type...</option>
-                {eventOptions.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group> */}
             <Form.Group controlId="creator">
               <Form.Label>Creator</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter your Username"
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="creator">
+              <Form.Label>Keyword</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter a keyword for your event"
                 onChange={handleChange}
               />
             </Form.Group>
