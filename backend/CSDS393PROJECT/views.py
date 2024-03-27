@@ -78,6 +78,39 @@ def EventView(request):
         serializer = EventSerializer(date = request.data)
 
 
+@ensure_csrf_cookie
+@api_view (['GET', 'POST', 'PUT', 'PATCH'])
+def EventUpdate(request, pk):
+    try:
+        profile = UserProfile.objects.get(pk=pk)
+    except UserProfile.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'PATCH':
+        serializer = ProfileSerializer(profile, data= request.data, partial = True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        print(serializer.errors)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+    if request.method == 'PUT':
+        serializer = ProfileSerializer(profile, data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        print(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'GET':
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data)
+    
+    elif request.method == 'DELETE':
+        profile.delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)
+
+
     #if(text_method == 'GET')
     #input 
     #data = UserProfile.objects.get(username== input)
