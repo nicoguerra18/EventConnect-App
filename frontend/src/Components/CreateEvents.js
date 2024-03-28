@@ -9,7 +9,7 @@ import CSRFToken from "./crftoken";
 
 function CreateEvents() {
   const [show, setShow] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState("");
+  // const [selectedEvent, setSelectedEvent] = useState("");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -145,7 +145,7 @@ function CreateEvents() {
               />
             </Form.Group>
             <br />
-            <Form.Group controlId="image">
+            <Form.Group controlId="image" onChange={handleFileChange}>
               <Form.Label>Event Image</Form.Label>
               <Form.Control type="file" onChange={handleChange} />
             </Form.Group>
@@ -172,13 +172,16 @@ function CreateEvents() {
                 onChange={handleChange}
               />
             </Form.Group>
-            <Form.Group controlId="creator">
+            <Form.Group controlId="keyword">
               <Form.Label>Keyword</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter a keyword for your event"
-                onChange={handleChange}
-              />
+              <Form.Control as="select" onChange={handleChange}>
+                <option value="">Select a keyword</option>
+                {eventOptions.map((option, index) => (
+                  <option key={index} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </Form.Control>
             </Form.Group>
           </Form>
         </Modal.Body>
