@@ -12,7 +12,9 @@ function JoinedEvents() {
 
   const fetchMyJoinedEventsData = async () => {
     try {
-      const response = await fetch("http://localhost:8000/EventDatabase/");
+      const response = await fetch(
+        "http://localhost:8000/eventsattending/Rafay/"
+      );
       const myJoinedEventsData = await response.json();
       setMyJoinedEvents(myJoinedEventsData);
     } catch (error) {
@@ -23,7 +25,7 @@ function JoinedEvents() {
   const leaveEvent = async (eventId) => {
     try {
       const response = await fetch(
-        `http://localhost:8000/EventDatabase/${eventId}/leave/`,
+        `http://localhost:8000/EventDatabase/attendingevent/Rafay/`,
         {
           method: "DELETE",
         }
@@ -51,6 +53,7 @@ function JoinedEvents() {
                 variant="top"
                 src={event.image}
                 className="card-img-top img-fluid"
+                style={{ height: "150px" }}
               />
               <Card.Body>
                 <Card.Title>{event.name}</Card.Title>
