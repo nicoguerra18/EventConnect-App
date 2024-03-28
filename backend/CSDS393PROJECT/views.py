@@ -5,7 +5,10 @@ from rest_framework.decorators import api_view
 from rest_framework import status, viewsets
 from .serializers import ProfileSerializer, EventSerializer, AttendanceSerializer
 from .models import UserProfile, Event, Attendance
-
+from django.core import serializers
+from django.core.serializers.json import DjangoJSONEncoder
+import json
+from django.http import JsonResponse
 # Create your views here.
 
 #class ProfileView(viewsets.ModelViewSet):
@@ -140,3 +143,17 @@ def AttendanceView(request):
         # to do this probably need to make creator a foreign key reference to UserProfile
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#view that shows all attendees of an event
+@api_view(['GET'])
+def AttendingEvent(request, event_name):
+        queryset = Attendance.getAttending(event_name)
+        list1 = list(queryset)
+        serialized_q = json.dumps(list1, cls = DjangoJSONEncoder)
+        return Response(serialized_q)
+
+@api_view(['GET'])
+def EventsAttending(request, profile_name):
+    queryset = Attendance.getEvents(profile_name)
+    serialized_q = json.dumps(list(queryset), cls = DjangoJSONEncoder)
+    return Response(serialized_q)

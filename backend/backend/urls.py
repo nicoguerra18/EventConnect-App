@@ -30,7 +30,9 @@ urlpatterns = [
     path('EventDatabase/', views.EventView),
     path('EventDatabase/<int:pk>/', views.EventUpdate),
     path('profiles/<int:pk>/', views.ProfileUpdate),
-    path('attendance/', views.AttendanceView)
+    path('attendance/', views.AttendanceView),
+    path('attendingevent/<str:event_name>/', views.AttendingEvent),
+    path('eventsattending/<str:profile_name>', views.EventsAttending)
 ]
 
 urlpatterns= format_suffix_patterns(urlpatterns)
