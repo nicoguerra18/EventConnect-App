@@ -32,7 +32,7 @@ def ProfileView(request):
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
     
 @ensure_csrf_cookie
-@api_view(['GET', 'PUT', 'DELETE'])
+@api_view(['GET', 'PUT', 'DELETE', 'PATCH'])
 def ProfileUpdate(request, pk):
     try:
         profile = UserProfile.objects.get(pk=pk)

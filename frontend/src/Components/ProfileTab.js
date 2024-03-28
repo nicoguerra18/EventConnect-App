@@ -12,6 +12,8 @@ import { useState } from "react";
 import CSRFToken from "./crftoken";
 import { useEffect } from "react";
 import Toast from "react-bootstrap/Toast";
+import defaultImage from "./default.jpg";
+
 // NEED TO ADD A FILE IN ORDER FOR FOR THE PUT REQUEST TO GO THROUGH
 
 function ProfileTab() {
@@ -49,7 +51,7 @@ function PersonalInfo() {
     username: "",
     password: "",
     bio: "",
-    profilePicture: null,
+    profilePicture: defaultImage,
   });
 
   const [showSuccessToast, setShowSuccessToast] = useState(false);
@@ -105,7 +107,7 @@ function PersonalInfo() {
       console.log(formData.profilePicture);
 
       const response = await fetch("http://localhost:8000/profiles/1/", {
-        method: "PUT",
+        method: "PATCH",
         body: formDataToSend,
       });
 
@@ -129,14 +131,14 @@ function PersonalInfo() {
     <Row className="mx-auto">
       <Card style={{ width: "34rem" }}>
         <Card.Title>Profile</Card.Title>
-        <Card.Img variant="top" src={logo192} alt="logo192" />
+        <Card.Img src={defaultImage} alt="defaultImage" />
         <Form onSubmit={handleFormSubmit}>
           <CSRFToken />
           <Form.Group className="mb-3" controlId="formName">
             <Form.Label>Name</Form.Label>
             <Form.Control
               type="text"
-              name="name"
+              name="profileName"
               value={formData.profileName}
               onChange={handleFormChange}
             />
@@ -173,7 +175,11 @@ function PersonalInfo() {
 
           <Form.Group controlId="formEventImage">
             <Form.Label>Profile Picture</Form.Label>
-            <Form.Control type="file" onChange={handleFileChange} />
+            <Form.Control
+              type="file"
+              onChange={handleFileChange}
+              src={defaultImage}
+            />
           </Form.Group>
           <br />
 
