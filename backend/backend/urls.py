@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from CSDS393PROJECT import views
+
 from rest_framework.urlpatterns import format_suffix_patterns
 #router = routers.DefaultRouter()
 #router.register(r'UserProfile', views.ProfileView, 'Profiles')
@@ -26,7 +27,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('profiles/', views.ProfileView),
     path('EventDatabase/', views.EventView),
-    path('profiles/<int:pk>/', views.ProfileUpdate)
+    path('profiles/<int:pk>/', views.ProfileUpdate),
+    path('login/', views.login_view, name='login'),
+    path('register/', views.register_view, name='register'),
+    path('logout/', views.logout_view, name='logout'),
 ]
 
 urlpatterns= format_suffix_patterns(urlpatterns)

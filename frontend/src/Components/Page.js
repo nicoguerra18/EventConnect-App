@@ -1,12 +1,8 @@
-import { NavbarText, Row } from "react-bootstrap";
-import { Col } from "react-bootstrap";
-import { NavItem } from "react-bootstrap";
-import { Nav } from "react-bootstrap";
-import { Tab } from "react-bootstrap";
-import { Tabs } from "react-bootstrap";
+import React from "react";
+import { Navbar, Nav, Tabs, Tab, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import HomeTab from "./HomeTab";
 import ProfileTab from "./ProfileTab";
-import Navbar from "react-bootstrap/Navbar";
 import LightModeToggle from "./LightModeToggle";
 
 function Page() {
@@ -15,12 +11,7 @@ function Page() {
       <NavHeader />
       <Row>
         <Col>
-          <Tabs
-            defaultActiveKey="home"
-            id="uncontrolled-tab-example"
-            className="mb-3"
-            fill
-          >
+          <Tabs defaultActiveKey="home" className="mb-3" fill>
             <Tab eventKey="profile" title="Profile">
               <ProfileTab />
             </Tab>
@@ -28,7 +19,7 @@ function Page() {
               <HomeTab />
             </Tab>
             <Tab eventKey="eventsMap" title="Events Map">
-              <div>Events Map Feature Coming Soon in Feature 2!</div>
+              Events Map Feature Coming Soon in Feature 2!
             </Tab>
           </Tabs>
         </Col>
@@ -37,7 +28,10 @@ function Page() {
   );
 }
 
-function NavHeader() {
+/*previous I just change here for testing my code
+
+
+*function NavHeader() {
   return (
     <Navbar
       className="bg-body-tertiary justify-content-md-center"
@@ -65,6 +59,26 @@ function NavHeader() {
       <Navbar.Brand>
         <LightModeToggle />
       </Navbar.Brand>
+    </Navbar>
+  );
+}
+*
+*
+* */
+
+function NavHeader() {
+  return (
+    <Navbar className="justify-content-between" bg="dark" variant="dark">
+      <Navbar.Brand>
+        <Link to="/" className="navbar-brand">
+          EventConnect
+        </Link>
+      </Navbar.Brand>
+      <Nav>
+        <Link to="/login" className="nav-link">Sign In</Link>
+        <Link to="/signup" className="nav-link">Sign Up</Link>
+      </Nav>
+      <LightModeToggle />
     </Navbar>
   );
 }
