@@ -26,7 +26,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('profiles/', views.ProfileView),
     path('EventDatabase/', views.EventView),
-    path('profiles/<int:pk>/', views.ProfileUpdate)
+    path('profiles/<int:pk>/', views.ProfileUpdate),
+    path('attendance/', views.AttendanceView)
 ]
 
 urlpatterns= format_suffix_patterns(urlpatterns)

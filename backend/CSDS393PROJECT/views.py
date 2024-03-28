@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from django.http import HttpRequest
 from rest_framework.decorators import api_view
 from rest_framework import status, viewsets
-from .serializers import ProfileSerializer, EventSerializer
-from .models import UserProfile, Event
+from .serializers import ProfileSerializer, EventSerializer, AttendanceSerializer
+from .models import UserProfile, Event, Attendance
 
 # Create your views here.
 
@@ -87,15 +87,23 @@ def EventView(request):
 
 
 @ensure_csrf_cookie
-@api_view (['GET', 'POST', 'PUT', 'PATCH'])
+@api_view (['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
 def EventUpdate(request, pk):
     try:
-        profile = UserProfile.objects.get(pk=pk)
-    except UserProfile.DoesNotExist:
+        event = Event.objects.get(pk=pk)
+    except Event.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'PATCH':
+        serializer = ProfileSerializer(event, data= request.data, partial = True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        print(serializer.errors)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
-    if request.method == 'PUT':
-        serializer = ProfileSerializer(profile, data = request.data)
+    elif request.method == 'PUT':
+        serializer = EventSerializer(event, data = request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -103,11 +111,11 @@ def EventUpdate(request, pk):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'GET':
-        serializer = ProfileSerializer(profile)
+        serializer = EventSerializer(event)
         return Response(serializer.data)
     
     elif request.method == 'DELETE':
-        profile.delete()
+        event.delete()
         return Response(status = status.HTTP_204_NO_CONTENT)
 
 
@@ -116,3 +124,19 @@ def EventUpdate(request, pk):
     #data = UserProfile.objects.get(username== input)
     #serializer = ~~~
     #return Response (serializer.data)
+
+@api_view(['GET'])
+def AttendanceView(request):
+    if request.method == 'GET':
+        data = Attendance.objects.all()
+        serializer = AttendanceSerializer (data, context = {'request':request}, many = True)
+        events = Event.objects.filter(pk = 1)
+        print('hello')
+        #print(events)
+        #print(Attendance.getAttendees(events))
+        #print(Attendance.objects.filter(is_attending = True))
+        #print(Attendance.objects.filter(attendee = 1))
+        #join call matching username and created_by
+        # to do this probably need to make creator a foreign key reference to UserProfile
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
