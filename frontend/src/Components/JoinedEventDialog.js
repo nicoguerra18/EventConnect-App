@@ -5,7 +5,7 @@ import { Modal } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import CSRFToken from "./crftoken";
 
-function CreatedEventDialog({
+function JoinedEventDialog({
   eventName,
   eventDescription,
   eventDate,
@@ -116,4 +116,4 @@ function CreatedEventDialog({
   );
 }
 
-export default CreatedEventDialog;
+export default JoinedEventDialog;

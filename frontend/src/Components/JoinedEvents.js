@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Card, Button, CardFooter } from "react-bootstrap";
 import "./styles.css";
-import CreatedEventDialog from "./CreatedEventDialog";
+import JoinedEventDialog from "./JoinedEventDialog";
 
 function JoinedEvents() {
   const [myJoinedEvents, setMyJoinedEvents] = useState([]);
@@ -55,7 +55,7 @@ function JoinedEvents() {
               <Card.Body>
                 <Card.Title>{event.name}</Card.Title>
                 <Card.Text>{event.description}</Card.Text>
-                <CreatedEventDialog
+                <JoinedEventDialog
                   eventName={event.name}
                   eventDescription={event.description}
                   eventDate={event.date}
