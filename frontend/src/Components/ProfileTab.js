@@ -12,6 +12,7 @@ import CSRFToken from "./crftoken";
 import { useEffect } from "react";
 import Toast from "react-bootstrap/Toast";
 import defaultImage from "./default.jpg";
+import JoinedEvents from "./JoinedEvents";
 
 // NEED TO ADD A FILE IN ORDER FOR FOR THE PUT REQUEST TO GO THROUGH
 
@@ -30,7 +31,7 @@ function ProfileTab() {
               <MyEvents />
             </Tab>
             <Tab eventKey="eventsJoined" title="Events Joined">
-              <MyEvents />
+              <JoinedEvents />
             </Tab>
             <Tab eventKey="MyGroups" title="My Groups">
               Coming soon in feature 3!

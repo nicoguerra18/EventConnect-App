@@ -10,7 +10,7 @@ import { Card } from "react-bootstrap";
 import "./styles.css";
 import { useEffect } from "react";
 import CSRFToken from "./crftoken";
-import sample_pic from "./sample_pic.png";
+// import sample_pic from "./sample_pic.png";
 
 function HomeTab() {
   const [events, setEvents] = useState([]);
@@ -113,6 +113,13 @@ function RightSideOfPage({ events }) {
 }
 
 function EventCards({ events }) {
+
+  useEffect(() => {
+    console.log(
+      "Event Images:",
+      events.map((event) => event.image)
+    );
+  }, [events]);
   return (
     <div className="event-cards-container">
       <Row xs={1} md={3} className="g-4">
@@ -121,7 +128,7 @@ function EventCards({ events }) {
             <Card style={{ width: "17rem" }}>
               <Card.Img
                 variant="top"
-                src={sample_pic}
+                src="http://localhost:8000/default.jpg"
                 alt="sample_pic"
                 className="card-img-top img-fluid"
               />
@@ -134,6 +141,7 @@ function EventCards({ events }) {
                   eventDate={event.date}
                   eventLocation={event.location}
                   eventDescription={event.description}
+                  eventId={event.id}
                 />
               </Card.Body>
             </Card>
