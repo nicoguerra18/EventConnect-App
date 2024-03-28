@@ -32,7 +32,7 @@ function MyEvents() {
       // console.log(eventData);
       setMyCreatedEvents(myCreatedEventsData);
     } catch (error) {
-      console.error("Error fetching event data:", error);
+      console.error("Error fetching my events data:", error);
     }
   };
 
@@ -72,10 +72,10 @@ function MyEvents() {
               />
               <Card.Body>
                 <Card.Title>{event.name}</Card.Title>
-                <Card.Text>{event.desciption}</Card.Text>
+                <Card.Text>{event.description}</Card.Text>
                 <CreatedEventDialog
                   eventName={event.name}
-                  eventDescription={event.desciption}
+                  eventDescription={event.description}
                   eventDate={event.date}
                   eventLocation={event.location}
                   eventCreator={event.creator}

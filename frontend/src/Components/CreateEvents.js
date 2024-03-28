@@ -42,8 +42,8 @@ function CreateEvents() {
       formdata.append("location", formData.location);
       formdata.append("creator", formData.creator);
       formdata.append("description", formData.description);
-      // formdata.append("eventImage", formData.eventImage);
-      // formdata.append("selectedEvent", formData.selectedEvent);
+      formdata.append("eventImage", formData.eventImage);
+      formdata.append("selectedEvent", formData.selectedEvent);
 
       // send event form data to backend
       const response = await fetch("http://localhost:8000/EventDatabase/", {
