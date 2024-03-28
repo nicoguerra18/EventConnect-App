@@ -128,9 +128,10 @@ function EventCards({ events }) {
             <Card style={{ width: "17rem" }}>
               <Card.Img
                 variant="top"
-                src="http://localhost:8000/default.jpg"
+                src={event.image}
                 alt="sample_pic"
                 className="card-img-top img-fluid"
+                style={{ height: "210px" }}
               />
               <Card.Body>
                 <Card.Title>{event.name}</Card.Title>

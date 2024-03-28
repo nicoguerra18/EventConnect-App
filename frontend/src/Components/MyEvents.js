@@ -69,6 +69,7 @@ function MyEvents() {
                 variant="top"
                 src={event.image}
                 className="card-img-top img-fluid"
+                style={{ height: "150px" }}
               />
               <Card.Body>
                 <Card.Title>{event.name}</Card.Title>
