@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Row } from "react-bootstrap";
 import { Col } from "react-bootstrap";
 import { Card } from "react-bootstrap";
-import logo192 from "./logo192.png";
 import "./styles.css";
 import CreatedEventDialog from "./CreatedEventDialog";
 import { useEffect } from "react";
@@ -72,9 +71,15 @@ function MyEvents() {
                 className="card-img-top img-fluid"
               />
               <Card.Body>
-                <Card.Title>{event.title}</Card.Title>
-                <Card.Text>Text</Card.Text>
-                <CreatedEventDialog eventTitle={event.title} />
+                <Card.Title>{event.name}</Card.Title>
+                <Card.Text>{event.desciption}</Card.Text>
+                <CreatedEventDialog
+                  eventName={event.name}
+                  eventDescription={event.desciption}
+                  eventDate={event.date}
+                  eventLocation={event.location}
+                  eventCreator={event.creator}
+                />
                 <Button variant="danger" onClick={() => deleteEvent(event.id)}>
                   Delete Event
                 </Button>

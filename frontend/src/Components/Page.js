@@ -1,7 +1,5 @@
-import { NavbarText, Row } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import { Col } from "react-bootstrap";
-import { NavItem } from "react-bootstrap";
-import { Nav } from "react-bootstrap";
 import { Tab } from "react-bootstrap";
 import { Tabs } from "react-bootstrap";
 import HomeTab from "./HomeTab";
