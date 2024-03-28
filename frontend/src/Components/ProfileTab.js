@@ -186,7 +186,12 @@ function PersonalInfo() {
           </Form.Group>
           <br />
 
-          <Button variant="primary" type="submit" onClick={handleFormSubmit}>
+          <Button
+            variant="primary"
+            type="submit"
+            onClick={handleFormSubmit}
+            className="mb-3"
+          >
             Edit/Save
           </Button>
         </Form>

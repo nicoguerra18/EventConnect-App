@@ -41,7 +41,7 @@ function MyEvents() {
   const deleteEvent = async (eventId) => {
     try {
       const response = await fetch(
-        `http://localhost:8000/EventDatabase/${eventId}`,
+        `http://localhost:8000/EventDatabase/${eventId}/`,
         {
           method: "DELETE",
         }

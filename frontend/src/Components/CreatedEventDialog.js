@@ -82,7 +82,9 @@ function CreatedEventDialog({
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger">Delete This Event</Button>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
