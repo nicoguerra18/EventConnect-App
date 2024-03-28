@@ -1,19 +1,16 @@
 import { Button, Container } from "react-bootstrap";
 import React from "react";
 import { useState } from "react";
-import { Modal } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 import { Col } from "react-bootstrap";
 import { Form } from "react-bootstrap";
-import { Table } from "react-bootstrap";
 import CreateEvents from "./CreateEvents";
 import EventDialog from "./EventDialog";
 import { Card } from "react-bootstrap";
-import logo192 from "./logo192.png";
 import "./styles.css";
 import { useEffect } from "react";
 import CSRFToken from "./crftoken";
-import sample_pic from "./sample_pic.png";
+// import sample_pic from "./sample_pic.png";
 
 function HomeTab() {
   const [events, setEvents] = useState([]);
@@ -116,6 +113,13 @@ function RightSideOfPage({ events }) {
 }
 
 function EventCards({ events }) {
+
+  useEffect(() => {
+    console.log(
+      "Event Images:",
+      events.map((event) => event.image)
+    );
+  }, [events]);
   return (
     <div className="event-cards-container">
       <Row xs={1} md={3} className="g-4">
@@ -124,7 +128,7 @@ function EventCards({ events }) {
             <Card style={{ width: "17rem" }}>
               <Card.Img
                 variant="top"
-                src={sample_pic}
+                src="http://localhost:8000/default.jpg"
                 alt="sample_pic"
                 className="card-img-top img-fluid"
               />
@@ -137,6 +141,7 @@ function EventCards({ events }) {
                   eventDate={event.date}
                   eventLocation={event.location}
                   eventDescription={event.description}
+                  eventId={event.id}
                 />
               </Card.Body>
             </Card>

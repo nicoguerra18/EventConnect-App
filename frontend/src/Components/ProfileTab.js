@@ -2,7 +2,6 @@ import { Card, Container, ToastContainer } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { Row } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import logo192 from "./logo192.png";
 import "./styles.css";
 import { Col } from "react-bootstrap";
 import MyEvents from "./MyEvents";
@@ -12,6 +11,9 @@ import { useState } from "react";
 import CSRFToken from "./crftoken";
 import { useEffect } from "react";
 import Toast from "react-bootstrap/Toast";
+import defaultImage from "./default.jpg";
+import JoinedEvents from "./JoinedEvents";
+
 // NEED TO ADD A FILE IN ORDER FOR FOR THE PUT REQUEST TO GO THROUGH
 
 function ProfileTab() {
@@ -29,7 +31,7 @@ function ProfileTab() {
               <MyEvents />
             </Tab>
             <Tab eventKey="eventsJoined" title="Events Joined">
-              <MyEvents />
+              <JoinedEvents />
             </Tab>
             <Tab eventKey="MyGroups" title="My Groups">
               Coming soon in feature 3!
@@ -105,9 +107,10 @@ function PersonalInfo() {
       console.log(formData.profilePicture);
 
       const response = await fetch("http://localhost:8000/profiles/1/", {
-        method: "PUT",
+        method: "PATCH",
         body: formDataToSend,
       });
+      console.log(formData.profilePicture);
 
       if (response.ok) {
         // Profile updated successfully
@@ -128,15 +131,22 @@ function PersonalInfo() {
   return (
     <Row className="mx-auto">
       <Card style={{ width: "34rem" }}>
-        <Card.Title>Profile</Card.Title>
-        <Card.Img variant="top" src={logo192} alt="logo192" />
+        <Card.Title>Your Profile</Card.Title>
+        <Card.Img
+          src={
+            formData.profilePicture instanceof File
+              ? URL.createObjectURL(formData.profilePicture)
+              : defaultImage
+          }
+          alt="Profile Picture"
+        />
         <Form onSubmit={handleFormSubmit}>
           <CSRFToken />
           <Form.Group className="mb-3" controlId="formName">
             <Form.Label>Name</Form.Label>
             <Form.Control
               type="text"
-              name="name"
+              name="profileName"
               value={formData.profileName}
               onChange={handleFormChange}
             />
@@ -177,7 +187,12 @@ function PersonalInfo() {
           </Form.Group>
           <br />
 
-          <Button variant="primary" type="submit" onClick={handleFormSubmit}>
+          <Button
+            variant="primary"
+            type="submit"
+            onClick={handleFormSubmit}
+            className="mb-3"
+          >
             Edit/Save
           </Button>
         </Form>
