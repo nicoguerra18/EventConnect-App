@@ -30,7 +30,7 @@ function CreateEvents() {
   };
 
   const handleFileChange = (e) => {
-    setFormData({ ...formData, image: e.target.files[0] });
+    setFormData({ ...formData, eventImage: e.target.files[0] });
   };
 
   const handleSubmit = async (event) => {
@@ -42,7 +42,7 @@ function CreateEvents() {
       formdata.append("location", formData.location);
       formdata.append("creator", formData.creator);
       formdata.append("description", formData.description);
-      formdata.append("image", formData.image);
+      formdata.append("eventImage", formData.eventImage);
       formdata.append("selectedEvent", formData.selectedEvent);
 
       // send event form data to backend
@@ -145,9 +145,9 @@ function CreateEvents() {
               />
             </Form.Group>
             <br />
-            <Form.Group controlId="image">
+            <Form.Group controlId="image" onChange={handleFileChange}>
               <Form.Label>Event Image</Form.Label>
-              <Form.Control type="file" onChange={handleFileChange} />
+              <Form.Control type="file" onChange={handleChange} />
             </Form.Group>
             <br />
             <Form.Group controlId="location">

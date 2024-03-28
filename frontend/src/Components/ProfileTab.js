@@ -51,7 +51,7 @@ function PersonalInfo() {
     username: "",
     password: "",
     bio: "",
-    profilePicture: "",
+    profilePicture: null,
   });
 
   const [showSuccessToast, setShowSuccessToast] = useState(false);
@@ -64,7 +64,7 @@ function PersonalInfo() {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await fetch("http://localhost:8000/profiles/4/");
+        const response = await fetch("http://localhost:8000/profiles/1/");
         if (response.ok) {
           const profileData = await response.json();
           setFormData(profileData);
@@ -106,7 +106,7 @@ function PersonalInfo() {
       formDataToSend.append("profilePicture", formData.profilePicture);
       console.log(formData.profilePicture);
 
-      const response = await fetch("http://localhost:8000/profiles/4/", {
+      const response = await fetch("http://localhost:8000/profiles/1/", {
         method: "PATCH",
         body: formDataToSend,
       });
@@ -128,14 +128,16 @@ function PersonalInfo() {
     }
   };
 
-  console.log("profile pic" + formData.profilePicture);
-
   return (
     <Row className="mx-auto">
       <Card style={{ width: "34rem" }}>
         <Card.Title>Your Profile</Card.Title>
         <Card.Img
-          src={"http://localhost:8000" + formData.profilePicture}
+          src={
+            formData.profilePicture instanceof File
+              ? URL.createObjectURL(formData.profilePicture)
+              : defaultImage
+          }
           alt="Profile Picture"
         />
         <Form onSubmit={handleFormSubmit}>
