@@ -2,7 +2,6 @@ import { Card, Container, ToastContainer } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { Row } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import logo192 from "./logo192.png";
 import "./styles.css";
 import { Col } from "react-bootstrap";
 import MyEvents from "./MyEvents";
@@ -51,7 +50,7 @@ function PersonalInfo() {
     username: "",
     password: "",
     bio: "",
-    profilePicture: defaultImage,
+    profilePicture: null,
   });
 
   const [showSuccessToast, setShowSuccessToast] = useState(false);
@@ -110,6 +109,7 @@ function PersonalInfo() {
         method: "PATCH",
         body: formDataToSend,
       });
+      console.log(formData.profilePicture);
 
       if (response.ok) {
         // Profile updated successfully
@@ -130,8 +130,15 @@ function PersonalInfo() {
   return (
     <Row className="mx-auto">
       <Card style={{ width: "34rem" }}>
-        <Card.Title>Profile</Card.Title>
-        <Card.Img src={defaultImage} alt="defaultImage" />
+        <Card.Title>Your Profile</Card.Title>
+        <Card.Img
+          src={
+            formData.profilePicture instanceof File
+              ? URL.createObjectURL(formData.profilePicture)
+              : defaultImage
+          }
+          alt="Profile Picture"
+        />
         <Form onSubmit={handleFormSubmit}>
           <CSRFToken />
           <Form.Group className="mb-3" controlId="formName">
@@ -175,11 +182,7 @@ function PersonalInfo() {
 
           <Form.Group controlId="formEventImage">
             <Form.Label>Profile Picture</Form.Label>
-            <Form.Control
-              type="file"
-              onChange={handleFileChange}
-              src={defaultImage}
-            />
+            <Form.Control type="file" onChange={handleFileChange} />
           </Form.Group>
           <br />
 

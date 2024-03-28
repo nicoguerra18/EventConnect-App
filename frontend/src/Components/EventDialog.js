@@ -1,9 +1,8 @@
-import { Button, Image } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import React from "react";
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Form } from "react-bootstrap";
-import logo192 from "./logo192.png";
 import CSRFToken from "./crftoken";
 
 function EventDialog({
