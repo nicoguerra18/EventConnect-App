@@ -51,7 +51,7 @@ function PersonalInfo() {
     username: "",
     password: "",
     bio: "",
-    profilePicture: null,
+    profilePicture: "",
   });
 
   const [showSuccessToast, setShowSuccessToast] = useState(false);
@@ -64,7 +64,7 @@ function PersonalInfo() {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await fetch("http://localhost:8000/profiles/1/");
+        const response = await fetch("http://localhost:8000/profiles/2/");
         if (response.ok) {
           const profileData = await response.json();
           setFormData(profileData);
@@ -88,9 +88,11 @@ function PersonalInfo() {
   };
 
   const handleFileChange = (e) => {
+    const file = e.target.files[0];
     setFormData({
       ...formData,
-      profilePicture: e.target.files[0],
+      profilePicture: file,
+      profilePictureUrl: URL.createObjectURL(file), // Create URL for the file
     });
   };
 
@@ -106,7 +108,7 @@ function PersonalInfo() {
       formDataToSend.append("profilePicture", formData.profilePicture);
       console.log(formData.profilePicture);
 
-      const response = await fetch("http://localhost:8000/profiles/1/", {
+      const response = await fetch("http://localhost:8000/profiles/2/", {
         method: "PATCH",
         body: formDataToSend,
       });
@@ -133,11 +135,7 @@ function PersonalInfo() {
       <Card style={{ width: "34rem" }}>
         <Card.Title>Your Profile</Card.Title>
         <Card.Img
-          src={
-            formData.profilePicture instanceof File
-              ? URL.createObjectURL(formData.profilePicture)
-              : defaultImage
-          }
+          src={formData.profilePictureUrl || defaultImage}
           alt="Profile Picture"
         />
         <Form onSubmit={handleFormSubmit}>

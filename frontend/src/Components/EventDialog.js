@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import CSRFToken from "./crftoken";
+import { useEffect } from "react";
 
 function EventDialog({
   eventName,
@@ -19,27 +20,24 @@ function EventDialog({
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const toggleEvent = async () => {
+  const joinEvent = async () => {
     try {
-      if (!joined) {
-        const response = await fetch(
-          "http://localhost:8000/EventDatabase/join/",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ eventName }), // Assuming you're sending the event name to join the event
-          }
-        );
-        if (response.ok) {
-          setAttendees(attendees + 1);
-          setJoined(true);
-        } else {
-          console.error("Failed to join event");
-        }
+      const response = await fetch(`http://localhost:8000/attendance/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          event: eventName + "",
+          attendee: "nico",
+          is_attending: true, // Set the attendance to true when creating the attendance entry
+        }),
+      });
+      if (response.ok) {
+        setJoined(true);
+        window.location.reload(); // Reload the page after joining the event
       } else {
-        // Handle leaving event if needed
+        console.error("Failed to join event");
       }
     } catch (error) {
       console.error("Error joining event:", error);
@@ -88,12 +86,15 @@ function EventDialog({
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button
-            variant={joined ? "danger" : "success"} // Change variant based on joined state
-            onClick={toggleEvent}
-          >
-            Join Event
-          </Button>
+          {joined ? (
+            <Button variant="danger" disabled>
+              Already joined
+            </Button>
+          ) : (
+            <Button variant="success" onClick={joinEvent}>
+              Join Event
+            </Button>
+          )}
         </Modal.Footer>
       </Modal>
     </>

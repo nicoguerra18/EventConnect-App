@@ -30,31 +30,6 @@ function JoinedEventDialog({
     handleClose();
   };
 
-  // Call to API to Join an Event
-  // const joinEvent = async (eventId) => {
-  //   try {
-  //     const response = await fetch(
-  //       `http://localhost:8000/EventDatabase/${eventId}/join/`,
-  //       {
-  //         method: "POST",
-
-  //         // Optionally, you can send data in the request body
-  //         // body: JSON.stringify({ eventId: eventId }),
-  //       }
-  //     );
-
-  //     if (response.ok) {
-  //       // Handle success
-  //       // For example, you can update UI or show a success message
-  //     } else {
-  //       // Handle error
-  //       console.error("Failed to join event");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error joining event:", error);
-  //   }
-  // };
-
   return (
     <>
       <CSRFToken />

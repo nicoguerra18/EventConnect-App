@@ -12,27 +12,33 @@ function JoinedEvents() {
 
   const fetchMyJoinedEventsData = async () => {
     try {
-      const response = await fetch("http://localhost:8000/EventDatabase/");
+      const response = await fetch(
+        "http://localhost:8000/eventsattending/nico/"
+      );
       const myJoinedEventsData = await response.json();
-      setMyJoinedEvents(myJoinedEventsData);
+      const parsedEventsData = JSON.parse(myJoinedEventsData);
+      setMyJoinedEvents(parsedEventsData);
     } catch (error) {
       console.error("Error fetching my events data:", error);
     }
   };
 
-  const leaveEvent = async (eventId) => {
+  const leaveEvent = async (eventName) => {
     try {
       const response = await fetch(
-        `http://localhost:8000/EventDatabase/${eventId}/leave/`,
+        `http://localhost:8000/changeattendance/${eventName}/nico/`,
         {
           method: "DELETE",
         }
       );
       if (response.ok) {
-        // Remove the event from the state
+        // Update the state to remove the event from the state when I leave
         setMyJoinedEvents(
-          myJoinedEvents.filter((event) => event.id !== eventId)
+          myJoinedEvents.filter((event) => event.input_name !== eventName)
         );
+
+        // Fetch updated joined events data
+        fetchMyJoinedEventsData();
       } else {
         console.error("Failed to leave event");
       }
@@ -46,28 +52,30 @@ function JoinedEvents() {
       <Row className="g-4">
         {myJoinedEvents.map((event, index) => (
           <Col key={index}>
-            <Card style={{ width: "15rem" }}>
+            <Card style={{ width: "16rem" }}>
               <Card.Img
                 variant="top"
-                src={event.image}
+                src={`http://localhost:8000/media/` + event.input_image + "/"}
                 className="card-img-top img-fluid"
+                style={{ height: "150px" }}
               />
+              {/* {console.log(`http://localhost:8000/` + event.input_image + "/")} */}
               <Card.Body>
-                <Card.Title>{event.name}</Card.Title>
-                <Card.Text>{event.description}</Card.Text>
+                <Card.Title>{event.input_name}</Card.Title>
+                <Card.Text>{event.input_description}</Card.Text>
                 <JoinedEventDialog
-                  eventName={event.name}
-                  eventDescription={event.description}
-                  eventDate={event.date}
-                  eventLocation={event.location}
-                  eventCreator={event.creator}
+                  eventName={event.input_name}
+                  eventDescription={event.input_description}
+                  eventDate={event.input_date}
+                  eventLocation={event.input_location}
+                  eventCreator={event.input_creator}
                 />
               </Card.Body>
               <CardFooter>
                 <Button
                   size="sm"
                   variant="danger"
-                  onClick={() => leaveEvent(event.id)}
+                  onClick={() => leaveEvent(event.input_name)}
                 >
                   Leave Event{" "}
                   <svg

@@ -5,7 +5,10 @@ from rest_framework.decorators import api_view
 from rest_framework import status, viewsets
 from .serializers import ProfileSerializer, EventSerializer, AttendanceSerializer
 from .models import UserProfile, Event, Attendance
-
+from django.core import serializers
+from django.core.serializers.json import DjangoJSONEncoder
+import json
+from django.http import JsonResponse
 # Create your views here.
 
 #class ProfileView(viewsets.ModelViewSet):
@@ -125,18 +128,73 @@ def EventUpdate(request, pk):
     #serializer = ~~~
     #return Response (serializer.data)
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def AttendanceView(request):
     if request.method == 'GET':
         data = Attendance.objects.all()
-        serializer = AttendanceSerializer (data, context = {'request':request}, many = True)
-        events = Event.objects.filter(pk = 1)
-        print('hello')
-        #print(events)
-        #print(Attendance.getAttendees(events))
-        #print(Attendance.objects.filter(is_attending = True))
-        #print(Attendance.objects.filter(attendee = 1))
-        #join call matching username and created_by
-        # to do this probably need to make creator a foreign key reference to UserProfile
+        serializer = AttendanceSerializer(data, many=True)
         return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+      
+    elif request.method == 'POST':
+        try:
+            attendance_data = request.data  # Directly use request.data
+            event_name = attendance_data.get('event')
+            attendee_name = attendance_data.get('attendee')
+            is_attending = attendance_data.get('is_attending')
+
+            if not all([event_name, attendee_name, is_attending]):
+                return Response({'error': 'Missing required fields'}, status=status.HTTP_400_BAD_REQUEST)
+
+            event = Event.objects.get(name=event_name)
+            attendee = UserProfile.objects.get(username=attendee_name)
+
+            # Create and save Attendance object
+            attendance = Attendance.objects.create(event=event, attendee=attendee, is_attending=is_attending)
+            serializer = AttendanceSerializer(attendance)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+#view that shows all attendees of an event
+@api_view(['GET'])
+def AttendingEvent(request, event_name):
+        queryset = Attendance.getAttending(event_name)
+        results = [ob.as_json() for ob in queryset]
+        serialized_q = json.dumps(results, cls = DjangoJSONEncoder)
+        return Response(serialized_q)
+
+@api_view(['GET'])
+def EventsAttending(request, profile_name):
+    queryset = Attendance.getEvents(profile_name)
+    results =[ob.as_json() for ob in queryset]
+    serialized_q = json.dumps(results, cls = DjangoJSONEncoder)
+    return Response(serialized_q)
+
+@api_view(['DELETE', 'GET', 'POST', 'PATCH'])
+def changeAttending(request, event_name, profile_name):
+    try:
+        attendance = Attendance.objects.get(event__name = event_name, attendee__profileName = profile_name)
+    except Attendance.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'DELETE':
+        attendance.delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)
+    
+
+    
+    elif request.method == 'PATCH':
+        serializer = AttendanceSerializer(attendance, data = request.data, partial = True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status = status.HTTP_202_ACCEPTED)
+        
+    return Response(status = status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def CreatedEvents(request, user_name):
+    events = Event.createdEvents(user_name)
+    #serializer = EventSerializer(events)
+    list1 = list(events)
+    serialized_events = json.dumps(list1, cls = DjangoJSONEncoder)
+    return Response (serialized_events)
