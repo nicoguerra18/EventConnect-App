@@ -52,14 +52,14 @@ function JoinedEvents() {
       <Row className="g-4">
         {myJoinedEvents.map((event, index) => (
           <Col key={index}>
-            {console.log(event)}
             <Card style={{ width: "16rem" }}>
               <Card.Img
                 variant="top"
-                src={event.image}
+                src={`http://localhost:8000/media/` + event.input_image + "/"}
                 className="card-img-top img-fluid"
                 style={{ height: "150px" }}
               />
+              {/* {console.log(`http://localhost:8000/` + event.input_image + "/")} */}
               <Card.Body>
                 <Card.Title>{event.input_name}</Card.Title>
                 <Card.Text>{event.input_description}</Card.Text>
