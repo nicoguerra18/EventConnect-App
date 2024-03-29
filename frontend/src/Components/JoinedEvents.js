@@ -53,7 +53,7 @@ function JoinedEvents() {
         {myJoinedEvents.map((event, index) => (
           <Col key={index}>
             {console.log(event)}
-            <Card style={{ width: "15rem" }}>
+            <Card style={{ width: "16rem" }}>
               <Card.Img
                 variant="top"
                 src={event.image}

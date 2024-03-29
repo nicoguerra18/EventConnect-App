@@ -60,7 +60,7 @@ function MyEvents() {
       <Row className="g-4">
         {myCreatedEvents.map((event, index) => (
           <Col key={index}>
-            <Card style={{ width: "15rem" }}>
+            <Card style={{ width: "16rem" }}>
               <Card.Img
                 variant="top"
                 src={"http://localhost:8000/media/" + event.image + "/"}
