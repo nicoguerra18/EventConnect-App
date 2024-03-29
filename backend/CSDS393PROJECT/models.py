@@ -35,6 +35,10 @@ class Event(models.Model):
     # add field for image file
     image = models.ImageField(default = 'default.jpg')    
 
+
+    def createdEvents(username):
+        eventsCreated = Event.objects.filter(creator = username).values()
+        return eventsCreated
     #Ex of how to use it: UserProfile.objects.filter(Events__id = 1) shoud get you all users in the event with id/pk == 1
 
     def __str__(self):
@@ -61,3 +65,7 @@ class Attendance(models.Model):
     def getEvents(profile_name):
         events = Event.objects.filter(attendants__attendee__profileName = profile_name, attendants__is_attending = True).values_list('name')
         return events
+    #event_name and profile_name string, input is boolean
+    def changeAttendance(event_name, profile_name, input):
+        attendance = Attendance.objects.get(attendee_profileName = profile_name, event__name = event_name)
+        attendance.is_attending = input

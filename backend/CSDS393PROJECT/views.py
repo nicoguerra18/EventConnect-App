@@ -157,3 +157,37 @@ def EventsAttending(request, profile_name):
     queryset = Attendance.getEvents(profile_name)
     serialized_q = json.dumps(list(queryset), cls = DjangoJSONEncoder)
     return Response(serialized_q)
+
+@api_view(['DELETE', 'GET', 'POST', 'PATCH'])
+def changeAttending(request, event_name, profile_name):
+    try:
+        attendance = Attendance.objects.get(event__name = event_name, attendee__profileName = profile_name)
+    except Attendance.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'DELETE':
+        attendance.delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)
+    
+
+    elif request.method == 'POST':
+        serializer = AttendanceSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status = status.HTTP_201_CREATED)
+    
+    elif request.method == 'PATCH':
+        serializer = AttendanceSerializer(attendance, data = request.data, partial = True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status = status.HTTP_202_ACCEPTED)
+        
+    return Response(status = status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def CreatedEvents(request, user_name):
+    events = Event.createdEvents(user_name)
+    #serializer = EventSerializer(events)
+    list1 = list(events)
+    serialized_events = json.dumps(list1, cls = DjangoJSONEncoder)
+    return Response (serialized_events)
