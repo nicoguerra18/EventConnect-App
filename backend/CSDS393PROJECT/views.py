@@ -166,7 +166,8 @@ def AttendingEvent(request, event_name):
 @api_view(['GET'])
 def EventsAttending(request, profile_name):
     queryset = Attendance.getEvents(profile_name)
-    serialized_q = json.dumps(list(queryset), cls = DjangoJSONEncoder)
+    results =[ob.as_json() for ob in queryset]
+    serialized_q = json.dumps(results, cls = DjangoJSONEncoder)
     return Response(serialized_q)
 
 @api_view(['DELETE', 'GET', 'POST', 'PATCH'])

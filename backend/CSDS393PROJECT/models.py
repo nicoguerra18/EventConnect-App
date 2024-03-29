@@ -43,6 +43,15 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name    
+    
+    def as_json(self):
+        return dict(
+            input_name = self.name, input_date = self.date,
+            input_location = self.location, input_creator = self.creator,
+            input_description = self.description, input_keyword = self.keyword,
+            input_image = self.image
+        )
+
     class Meta:
         ordering = ['id']
 
