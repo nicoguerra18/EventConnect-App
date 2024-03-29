@@ -23,10 +23,10 @@ function JoinedEvents() {
     }
   };
 
-  const leaveEvent = async (eventId) => {
+  const leaveEvent = async (eventName) => {
     try {
       const response = await fetch(
-        `http://localhost:8000/changeattendance/${eventId}/rafay/`,
+        `http://localhost:8000/changeattendance/${eventName}/nico/`,
         {
           method: "DELETE",
         }
@@ -34,7 +34,7 @@ function JoinedEvents() {
       if (response.ok) {
         // Update the state to remove the event from the state when I leave
         setMyJoinedEvents(
-          myJoinedEvents.filter((event) => event.id !== eventId)
+          myJoinedEvents.filter((event) => event.name !== eventName)
         );
       } else {
         console.error("Failed to leave event");
@@ -49,6 +49,7 @@ function JoinedEvents() {
       <Row className="g-4">
         {myJoinedEvents.map((event, index) => (
           <Col key={index}>
+            {console.log(event)}
             <Card style={{ width: "15rem" }}>
               <Card.Img
                 variant="top"
@@ -57,21 +58,21 @@ function JoinedEvents() {
                 style={{ height: "150px" }}
               />
               <Card.Body>
-                <Card.Title>{event.name}</Card.Title>
-                <Card.Text>{event.description}</Card.Text>
+                <Card.Title>{event.input_name}</Card.Title>
+                <Card.Text>{event.input_description}</Card.Text>
                 <JoinedEventDialog
-                  eventName={event.name}
-                  eventDescription={event.description}
-                  eventDate={event.date}
-                  eventLocation={event.location}
-                  eventCreator={event.creator}
+                  eventName={event.input_name}
+                  eventDescription={event.input_description}
+                  eventDate={event.input_date}
+                  eventLocation={event.input_location}
+                  eventCreator={event.input_creator}
                 />
               </Card.Body>
               <CardFooter>
                 <Button
                   size="sm"
                   variant="danger"
-                  onClick={() => leaveEvent(event.id)}
+                  onClick={() => leaveEvent(event.name)}
                 >
                   Leave Event{" "}
                   <svg
