@@ -15,11 +15,11 @@ jobs:
         python-version: '3.8'
     - name: Install dependencies
       run: |
-        cd /backend
+        cd backend
         pip install -r requirements.txt
     - name: Run migrations
       run: |
-        cd /backend
+        cd backend
         python manage.py migrate
     # Removed restarting of Gunicorn service
     # Add any additional deployment steps if necessary
@@ -35,13 +35,14 @@ jobs:
         node-version: '14' # Use the node version that your project requires
     - name: Install frontend dependencies
       run: |
-        cd /frontend
+        cd frontend
         npm install
     - name: Build frontend
       run: |
-        cd /frontend
+        cd frontend
         npm run build
     - name: Run tests
       run: |
         cd frontend
         npm test
+    # Add deployment steps for frontend if needed
