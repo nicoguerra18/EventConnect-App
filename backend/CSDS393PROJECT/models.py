@@ -63,7 +63,7 @@ class Attendance(models.Model):
     
     #runs a query to return a queryset of event names a given profile is attending
     def getEvents(profile_name):
-        events = Event.objects.filter(attendants__attendee__profileName = profile_name, attendants__is_attending = True).values_list('name')
+        events = Event.objects.filter(attendants__attendee__profileName = profile_name, attendants__is_attending = True).distinct()#.values_list('name')
         return events
     #event_name and profile_name string, input is boolean
     def changeAttendance(event_name, profile_name, input):
