@@ -18,6 +18,12 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.username
     
+    def as_json(self):
+        return dict(
+            input_profileName = self.profileName, input_username = self.username,
+            input_password = self.password, input_bio = self.bio,
+            input_profilePicture = self.profilePicture
+        )
     class Meta:
         ordering = ['id']
 
@@ -67,7 +73,7 @@ class Attendance(models.Model):
     def getAttending(event_name):
             #this works to get a queryset of just the names of every profile
             #print(UserProfile.objects.filter(attending__event__name= event_name, attending__is_attending=True).values_list('profileName'))
-            attendees = UserProfile.objects.filter(attending__event__name= event_name, attending__is_attending=True).values_list('profileName')
+            attendees = UserProfile.objects.filter(attending__event__name= event_name, attending__is_attending=True).distinct()#values_list('profileName')
             return attendees
     
     #runs a query to return a queryset of event names a given profile is attending

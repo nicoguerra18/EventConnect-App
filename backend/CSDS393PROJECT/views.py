@@ -159,8 +159,8 @@ def AttendanceView(request):
 @api_view(['GET'])
 def AttendingEvent(request, event_name):
         queryset = Attendance.getAttending(event_name)
-        list1 = list(queryset)
-        serialized_q = json.dumps(list1, cls = DjangoJSONEncoder)
+        results = [ob.as_json() for ob in queryset]
+        serialized_q = json.dumps(results, cls = DjangoJSONEncoder)
         return Response(serialized_q)
 
 @api_view(['GET'])
