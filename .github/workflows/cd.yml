@@ -9,33 +9,48 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Deploy Django backend
-      uses: appleboy/ssh-action@master
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
-        host: ${{ secrets.SERVER_HOST }}
-        username: ${{ secrets.SERVER_USER }}
-        password: ${{ secrets.SERVER_PASSWORD }}
-        script: |
-          cd /backend
-          git pull
-          pip install -r requirements.txt
-          python manage.py migrate
-          sudo systemctl restart gunicorn
+        python-version: '3.8'
+    - name: Install dependencies
+      run: |
+        cd backend
+        pip install -r requirements.txt
+    - name: Run migrations
+      run: |
+        cd backend
+        python manage.py migrate
+    - name: Restart backend service
+      run: |
+        # Assuming you have set up a service for your backend
+        # This step might need to be replaced with SSH or another method 
+        # to restart your actual backend service in production
+        sudo systemctl restart gunicorn
 
   deploy-frontend:
     runs-on: ubuntu-latest
     needs: deploy-backend
     steps:
     - uses: actions/checkout@v2
-    - name: Deploy React frontend
-      uses: appleboy/ssh-action@master
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
       with:
-        host: ${{ secrets.SERVER_HOST }}
-        username: ${{ secrets.SERVER_USER }}
-        password: ${{ secrets.SERVER_PASSWORD }}
-        script: |
-          cd /frontend
-          git pull
-          npm install
-          npm run build
-          sudo systemctl restart nginx
+        node-version: '14' # Use the node version that your project requires
+    - name: Install frontend dependencies
+      run: |
+        cd frontend
+        npm install
+    - name: Build frontend
+      run: |
+        cd frontend
+        npm run build
+    - name: Run tests
+      run: |
+        cd frontend
+        npm test
+    - name: Deploy React frontend
+      run: |
+        # This script should be adapted to whatever deployment mechanism you use
+        # If using SSH similar to the backend, replace this with an appropriate SSH action
+        sudo systemctl restart nginx
