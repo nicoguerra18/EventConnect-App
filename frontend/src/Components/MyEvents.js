@@ -11,12 +11,6 @@ import { Button } from "react-bootstrap";
 // Order events based on Time, done on the backed tho?
 
 function MyEvents() {
-  // const myEventsMock = [
-  //   { title: "Event Im attending 1" },
-  //   { title: "Event Im attending 2" },
-  //   { title: "Event Im attending 3" },
-  // ];
-
   const [myCreatedEvents, setMyCreatedEvents] = useState([]);
 
   // All the events that I've created show up here need to make the call to the api and then pass that into myEvents
@@ -27,9 +21,7 @@ function MyEvents() {
   // Function to fetch events in the database that I CREATED,  data from the backend API
   const fetchMyCreatedEventsData = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:8000/createdevents/rafay/"
-      );
+      const response = await fetch("http://localhost:8000/createdevents/nico/");
       const myCreatedEventsData = await response.json();
       // Parse the JSON string into a JavaScript object array
       const parsedEventsData = JSON.parse(myCreatedEventsData);
@@ -71,9 +63,9 @@ function MyEvents() {
             <Card style={{ width: "15rem" }}>
               <Card.Img
                 variant="top"
-                src={event.image}
+                src={"http://localhost:8000/media/" + event.image + "/"}
                 className="card-img-top img-fluid"
-                style={{ height: "150px" }}
+                style={{ height: "170px" }}
               />
               <Card.Body>
                 <Card.Title>{event.name}</Card.Title>

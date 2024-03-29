@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import CSRFToken from "./crftoken";
+import { useEffect } from "react";
 
 function EventDialog({
   eventName,
@@ -27,7 +28,7 @@ function EventDialog({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          event: eventName,
+          event: eventName + "",
           attendee: "rafay",
           is_attending: true, // Set the attendance to true when creating the attendance entry
         }),
@@ -84,12 +85,15 @@ function EventDialog({
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button
-            variant={joined ? "danger" : "success"} // Change variant based on joined state
-            onClick={joinEvent}
-          >
-            Join Event
-          </Button>
+          {joined ? (
+            <Button variant="danger" disabled>
+              Already joined
+            </Button>
+          ) : (
+            <Button variant="success" onClick={joinEvent}>
+              Join Event
+            </Button>
+          )}
         </Modal.Footer>
       </Modal>
     </>

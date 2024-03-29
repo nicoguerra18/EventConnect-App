@@ -132,38 +132,28 @@ def EventUpdate(request, pk):
 def AttendanceView(request):
     if request.method == 'GET':
         data = Attendance.objects.all()
-        serializer = AttendanceSerializer (data, context = {'request':request}, many = True)
-        events = Event.objects.filter(pk = 1)
-        print('hello')
-        #print(events)
-        #print(Attendance.getAttendees(events))
-        #print(Attendance.objects.filter(is_attending = True))
-        #print(Attendance.objects.filter(attendee = 1))
-        #join call matching username and created_by
-        # to do this probably need to make creator a foreign key reference to UserProfile
+        serializer = AttendanceSerializer(data, many=True)
         return Response(serializer.data)
       
     elif request.method == 'POST':
-        #keys for dictionary should be event, attendee, is_attending
-        #manually load in and serialize the data to then put into model and save record of Attendance to db
-        attendance_dict = json.loads(request.data)
-        if('event' in attendance_dict):
-            eventName = attendance_dict['event']
-        else:return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
-        if('attendee' in attendance_dict):
-            attendeeName = attendance_dict['attendee']
-        else:return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            attendance_data = request.data  # Directly use request.data
+            event_name = attendance_data.get('event')
+            attendee_name = attendance_data.get('attendee')
+            is_attending = attendance_data.get('is_attending')
 
-        if('is_attending' in attendance_dict):
-            is_attending = attendance_dict['is_attending']
-        else:return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            if not all([event_name, attendee_name, is_attending]):
+                return Response({'error': 'Missing required fields'}, status=status.HTTP_400_BAD_REQUEST)
 
-        event = Event.objects.get(name = eventName)
-        profile = UserProfile.objects.get(username = attendeeName)
-        a = Attendance(profile, event, is_attending)
-        a.save()
-        return Response(serializer.errors, status=status.HTTP_201_CREATED)
+            event = Event.objects.get(name=event_name)
+            attendee = UserProfile.objects.get(username=attendee_name)
+
+            # Create and save Attendance object
+            attendance = Attendance.objects.create(event=event, attendee=attendee, is_attending=is_attending)
+            serializer = AttendanceSerializer(attendance)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 #view that shows all attendees of an event
 @api_view(['GET'])

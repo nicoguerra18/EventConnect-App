@@ -12,10 +12,9 @@ function JoinedEvents() {
 
   const fetchMyJoinedEventsData = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:8000/eventsattending/jack"
-      );
+      const response = await fetch("http://localhost:8000/EventDatabase/");
       const myJoinedEventsData = await response.json();
+      // const parsedEventsData = JSON.parse(myJoinedEventsData);
       setMyJoinedEvents(myJoinedEventsData);
     } catch (error) {
       console.error("Error fetching my events data:", error);
@@ -25,13 +24,13 @@ function JoinedEvents() {
   const leaveEvent = async (eventId) => {
     try {
       const response = await fetch(
-        `http://localhost:8000/EventDatabase/attendingevent/Rafay/`,
+        `http://localhost:8000/changeattendance/${eventId}/rafay/`,
         {
           method: "DELETE",
         }
       );
       if (response.ok) {
-        // Remove the event from the state
+        // Update the state to remove the event from the state when I leave
         setMyJoinedEvents(
           myJoinedEvents.filter((event) => event.id !== eventId)
         );

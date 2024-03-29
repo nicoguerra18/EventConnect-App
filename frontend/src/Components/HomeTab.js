@@ -120,6 +120,20 @@ function EventCards({ events }) {
       events.map((event) => event.image)
     );
   }, [events]);
+
+  const truncateDescription = (description) => {
+    // Splitting description by newline characters
+    const lines = description.split("\n");
+    // Taking only the first 3 lines
+    const truncatedDescription = lines.slice(0, 3).join("\n");
+    // Adding ... if the original description has more lines
+    if (lines.length > 3) {
+      return truncatedDescription + " ...";
+    } else {
+      return truncatedDescription;
+    }
+  };
+
   return (
     <div className="event-cards-container">
       <Row xs={1} md={3} className="g-4">
@@ -135,7 +149,7 @@ function EventCards({ events }) {
               />
               <Card.Body>
                 <Card.Title>{event.name}</Card.Title>
-                <Card.Text>{event.description}</Card.Text>
+                <Card.Text>{truncateDescription(event.description)}</Card.Text>
                 <EventDialog
                   eventName={event.name}
                   eventCreator={event.creator}

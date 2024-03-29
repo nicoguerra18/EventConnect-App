@@ -64,7 +64,7 @@ function PersonalInfo() {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await fetch("http://localhost:8000/profiles/4/");
+        const response = await fetch("http://localhost:8000/profiles/2/");
         if (response.ok) {
           const profileData = await response.json();
           setFormData(profileData);
