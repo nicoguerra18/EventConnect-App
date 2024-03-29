@@ -32,7 +32,7 @@ urlpatterns = [
     path('profiles/<int:pk>/', views.ProfileUpdate),
     path('attendance/', views.AttendanceView),
     path('attendingevent/<str:event_name>/', views.AttendingEvent),
-    path('eventsattending/<str:profile_name>', views.EventsAttending),
+    path('eventsattending/<str:profile_name>/', views.EventsAttending),
     path('changeattendance/<str:event_name>/<str:profile_name>/', views.changeAttending),
     path('createdevents/<str:user_name>/', views.CreatedEvents)
 ]

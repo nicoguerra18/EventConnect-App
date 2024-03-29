@@ -13,7 +13,7 @@ function JoinedEvents() {
   const fetchMyJoinedEventsData = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8000/eventsattending/Rafay/"
+        "http://localhost:8000/eventsattending/jack"
       );
       const myJoinedEventsData = await response.json();
       setMyJoinedEvents(myJoinedEventsData);

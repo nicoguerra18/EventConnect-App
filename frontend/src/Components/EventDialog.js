@@ -19,27 +19,21 @@ function EventDialog({
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const toggleEvent = async () => {
+  const joinEvent = async () => {
     try {
-      if (!joined) {
-        const response = await fetch(
-          "http://localhost:8000/EventDatabase/join/",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ eventName }), // Assuming you're sending the event name to join the event
-          }
-        );
-        if (response.ok) {
-          setAttendees(attendees + 1);
-          setJoined(true);
-        } else {
-          console.error("Failed to join event");
-        }
+      const response = await fetch(`http://localhost:8000/attendance/`, {
+        method: "PATCH", // Send a PATCH request to update attendance
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          is_attending: false, // Set the attendance status
+        }),
+      });
+      if (response.ok) {
+        setJoined(true);
       } else {
-        // Handle leaving event if needed
+        console.error("Failed to join event");
       }
     } catch (error) {
       console.error("Error joining event:", error);
@@ -90,7 +84,7 @@ function EventDialog({
         <Modal.Footer>
           <Button
             variant={joined ? "danger" : "success"} // Change variant based on joined state
-            onClick={toggleEvent}
+            onClick={joinEvent}
           >
             Join Event
           </Button>
