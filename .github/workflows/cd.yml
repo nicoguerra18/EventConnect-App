@@ -21,12 +21,8 @@ jobs:
       run: |
         cd backend
         python manage.py migrate
-    - name: Restart backend service
-      run: |
-        # Assuming you have set up a service for your backend
-        # This step might need to be replaced with SSH or another method 
-        # to restart your actual backend service in production
-        sudo systemctl restart gunicorn
+    # Removed restarting of Gunicorn service
+    # Add any additional deployment steps if necessary
 
   deploy-frontend:
     runs-on: ubuntu-latest
@@ -49,8 +45,3 @@ jobs:
       run: |
         cd frontend
         npm test
-    - name: Deploy React frontend
-      run: |
-        # This script should be adapted to whatever deployment mechanism you use
-        # If using SSH similar to the backend, replace this with an appropriate SSH action
-        sudo systemctl restart nginx
