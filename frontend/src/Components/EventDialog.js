@@ -29,7 +29,7 @@ function EventDialog({
         },
         body: JSON.stringify({
           event: eventName + "",
-          attendee: "rafay",
+          attendee: "nico",
           is_attending: true, // Set the attendance to true when creating the attendance entry
         }),
       });

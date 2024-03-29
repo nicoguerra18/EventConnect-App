@@ -12,10 +12,12 @@ function JoinedEvents() {
 
   const fetchMyJoinedEventsData = async () => {
     try {
-      const response = await fetch("http://localhost:8000/EventDatabase/");
+      const response = await fetch(
+        "http://localhost:8000/eventsattending/nico/"
+      );
       const myJoinedEventsData = await response.json();
-      // const parsedEventsData = JSON.parse(myJoinedEventsData);
-      setMyJoinedEvents(myJoinedEventsData);
+      const parsedEventsData = JSON.parse(myJoinedEventsData);
+      setMyJoinedEvents(parsedEventsData);
     } catch (error) {
       console.error("Error fetching my events data:", error);
     }
