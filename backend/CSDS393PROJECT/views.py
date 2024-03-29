@@ -128,7 +128,7 @@ def EventUpdate(request, pk):
     #serializer = ~~~
     #return Response (serializer.data)
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def AttendanceView(request):
     if request.method == 'GET':
         data = Attendance.objects.all()
@@ -142,6 +142,12 @@ def AttendanceView(request):
         #join call matching username and created_by
         # to do this probably need to make creator a foreign key reference to UserProfile
         return Response(serializer.data)
+      
+    elif request.method == 'POST':
+        serializer = AttendanceSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status = status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 #view that shows all attendees of an event
@@ -170,11 +176,6 @@ def changeAttending(request, event_name, profile_name):
         return Response(status = status.HTTP_204_NO_CONTENT)
     
 
-    elif request.method == 'POST':
-        serializer = AttendanceSerializer(data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status = status.HTTP_201_CREATED)
     
     elif request.method == 'PATCH':
         serializer = AttendanceSerializer(attendance, data = request.data, partial = True)
