@@ -27,10 +27,12 @@ function MyEvents() {
   // Function to fetch events in the database that I CREATED,  data from the backend API
   const fetchMyCreatedEventsData = async () => {
     try {
-      const response = await fetch("http://localhost:8000/EventDatabase/");
+      const response = await fetch("http://localhost:8000/createdevents/jack/");
       const myCreatedEventsData = await response.json();
-      // console.log(eventData);
-      setMyCreatedEvents(myCreatedEventsData);
+      // Parse the JSON string into a JavaScript object array
+      const parsedEventsData = JSON.parse(myCreatedEventsData);
+      setMyCreatedEvents(parsedEventsData);
+      console.log(myCreatedEvents);
     } catch (error) {
       console.error("Error fetching my events data:", error);
     }
