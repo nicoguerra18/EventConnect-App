@@ -19,7 +19,7 @@ jobs:
         pip install -r requirements.txt
     - name: Run migrations
       run: |
-        cd backend
+        cd /backend
         python manage.py migrate
     # Removed restarting of Gunicorn service
     # Add any additional deployment steps if necessary
