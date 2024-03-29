@@ -34,8 +34,11 @@ function JoinedEvents() {
       if (response.ok) {
         // Update the state to remove the event from the state when I leave
         setMyJoinedEvents(
-          myJoinedEvents.filter((event) => event.name !== eventName)
+          myJoinedEvents.filter((event) => event.input_name !== eventName)
         );
+
+        // Fetch updated joined events data
+        fetchMyJoinedEventsData();
       } else {
         console.error("Failed to leave event");
       }
@@ -72,7 +75,7 @@ function JoinedEvents() {
                 <Button
                   size="sm"
                   variant="danger"
-                  onClick={() => leaveEvent(event.name)}
+                  onClick={() => leaveEvent(event.input_name)}
                 >
                   Leave Event{" "}
                   <svg

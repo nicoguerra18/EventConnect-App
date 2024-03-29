@@ -35,6 +35,7 @@ function EventDialog({
       });
       if (response.ok) {
         setJoined(true);
+        window.location.reload(); // Reload the page after joining the event
       } else {
         console.error("Failed to join event");
       }
