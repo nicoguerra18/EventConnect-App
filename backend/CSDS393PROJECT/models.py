@@ -55,6 +55,7 @@ class Event(models.Model):
             input_name = self.name, input_date = self.date,
             input_location = self.location, input_creator = self.creator.profileName,
             input_description = self.description, input_keyword = self.keyword,
+            input_image = self.image.name
         )
 
     class Meta:
