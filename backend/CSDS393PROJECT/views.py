@@ -144,12 +144,26 @@ def AttendanceView(request):
         return Response(serializer.data)
       
     elif request.method == 'POST':
-        serializer = AttendanceSerializer(data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status = status.HTTP_201_CREATED)
-        print(serializer.errors)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        #keys for dictionary should be event, attendee, is_attending
+        #manually load in and serialize the data to then put into model and save record of Attendance to db
+        attendance_dict = json.loads(request.data)
+        if('event' in attendance_dict):
+            eventName = attendance_dict['event']
+        else:return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        if('attendee' in attendance_dict):
+            attendeeName = attendance_dict['attendee']
+        else:return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        if('is_attending' in attendance_dict):
+            is_attending = attendance_dict['is_attending']
+        else:return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        event = Event.objects.get(name = eventName)
+        profile = UserProfile.objects.get(username = attendeeName)
+        a = Attendance(profile, event, is_attending)
+        a.save()
+        return Response(serializer.errors, status=status.HTTP_201_CREATED)
 
 #view that shows all attendees of an event
 @api_view(['GET'])
