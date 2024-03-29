@@ -4,3 +4,4 @@ django-cors-headers==3.7.0
 django-location-field==2.1.0
 psycopg2-binary==2.8.6  
 gunicorn==20.0.4
+Pillow>=8.0.0
