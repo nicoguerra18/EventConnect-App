@@ -22,12 +22,14 @@ function EventDialog({
   const joinEvent = async () => {
     try {
       const response = await fetch(`http://localhost:8000/attendance/`, {
-        method: "PATCH", // Send a PATCH request to update attendance
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          is_attending: false, // Set the attendance status
+          event: eventName,
+          attendee: "rafay",
+          is_attending: true, // Set the attendance to true when creating the attendance entry
         }),
       });
       if (response.ok) {
