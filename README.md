@@ -16,6 +16,6 @@ On terminal:
 - cd to frontend folder:
 - npm run start
 
-## View in browser:
+## View Locally in browser:
 - backend:http://127.0.0.1:8000/
 - frontend:  http://localhost:3000
