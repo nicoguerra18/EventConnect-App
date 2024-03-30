@@ -1,4 +1,4 @@
-# CSDS393Project
+# EventConnect-App
 
 ## Required package and library
 On terminal:
