@@ -16,6 +16,7 @@ function MyEvents() {
   // All the events that I've created show up here need to make the call to the api and then pass that into myEvents
   useEffect(() => {
     fetchMyCreatedEventsData(); // Fetch event data when component mounts
+    // eslint-disable-next-line
   }, []);
 
   // Function to fetch events in the database that I CREATED,  data from the backend API

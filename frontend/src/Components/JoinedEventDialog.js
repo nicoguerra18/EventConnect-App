@@ -14,21 +14,21 @@ function JoinedEventDialog({
   eventId,
 }) {
   const [show, setShow] = useState(false);
-  const [attendees, setAttendees] = useState(0); // State for number of attendees
-  const [joined, setJoined] = useState(false); // State to track whether user has joined the event
+  // const [attendees, setAttendees] = useState(0); // State for number of attendees
+  // const [joined, setJoined] = useState(false); // State to track whether user has joined the event
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const toggleEvent = () => {
-    if (joined) {
-      setAttendees(attendees - 1);
-    } else {
-      setAttendees(attendees + 1);
-    }
-    setJoined(!joined);
-    handleClose();
-  };
+  // const toggleEvent = () => {
+  //   if (joined) {
+  //     setAttendees(attendees - 1);
+  //   } else {
+  //     setAttendees(attendees + 1);
+  //   }
+  //   setJoined(!joined);
+  //   handleClose();
+  // };
 
   return (
     <>
@@ -73,7 +73,7 @@ function JoinedEventDialog({
             </Form.Group>
             <Form.Group controlId="formPeopleGoing">
               <Form.Label># People Attending</Form.Label>
-              <Form.Control disabled type="number" value={attendees} />
+              <Form.Control disabled type="number" value={0} />
             </Form.Group>
             <Form.Group controlId="formCreator">
               <Form.Label>Creator</Form.Label>

@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import CSRFToken from "./crftoken";
-import { useEffect } from "react";
 
 function EventDialog({
   eventName,
@@ -14,7 +13,7 @@ function EventDialog({
   eventLocation,
 }) {
   const [show, setShow] = useState(false);
-  const [attendees, setAttendees] = useState(0); // State for number of attendees
+  // const [attendees, setAttendees] = useState(0); // State for number of attendees
   const [joined, setJoined] = useState(false); // State to track whether user has joined the event
 
   const handleClose = () => setShow(false);
@@ -77,7 +76,7 @@ function EventDialog({
             </Form.Group>
             <Form.Group controlId="formPeopleGoing">
               <Form.Label># People Attending</Form.Label>
-              <Form.Control disabled type="number" value={attendees} />
+              <Form.Control disabled type="number" value={0} />
             </Form.Group>
             <Form.Group controlId="formCreator">
               <Form.Label>Creator</Form.Label>
