@@ -17,5 +17,7 @@ On terminal:
 - npm run start
 
 ## View Locally in browser:
-- backend:http://127.0.0.1:8000/EventDatabase/
+- backend:
+  - http://127.0.0.1:8000/EventDatabase/
+  - http://127.0.0.1:8000/profiles/
 - frontend:  http://localhost:3000
