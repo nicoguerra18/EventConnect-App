@@ -12,25 +12,39 @@ import EventDialog from "./EventDialog";
 
 function GoogleMapsComponent() {
   const position = { lat: 53.54, lng: 10 };
-  const [open, setOpen] = useState(false);
 
   return (
     <APIProvider apiKey="AIzaSyAfwuhpEPloICBoNSQKGBBEYVJzAYqyzYU">
       <div style={{ height: "100vh" }}>
-        <Map zoom={9} center={position} mapId={"da1539bfad046c08"}>
-          <AdvancedMarker position={position} onClick={() => setOpen(true)}>
-            <Pin />
-          </AdvancedMarker>
-
-          {open && (
-            <InfoWindow position={position} onCloseClick={() => setOpen(false)}>
-              <h3>Event Title</h3>
-              <EventDialog />
-            </InfoWindow>
-          )}
+        <Map
+          defaultZoom={9}
+          defaultCenter={position}
+          mapId={"da1539bfad046c08"}
+        >
+          <EventMarkers position={position} />
         </Map>
       </div>
     </APIProvider>
+  );
+}
+
+function EventMarkers({ position }) {
+  const [open, setOpen] = useState(false);
+  // get all event information and posions
+
+  return (
+    <div>
+      <AdvancedMarker position={position} onClick={() => setOpen(true)}>
+        <Pin />
+      </AdvancedMarker>
+
+      {open && (
+        <InfoWindow position={position} onCloseClick={() => setOpen(false)}>
+          <h3>Event Title</h3>
+          <EventDialog />
+        </InfoWindow>
+      )}
+    </div>
   );
 }
 
