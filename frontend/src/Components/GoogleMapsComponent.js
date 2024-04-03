@@ -11,17 +11,24 @@ import {
 import EventDialog from "./EventDialog";
 
 function GoogleMapsComponent() {
-  const position = { lat: 53.54, lng: 10 };
+  // const position = { lat: 53.54, lng: 10 };
+  const positions = [
+    { lat: 53.54, lng: 10 },
+    { lat: 54, lng: 10 },
+    // Add more positions here as needed
+  ];
 
   return (
     <APIProvider apiKey="AIzaSyAfwuhpEPloICBoNSQKGBBEYVJzAYqyzYU">
       <div style={{ height: "100vh" }}>
         <Map
           defaultZoom={9}
-          defaultCenter={position}
+          defaultCenter={positions[0]}
           mapId={"da1539bfad046c08"}
         >
-          <EventMarkers position={position} />
+          {positions.map((position, index) => (
+            <EventMarkers key={index} position={position} />
+          ))}
         </Map>
       </div>
     </APIProvider>
@@ -30,7 +37,6 @@ function GoogleMapsComponent() {
 
 function EventMarkers({ position }) {
   const [open, setOpen] = useState(false);
-  // get all event information and posions
 
   return (
     <div>
