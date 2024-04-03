@@ -7,6 +7,7 @@ import { Form } from "react-bootstrap";
 import "./styles.css";
 import CSRFToken from "./crftoken";
 
+
 function CreateEvents() {
   const [show, setShow] = useState(false);
   // const [selectedEvent, setSelectedEvent] = useState("");

@@ -6,6 +6,7 @@ import HomeTab from "./HomeTab";
 import ProfileTab from "./ProfileTab";
 import Navbar from "react-bootstrap/Navbar";
 import LightModeToggle from "./LightModeToggle";
+import GoogleMapsComponent from "./GoogleMapsComponent";
 
 function Page() {
   return (
@@ -26,7 +27,7 @@ function Page() {
               <HomeTab />
             </Tab>
             <Tab eventKey="eventsMap" title="Events Map">
-              <div>Events Map Feature Coming Soon in Feature 2!</div>
+              <GoogleMapsComponent />
             </Tab>
           </Tabs>
         </Col>
