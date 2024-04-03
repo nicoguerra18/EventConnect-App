@@ -8,6 +8,7 @@ import {
   Pin,
   InfoWindow,
 } from "@vis.gl/react-google-maps";
+import EventDialog from "./EventDialog";
 
 function GoogleMapsComponent() {
   const position = { lat: 53.54, lng: 10 };
@@ -16,21 +17,18 @@ function GoogleMapsComponent() {
   return (
     <APIProvider apiKey="AIzaSyAfwuhpEPloICBoNSQKGBBEYVJzAYqyzYU">
       <div style={{ height: "100vh" }}>
-        <Map
-          defaultZoom={9}
-          defaultCenter={position}
-          mapId={"main-aviary-419215"}
-          onClick={() => setOpen(true)}
-        ></Map>
-        <AdvancedMarker position={position}>
-          <Pin background={"grey"} borderColor={"green"} />
-        </AdvancedMarker>
+        <Map zoom={9} center={position} mapId={"da1539bfad046c08"}>
+          <AdvancedMarker position={position} onClick={() => setOpen(true)}>
+            <Pin />
+          </AdvancedMarker>
 
-        {open && (
-          <InfoWindow position={position} onCloseClick={() => setOpen(false)}>
-            <p>Im in Hamburg</p>
-          </InfoWindow>
-        )}
+          {open && (
+            <InfoWindow position={position} onCloseClick={() => setOpen(false)}>
+              <h3>Event Title</h3>
+              <EventDialog />
+            </InfoWindow>
+          )}
+        </Map>
       </div>
     </APIProvider>
   );
