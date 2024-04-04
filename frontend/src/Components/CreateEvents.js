@@ -152,7 +152,7 @@ function CreateEvents() {
             </Form.Group>
             <br />
             <Form.Group controlId="location">
-              <Form.Label>Event Location</Form.Label>
+              <Form.Label>Google Maps Locator Event Location</Form.Label>
               <Form.Control type="locationForm" onChange={handleChange} />
             </Form.Group>
             <br />
