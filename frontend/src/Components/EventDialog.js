@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import CSRFToken from "./crftoken";
+import DiscussionCard from "./DisucssionCard";
+import { Row } from "react-bootstrap";
 
 function EventDialog({
   eventName,
@@ -83,6 +85,10 @@ function EventDialog({
               <Form.Control disabled type="text" value={eventCreator} />
             </Form.Group>
           </Form>
+          <Row>
+            <Modal.Title>Discussion</Modal.Title>
+            <DiscussionCard />
+          </Row>
         </Modal.Body>
         <Modal.Footer>
           {joined ? (

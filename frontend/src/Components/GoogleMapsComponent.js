@@ -15,7 +15,7 @@ import "@googlemaps/extended-component-library/place_picker.js";
 import { PlacePicker } from "@googlemaps/extended-component-library/react";
 import { Row } from "react-bootstrap";
 
-// Variables
+// Have default "Home" position set by the user on their account
 
 function GoogleMapsComponent() {
   const positions = [
@@ -88,35 +88,5 @@ function EventMarkers({ position }) {
     </div>
   );
 }
-
-// function Geocoding() {
-//   const geocodingApiLoaded = useMapsLibrary("geocoding");
-//   const [geocodingService, setGeocodingService] = useState();
-//   const [geocodingResult, setGeocodingResult] = useState();
-//   const [address, setAddress] = useState("10 Front St, Toronto");
-
-//   useEffect(() => {
-//     if (!geocodingApiLoaded) return;
-//     setGeocodingService(new window.google.maps.Geocoder());
-//   }, [geocodingApiLoaded]);
-
-//   useEffect(() => {
-//     if (!geocodingService || !address) return;
-
-//     geocodingService.geocode({ address }, (results, status) => {
-//       if (results && status === "OK") {
-//         setGeocodingResult(results[0]);
-//         console.log(results);
-//       }
-//     });
-//   }, [geocodingService, address]);
-
-//   // Extract latitude and longitude from geocodingResult
-//   const latitude = geocodingResult?.geometry?.location?.lat() || 0;
-//   const longitude = geocodingResult?.geometry?.location?.lng() || 0;
-
-//   console.log("Latitude:", latitude);
-//   console.log("Longitude:", longitude);
-// }
 
 export default GoogleMapsComponent;

@@ -7,8 +7,36 @@ import ProfileTab from "./ProfileTab";
 import Navbar from "react-bootstrap/Navbar";
 import LightModeToggle from "./LightModeToggle";
 import GoogleMapsComponent from "./GoogleMapsComponent";
+import DiscusionCard from "./DisucssionCard";
+import { useState } from "react";
+import { useEffect } from "react";
 
 function Page() {
+  const sampleComments = [
+    {
+      username: "user1",
+      comment: "This is the first comment.",
+    },
+    {
+      username: "user2",
+      comment: "This is the second comment.",
+    },
+    {
+      username: "user3",
+      comment: "This is the third comment.",
+    },
+  ];
+
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    setComments([...comments, ...sampleComments]);
+  }, []);
+
+  const handleAddComment = (newComment) => {
+    setComments([...comments, newComment]);
+  };
+
   return (
     <div>
       <NavHeader />
@@ -28,6 +56,12 @@ function Page() {
             </Tab>
             <Tab eventKey="eventsMap" title="Events Map">
               <GoogleMapsComponent />
+            </Tab>
+            <Tab eventKey="discussionCard" title="Discussion">
+              <DiscusionCard
+                comments={comments}
+                onAddComment={handleAddComment}
+              />
             </Tab>
           </Tabs>
         </Col>
