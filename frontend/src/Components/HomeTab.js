@@ -14,6 +14,10 @@ import CSRFToken from "./crftoken";
 
 function HomeTab() {
   const [events, setEvents] = useState([]);
+  const [showCreateEvents, setShowCreateEvents] = useState(false);
+  const toggleCreateEvents = () => {
+    setShowCreateEvents(!showCreateEvents);
+  };
 
   useEffect(() => {
     fetchEventData(); // Fetch event data when component mounts
@@ -36,9 +40,13 @@ function HomeTab() {
       <CSRFToken />
       <Row className="mx-auto">
         <Col md={4}>
-          <Row>
-            <CreateEvents />
-          </Row>
+          <Container>
+            <Row>
+              <Button onClick={toggleCreateEvents}>CREATE EVENT</Button>
+            </Row>
+          </Container>
+          <br />
+          <Row>{showCreateEvents && <CreateEvents />}</Row>
         </Col>
 
         <Col md={8}>
