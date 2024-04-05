@@ -47,13 +47,13 @@ class Event(models.Model):
         geolocator = GoogleV3('AIzaSyAfwuhpEPloICBoNSQKGBBEYVJzAYqyzYU')
         coords = geolocator.geocode(self.location)
         latitude = coords.latitude
-        return latitude.str()
+        return str(latitude)
     
     def longitude(self):
         geolocator = GoogleV3('AIzaSyAfwuhpEPloICBoNSQKGBBEYVJzAYqyzYU')
         coords = geolocator.geocode(self.location)
         longitude = coords.longitude
-        return longitude.str()
+        return str(longitude)
 
     def createdEvents(username):
         eventsCreated = Event.objects.filter(creator = username).values()

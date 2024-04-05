@@ -10,6 +10,7 @@ django-cors-headers = "*"
 django-location-field = "*"
 six = "*"
 geopy = "*"
+pillow = "*"
 
 [dev-packages]
 
