@@ -95,12 +95,12 @@ function RightSideOfPage({ events }) {
 
   return (
     <>
-      <Container>
+      <Container style={{ minHeight: "600px" }}>
         <Row>
           <SearchEvents events={events} setFilteredEvents={setFilteredEvents} />
         </Row>
 
-        <Row>
+        <Row style={{ minHeight: "600px" }}>
           <Col>
             <EventCards
               events={filteredEvents.length > 0 ? filteredEvents : events}
@@ -113,7 +113,6 @@ function RightSideOfPage({ events }) {
 }
 
 function EventCards({ events }) {
-
   useEffect(() => {
     console.log(
       "Event Images:",
@@ -135,7 +134,7 @@ function EventCards({ events }) {
   };
 
   return (
-    <div className="event-cards-container">
+    <div className="event-cards-container" style={{ minHeight: "800px" }}>
       <Row xs={1} md={3} className="g-4">
         {events.map((event, index) => (
           <Col key={index}>
