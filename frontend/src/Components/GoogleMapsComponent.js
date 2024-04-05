@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import {
   APIProvider,
@@ -12,6 +11,9 @@ import {
 } from "@vis.gl/react-google-maps";
 import EventDialog from "./EventDialog";
 import { useEffect } from "react";
+import "@googlemaps/extended-component-library/place_picker.js";
+import { PlacePicker } from "@googlemaps/extended-component-library/react";
+import { Row } from "react-bootstrap";
 
 // Variables
 
@@ -22,6 +24,7 @@ function GoogleMapsComponent() {
     // Add more positions here as needed
   ];
   const [events, setEvents] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState(null);
 
   useEffect(() => {
     fetchMapEventData(); // Fetch event data to populate map when component mounts
@@ -40,21 +43,28 @@ function GoogleMapsComponent() {
     }
   };
 
-  // load all the events and convert their addresses to longitude and latitude coordinates
+  const handleLocationChange = (location) => {
+    setSelectedLocation(location);
+  };
+
+  // Convert all event location into a position longitude and latitude using geocoder so that I can place them
 
   return (
     <APIProvider apiKey="AIzaSyAfwuhpEPloICBoNSQKGBBEYVJzAYqyzYU">
+      <Row>
+        <PlacePicker onPlaceChanged={handleLocationChange} />
+      </Row>
+
       <div style={{ height: "100vh" }}>
         <Map
           defaultZoom={9}
-          defaultCenter={positions[0]}
+          defaultCenter={selectedLocation || { lat: 53.54, lng: 10 }} // Use selectedLocation if available, otherwise fallback to default position
           mapId={"da1539bfad046c08"}
         >
           {positions.map((position, index) => (
             <EventMarkers key={index} position={position} />
           ))}
         </Map>
-        <Geocoding />
       </div>
     </APIProvider>
   );
@@ -79,37 +89,34 @@ function EventMarkers({ position }) {
   );
 }
 
-function Geocoding() {
-  const geocodingApiLoaded = useMapsLibrary("geocoding");
-  const [geocodingService, setGeocodingService] = useState();
-  const [geocodingResult, setGeocodingResult] = useState();
-  const [address, setAddress] = useState("10 Front St, Toronto");
+// function Geocoding() {
+//   const geocodingApiLoaded = useMapsLibrary("geocoding");
+//   const [geocodingService, setGeocodingService] = useState();
+//   const [geocodingResult, setGeocodingResult] = useState();
+//   const [address, setAddress] = useState("10 Front St, Toronto");
 
-  useEffect(() => {
-    if (!geocodingApiLoaded) return;
-    setGeocodingService(new window.google.maps.Geocoder());
-  }, [geocodingApiLoaded]);
+//   useEffect(() => {
+//     if (!geocodingApiLoaded) return;
+//     setGeocodingService(new window.google.maps.Geocoder());
+//   }, [geocodingApiLoaded]);
 
-  useEffect(() => {
-    if (!geocodingService || !address) return;
+//   useEffect(() => {
+//     if (!geocodingService || !address) return;
 
-    geocodingService.geocode({ address }, (results, status) => {
-      if (results && status === "OK") {
-        setGeocodingResult(results[0]);
-        console.log(results);
-      }
-    });
-  }, [geocodingService, address]);
+//     geocodingService.geocode({ address }, (results, status) => {
+//       if (results && status === "OK") {
+//         setGeocodingResult(results[0]);
+//         console.log(results);
+//       }
+//     });
+//   }, [geocodingService, address]);
 
-  // Extract latitude and longitude from geocodingResult
-  const latitude = geocodingResult?.geometry?.location?.lat() || 0;
-  const longitude = geocodingResult?.geometry?.location?.lng() || 0;
+//   // Extract latitude and longitude from geocodingResult
+//   const latitude = geocodingResult?.geometry?.location?.lat() || 0;
+//   const longitude = geocodingResult?.geometry?.location?.lng() || 0;
 
-  console.log("Latitude:", latitude);
-  console.log("Longitude:", longitude);
-}
-
-
-
+//   console.log("Latitude:", latitude);
+//   console.log("Longitude:", longitude);
+// }
 
 export default GoogleMapsComponent;
