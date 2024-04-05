@@ -33,7 +33,7 @@ function GoogleMapsComponent() {
   // Function to fetch event data from the backend API
   const fetchMapEventData = async () => {
     try {
-      const response = await fetch("http://localhost:8000/EventDatabase/");
+      const response = await fetch("http://localhost:8000/eventcoords/");
       const eventDataForMap = await response.json();
       // console.log(eventData);
       setEvents(eventDataForMap);

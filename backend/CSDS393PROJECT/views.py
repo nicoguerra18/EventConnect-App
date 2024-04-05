@@ -198,3 +198,10 @@ def CreatedEvents(request, user_name):
     list1 = list(events)
     serialized_events = json.dumps(list1, cls = DjangoJSONEncoder)
     return Response (serialized_events)
+
+@api_view(['GET'])
+def eventCoords(request):
+    events = Event.objects.all()
+    results = [ob.as_json() for ob in events]
+    serialized_q = json.dumps(results, cls = DjangoJSONEncoder)
+    return Response(serialized_q)

@@ -9,6 +9,7 @@ djangorestframework = "*"
 django-cors-headers = "*"
 django-location-field = "*"
 six = "*"
+geopy = "*"
 
 [dev-packages]
 

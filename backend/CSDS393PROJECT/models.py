@@ -3,6 +3,7 @@ from django.db import models
 #from django.contrib.gis.geos import Point
 from django.contrib.auth.models import User
 from django.db.models import Count
+from geopy.geocoders import GoogleV3
 # Create your models here.
 
 #Model for UserProfile, primary key == id (premade by Django and auto set to primary_key == True)
@@ -42,6 +43,18 @@ class Event(models.Model):
     image = models.ImageField(default = 'default.jpg')    
 
 
+    def latitude(self):
+        geolocator = GoogleV3('AIzaSyAfwuhpEPloICBoNSQKGBBEYVJzAYqyzYU')
+        coords = geolocator.geocode(self.location)
+        latitude = coords.latitude
+        return latitude.str()
+    
+    def longitude(self):
+        geolocator = GoogleV3('AIzaSyAfwuhpEPloICBoNSQKGBBEYVJzAYqyzYU')
+        coords = geolocator.geocode(self.location)
+        longitude = coords.longitude
+        return longitude.str()
+
     def createdEvents(username):
         eventsCreated = Event.objects.filter(creator = username).values()
         return eventsCreated
@@ -55,7 +68,7 @@ class Event(models.Model):
             input_name = self.name, input_date = self.date,
             input_location = self.location, input_creator = self.creator.profileName,
             input_description = self.description, input_keyword = self.keyword,
-            input_image = self.image.name
+            input_image = self.image.name, latitude = self.latitude(), longitude = self.longitude()
         )
 
     class Meta:
