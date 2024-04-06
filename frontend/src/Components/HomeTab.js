@@ -14,6 +14,10 @@ import CSRFToken from "./crftoken";
 
 function HomeTab() {
   const [events, setEvents] = useState([]);
+  const [showCreateEvents, setShowCreateEvents] = useState(false);
+  const toggleCreateEvents = () => {
+    setShowCreateEvents(!showCreateEvents);
+  };
 
   useEffect(() => {
     fetchEventData(); // Fetch event data when component mounts
@@ -24,7 +28,7 @@ function HomeTab() {
     try {
       const response = await fetch("http://localhost:8000/EventDatabase/");
       const eventData = await response.json();
-      // console.log(eventData);
+      // console.log("Home page event data:" + eventData);
       setEvents(eventData);
     } catch (error) {
       console.error("Error fetching event data:", error);
@@ -36,9 +40,13 @@ function HomeTab() {
       <CSRFToken />
       <Row className="mx-auto">
         <Col md={4}>
-          <Row>
-            <CreateEvents />
-          </Row>
+          <Container>
+            <Row>
+              <Button onClick={toggleCreateEvents}>CREATE EVENT</Button>
+            </Row>
+          </Container>
+          <br />
+          <Row>{showCreateEvents && <CreateEvents />}</Row>
         </Col>
 
         <Col md={8}>
@@ -77,7 +85,7 @@ function SearchEvents({ events, setFilteredEvents }) {
               width="16"
               height="16"
               fill="currentColor"
-              class="bi bi-search"
+              className="bi bi-search"
               viewBox="0 0 16 16"
             >
               <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
@@ -95,12 +103,12 @@ function RightSideOfPage({ events }) {
 
   return (
     <>
-      <Container>
+      <Container style={{ minHeight: "600px" }}>
         <Row>
           <SearchEvents events={events} setFilteredEvents={setFilteredEvents} />
         </Row>
 
-        <Row>
+        <Row style={{ minHeight: "600px" }}>
           <Col>
             <EventCards
               events={filteredEvents.length > 0 ? filteredEvents : events}
@@ -113,7 +121,6 @@ function RightSideOfPage({ events }) {
 }
 
 function EventCards({ events }) {
-
   useEffect(() => {
     console.log(
       "Event Images:",
@@ -135,7 +142,7 @@ function EventCards({ events }) {
   };
 
   return (
-    <div className="event-cards-container">
+    <div className="event-cards-container" style={{ minHeight: "800px" }}>
       <Row xs={1} md={3} className="g-4">
         {events.map((event, index) => (
           <Col key={index}>

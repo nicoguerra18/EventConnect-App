@@ -1,18 +1,19 @@
-import { Button } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import React from "react";
 import { useState } from "react";
-import { Modal } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import "./styles.css";
 import CSRFToken from "./crftoken";
+import "@googlemaps/extended-component-library/place_picker.js";
+import { PlacePicker } from "@googlemaps/extended-component-library/react";
 
 function CreateEvents() {
-  const [show, setShow] = useState(false);
+  // const [show, setShow] = useState(false);
   // const [selectedEvent, setSelectedEvent] = useState("");
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -52,7 +53,7 @@ function CreateEvents() {
       });
 
       console.log(response);
-      setShow(false);
+      // setShow(false);
       window.location.reload(); // refresh page
     } catch (error) {
       console.log("Error sending event data form:", error);
@@ -105,7 +106,114 @@ function CreateEvents() {
 
   return (
     <Row className="mx-auto">
-      <Button size="md" variant="success" onClick={handleShow}>
+      <Card>
+        <Card.Body>
+          <Card.Title>Create An Event</Card.Title>
+          <Card.Text>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group controlId="name">
+                <Form.Label>Event Title</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Event Title"
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <br />
+              <Form.Group controlId="description">
+                <Form.Label>Event Description</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  placeholder="Event Decription"
+                  rows={3}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <br />
+              <Form.Group controlId="image">
+                <Form.Label>Event Image</Form.Label>
+                <Form.Control type="file" onChange={handleFileChange} />
+              </Form.Group>
+              <br />
+              <Form.Group controlId="date">
+                <Form.Label>Event Date</Form.Label>
+                <Form.Control
+                  type="text"
+                  onChange={handleChange}
+                  placeholder="DD-MM-YYYY"
+                />
+              </Form.Group>
+              <br />
+              <Form.Group controlId="creator">
+                <Form.Label>Creator</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter your Username"
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <br />
+              <Form.Group controlId="keyword">
+                <Form.Label>Keyword</Form.Label>
+                <Form.Control as="select" onChange={handleChange}>
+                  <option value="">Select a keyword</option>
+                  {eventOptions.map((option, index) => (
+                    <option key={index} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </Form.Control>
+              </Form.Group>
+              <br />
+
+              <Form.Group controlId="location">
+                <Row>
+                  <Form.Label>Event Location</Form.Label>
+                </Row>
+                <Row>
+                  <PlacePicker
+                    className="react-google-maps-autocomplete-container"
+                    placeholder="Lookup an Address"
+                  />
+                </Row>
+                <Form.Control
+                  type="text"
+                  value={formData.location}
+                  onChange={handleChange}
+                  placeholder="Copy address from above or type address"
+                />
+              </Form.Group>
+              <br />
+            </Form>
+            <CSRFToken />
+            <Row>
+              <Button variant="success" type="submit" onClick={handleSubmit}>
+                Create Event&nbsp;
+                <span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-hammer"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M9.972 2.508a.5.5 0 0 0-.16-.556l-.178-.129a5 5 0 0 0-2.076-.783C6.215.862 4.504 1.229 2.84 3.133H1.786a.5.5 0 0 0-.354.147L.146 4.567a.5.5 0 0 0 0 .706l2.571 2.579a.5.5 0 0 0 .708 0l1.286-1.29a.5.5 0 0 0 .146-.353V5.57l8.387 8.873A.5.5 0 0 0 14 14.5l1.5-1.5a.5.5 0 0 0 .017-.689l-9.129-8.63c.747-.456 1.772-.839 3.112-.839a.5.5 0 0 0 .472-.334" />
+                  </svg>
+                </span>
+              </Button>
+            </Row>
+          </Card.Text>
+        </Card.Body>
+      </Card>
+    </Row>
+  );
+}
+
+export default CreateEvents;
+
+{
+  /* <Button size="md" variant="success" onClick={handleShow}>
         Create Event&nbsp;
         <span>
           <svg
@@ -119,8 +227,8 @@ function CreateEvents() {
             <path d="M9.972 2.508a.5.5 0 0 0-.16-.556l-.178-.129a5 5 0 0 0-2.076-.783C6.215.862 4.504 1.229 2.84 3.133H1.786a.5.5 0 0 0-.354.147L.146 4.567a.5.5 0 0 0 0 .706l2.571 2.579a.5.5 0 0 0 .708 0l1.286-1.29a.5.5 0 0 0 .146-.353V5.57l8.387 8.873A.5.5 0 0 0 14 14.5l1.5-1.5a.5.5 0 0 0 .017-.689l-9.129-8.63c.747-.456 1.772-.839 3.112-.839a.5.5 0 0 0 .472-.334" />
           </svg>
         </span>
-      </Button>
-      <Modal show={show} onHide={handleClose}>
+      </Button> 
+   <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title> Create An Event</Modal.Title>
         </Modal.Header>
@@ -148,11 +256,6 @@ function CreateEvents() {
             <Form.Group controlId="image">
               <Form.Label>Event Image</Form.Label>
               <Form.Control type="file" onChange={handleFileChange} />
-            </Form.Group>
-            <br />
-            <Form.Group controlId="location">
-              <Form.Label>Event Location</Form.Label>
-              <Form.Control type="locationForm" onChange={handleChange} />
             </Form.Group>
             <br />
             <Form.Group controlId="date">
@@ -183,6 +286,24 @@ function CreateEvents() {
                 ))}
               </Form.Control>
             </Form.Group>
+            <br />
+
+            <Form.Group controlId="location">
+              <Form.Label>Event Location</Form.Label>
+              <Row>
+                {" "}
+                <PlacePicker
+                  onChange={handleLocationChange}
+                  className="react-google-maps-autocomplete-container"
+                />
+              </Row>
+              <Form.Control
+                type="hidden"
+                value={formData.location}
+                onChange={handleChange}
+                placeholder="Enter Event Location"
+              />
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -191,9 +312,5 @@ function CreateEvents() {
             Create Event
           </Button>
         </Modal.Footer>
-      </Modal>
-    </Row>
-  );
+      </Modal> */
 }
-
-export default CreateEvents;

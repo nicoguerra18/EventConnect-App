@@ -11,3 +11,7 @@
   .modal-title {
     color: red; /* Set the desired color for the modal title */
   }
+
+  .react-google-maps-autocomplete-container .pac-container {
+    z-index: 9999 !important;
+  }

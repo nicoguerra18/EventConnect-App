@@ -6,8 +6,37 @@ import HomeTab from "./HomeTab";
 import ProfileTab from "./ProfileTab";
 import Navbar from "react-bootstrap/Navbar";
 import LightModeToggle from "./LightModeToggle";
+import GoogleMapsComponent from "./GoogleMapsComponent";
+import DiscusionCard from "./DisucssionCard";
+import { useState } from "react";
+import { useEffect } from "react";
 
 function Page() {
+  const sampleComments = [
+    {
+      username: "user1",
+      comment: "This is the first comment.",
+    },
+    {
+      username: "user2",
+      comment: "This is the second comment.",
+    },
+    {
+      username: "user3",
+      comment: "This is the third comment.",
+    },
+  ];
+
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    setComments([...comments, ...sampleComments]);
+  }, []);
+
+  const handleAddComment = (newComment) => {
+    setComments([...comments, newComment]);
+  };
+
   return (
     <div>
       <NavHeader />
@@ -26,7 +55,13 @@ function Page() {
               <HomeTab />
             </Tab>
             <Tab eventKey="eventsMap" title="Events Map">
-              <div>Events Map Feature Coming Soon in Feature 2!</div>
+              <GoogleMapsComponent />
+            </Tab>
+            <Tab eventKey="discussionCard" title="Discussion">
+              <DiscusionCard
+                comments={comments}
+                onAddComment={handleAddComment}
+              />
             </Tab>
           </Tabs>
         </Col>
@@ -49,9 +84,8 @@ function NavHeader() {
             width="25"
             height="25"
             fill="currentColor"
-            class="bi bi-server"
             viewBox="0 0 16 16"
-            className="d-inline-block align-center"
+            className="d-inline-block align-center bi bi-server"
           >
             <path d="M1.333 2.667C1.333 1.194 4.318 0 8 0s6.667 1.194 6.667 2.667V4c0 1.473-2.985 2.667-6.667 2.667S1.333 5.473 1.333 4z" />
             <path d="M1.333 6.334v3C1.333 10.805 4.318 12 8 12s6.667-1.194 6.667-2.667V6.334a6.5 6.5 0 0 1-1.458.79C11.81 7.684 9.967 8 8 8s-3.809-.317-5.208-.876a6.5 6.5 0 0 1-1.458-.79z" />
