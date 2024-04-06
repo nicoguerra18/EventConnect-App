@@ -13,7 +13,8 @@ import EventDialog from "./EventDialog";
 import { useEffect } from "react";
 import "@googlemaps/extended-component-library/place_picker.js";
 import { PlacePicker } from "@googlemaps/extended-component-library/react";
-import { Row } from "react-bootstrap";
+import { CardFooter, Row } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 
 // Have default "Home" position set by the user on their account
 
@@ -90,9 +91,33 @@ function EventMarkers({ position, event }) {
 
       {open && (
         <InfoWindow position={position} onCloseClick={() => setOpen(false)}>
-          <h3>{event.input_name}</h3>
-          <p>{event.input_description}</p>
-          <EventDialog />
+          <Card style={{ width: "14rem" }}>
+            <Card.Img
+              variant="top"
+              src={"http://localhost:8000/media/" + event.input_image}
+              alt="sample_pic"
+              className="card-img-top img-fluid"
+              style={{ height: "140px" }}
+            />
+            <Card.Body>
+              <Card.Title>{event.input_name}</Card.Title>
+              <Card.Text>{event.input_description}</Card.Text>
+            </Card.Body>
+            <CardFooter>
+              <EventDialog
+                eventName={event.input_name}
+                eventCreator={event.input_creator}
+                eventDate={event.input_date}
+                eventLocation={event.input_location}
+                eventDescription={event.input_description}
+                eventId={event.id}
+              />
+            </CardFooter>
+          </Card>
+
+          {/* {console.log(
+            "http://localhost:8000/media/" + event.input_image + "/"
+          )} */}
         </InfoWindow>
       )}
     </div>
