@@ -34,10 +34,12 @@ function GoogleMapsComponent() {
   const fetchMapEventData = async () => {
     try {
       const response = await fetch("http://localhost:8000/eventcoords/");
+      if (!response.ok) {
+        throw new Error("Failed to fetch event data");
+      }
       const eventDataForMap = await response.json();
-      // console.log(eventData);
-      setEvents(eventDataForMap);
-      console.log(eventDataForMap);
+      const parsedEventData = JSON.parse(eventDataForMap); // Parse the JSON string
+      setEvents(parsedEventData); // Set the events state with the parsed data
     } catch (error) {
       console.error("Error fetching event data:", error);
     }
@@ -61,8 +63,15 @@ function GoogleMapsComponent() {
           defaultCenter={selectedLocation || { lat: 53.54, lng: 10 }} // Use selectedLocation if available, otherwise fallback to default position
           mapId={"da1539bfad046c08"}
         >
-          {positions.map((position, index) => (
-            <EventMarkers key={index} position={position} />
+          {events.map((event, index) => (
+            <EventMarkers
+              key={index}
+              position={{
+                lat: parseFloat(event.latitude),
+                lng: parseFloat(event.longitude),
+              }}
+              event={event}
+            />
           ))}
         </Map>
       </div>
@@ -70,7 +79,7 @@ function GoogleMapsComponent() {
   );
 }
 
-function EventMarkers({ position }) {
+function EventMarkers({ position, event }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -81,7 +90,8 @@ function EventMarkers({ position }) {
 
       {open && (
         <InfoWindow position={position} onCloseClick={() => setOpen(false)}>
-          <h3>Event Title</h3>
+          <h3>{event.input_name}</h3>
+          <p>{event.input_description}</p>
           <EventDialog />
         </InfoWindow>
       )}

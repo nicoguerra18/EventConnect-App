@@ -28,7 +28,7 @@ function HomeTab() {
     try {
       const response = await fetch("http://localhost:8000/EventDatabase/");
       const eventData = await response.json();
-      // console.log(eventData);
+      // console.log("Home page event data:" + eventData);
       setEvents(eventData);
     } catch (error) {
       console.error("Error fetching event data:", error);
