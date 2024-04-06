@@ -129,18 +129,13 @@ function PersonalInfo() {
       console.error("Error updating profile:", error);
     }
   };
-  
-  console.log(JSON.stringify({profilePicture: formData.profilePicture}));
-  var profilePictureUrl = ('http://localhost:8000' + formData.profilePicture);
-  //console.log(profilePictureUrl);
-  
 
   return (
     <Row className="mx-auto">
       <Card style={{ width: "34rem" }}>
         <Card.Title>Your Profile</Card.Title>
         <Card.Img
-          src={profilePictureUrl || defaultImage}
+          src={formData.profilePictureUrl || defaultImage}
           alt="Profile Picture"
         />
         <Form onSubmit={handleFormSubmit}>

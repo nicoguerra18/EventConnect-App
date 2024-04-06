@@ -1,9 +1,4 @@
 # EventConnect-App
-## Technologies Used
-- JavaScript/React
-- Python
-- Django
-- Google Maps API
 
 ## Required package and library
 On terminal:
