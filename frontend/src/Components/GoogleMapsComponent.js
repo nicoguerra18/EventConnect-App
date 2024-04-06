@@ -17,6 +17,7 @@ import { CardFooter, Row } from "react-bootstrap";
 import { Card } from "react-bootstrap";
 
 // Have default "Home" position set by the user on their account
+const googleapikey = process.env.REACT_APP_googleAPIKey;
 
 function GoogleMapsComponent() {
   const positions = [
@@ -53,7 +54,7 @@ function GoogleMapsComponent() {
   // Convert all event location into a position longitude and latitude using geocoder so that I can place them
 
   return (
-    <APIProvider apiKey="AIzaSyAfwuhpEPloICBoNSQKGBBEYVJzAYqyzYU">
+    <APIProvider apiKey={googleapikey}>
       <Row>
         <PlacePicker onPlaceChanged={handleLocationChange} />
       </Row>
