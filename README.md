@@ -11,8 +11,10 @@ On terminal:
 - pip install djangorestframework
 - pip install django-cors-headers
 - pip install django-location-field
-- npm install
+- pip install geopy 
+- npm install 
 - npm install react-router-dom
+- npm install i
 
 ## Host the app and Testing:
 - cd to backend folder where manage.py is:
