@@ -6,14 +6,11 @@ import {
   AdvancedMarker,
   Pin,
   InfoWindow,
-  Marker,
-  useMapsLibrary,
 } from "@vis.gl/react-google-maps";
 import EventDialog from "./EventDialog";
 import { useEffect } from "react";
 import "@googlemaps/extended-component-library/place_picker.js";
-import { PlacePicker } from "@googlemaps/extended-component-library/react";
-import { CardFooter, Row } from "react-bootstrap";
+import { CardFooter } from "react-bootstrap";
 import { Card } from "react-bootstrap";
 
 // Have default "Home" position set by the user on their account
@@ -21,7 +18,6 @@ const googleapikey = process.env.REACT_APP_googleAPIKey;
 
 function GoogleMapsComponent() {
   const [events, setEvents] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState(null);
 
   useEffect(() => {
     fetchMapEventData(); // Fetch event data to populate map when component mounts

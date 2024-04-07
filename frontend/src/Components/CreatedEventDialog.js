@@ -14,46 +14,11 @@ function CreatedEventDialog({
   eventId,
 }) {
   const [show, setShow] = useState(false);
-  const [attendees, setAttendees] = useState(0); // State for number of attendees
-  const [joined, setJoined] = useState(false); // State to track whether user has joined the event
+  // const [attendees, setAttendees] = useState(0); // State for number of attendees
+  // const [joined, setJoined] = useState(false); // State to track whether user has joined the event
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  const toggleEvent = () => {
-    if (joined) {
-      setAttendees(attendees - 1);
-    } else {
-      setAttendees(attendees + 1);
-    }
-    setJoined(!joined);
-    handleClose();
-  };
-
-  // Call to API to Join an Event
-  // const joinEvent = async (eventId) => {
-  //   try {
-  //     const response = await fetch(
-  //       `http://localhost:8000/EventDatabase/${eventId}/join/`,
-  //       {
-  //         method: "POST",
-
-  //         // Optionally, you can send data in the request body
-  //         // body: JSON.stringify({ eventId: eventId }),
-  //       }
-  //     );
-
-  //     if (response.ok) {
-  //       // Handle success
-  //       // For example, you can update UI or show a success message
-  //     } else {
-  //       // Handle error
-  //       console.error("Failed to join event");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error joining event:", error);
-  //   }
-  // };
 
   return (
     <>
@@ -64,7 +29,7 @@ function CreatedEventDialog({
           width="16"
           height="16"
           fill="currentColor"
-          class="bi bi-info-circle"
+          className="bi bi-info-circle"
           viewBox="0 0 16 16"
         >
           <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
@@ -98,7 +63,7 @@ function CreatedEventDialog({
             </Form.Group>
             <Form.Group controlId="formPeopleGoing">
               <Form.Label># People Attending</Form.Label>
-              <Form.Control disabled type="number" value={attendees} />
+              <Form.Control disabled type="number" />
             </Form.Group>
             <Form.Group controlId="formCreator">
               <Form.Label>Creator</Form.Label>

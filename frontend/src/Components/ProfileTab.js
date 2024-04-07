@@ -112,7 +112,6 @@ function PersonalInfo() {
         method: "PATCH",
         body: formDataToSend,
       });
-      console.log(formData.profilePicture);
 
       if (response.ok) {
         // Profile updated successfully
@@ -129,11 +128,10 @@ function PersonalInfo() {
       console.error("Error updating profile:", error);
     }
   };
-  
-  console.log(JSON.stringify({profilePicture: formData.profilePicture}));
-  var profilePictureUrl = ('http://localhost:8000' + formData.profilePicture);
+
+  console.log(JSON.stringify({ profilePicture: formData.profilePicture }));
+  var profilePictureUrl = "http://localhost:8000" + formData.profilePicture;
   //console.log(profilePictureUrl);
-  
 
   return (
     <Row className="mx-auto">
