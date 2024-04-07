@@ -4,6 +4,11 @@ import { Toast, Button, Form, ToastBody } from "react-bootstrap";
 function ToastMessage({ comment }) {
   return (
     <Toast>
+      <Toast.Header closeButton={false}>
+        <img></img>
+        <strong className="me-auto">username</strong>
+        <small className="text-muted">time posted</small>
+      </Toast.Header>
       <ToastBody>{comment}</ToastBody>
     </Toast>
   );
