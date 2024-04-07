@@ -20,11 +20,6 @@ import { Card } from "react-bootstrap";
 const googleapikey = process.env.REACT_APP_googleAPIKey;
 
 function GoogleMapsComponent() {
-  const positions = [
-    { lat: 53.54, lng: 10 },
-    { lat: 54, lng: 10 },
-    // Add more positions here as needed
-  ];
   const [events, setEvents] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(null);
 
@@ -47,22 +42,12 @@ function GoogleMapsComponent() {
     }
   };
 
-  const handleLocationChange = (location) => {
-    setSelectedLocation(location);
-  };
-
-  // Convert all event location into a position longitude and latitude using geocoder so that I can place them
-
   return (
     <APIProvider apiKey={googleapikey}>
-      <Row>
-        <PlacePicker onPlaceChanged={handleLocationChange} />
-      </Row>
-
       <div style={{ height: "100vh" }}>
         <Map
-          defaultZoom={9}
-          defaultCenter={selectedLocation || { lat: 53.54, lng: 10 }} // Use selectedLocation if available, otherwise fallback to default position
+          defaultZoom={8}
+          defaultCenter={{ lat: 41.49, lng: -81.69 }} // Use selectedLocation if available, otherwise fallback to default position
           mapId={"da1539bfad046c08"}
         >
           {events.map((event, index) => (
