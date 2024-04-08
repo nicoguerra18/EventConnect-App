@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Toast, Button, Form, ToastBody } from "react-bootstrap";
+import { Toast, Button, Form, ToastBody, Container } from "react-bootstrap";
 
 function ToastMessage({ comment }) {
   const currDate = new Date().toLocaleDateString();
@@ -35,10 +35,15 @@ function DiscussionCard() {
 
   return (
     <div>
-      {/* Render toast messages for each comment */}
-      {comments.map((comment, index) => (
-        <ToastMessage key={index} comment={comment} />
-      ))}
+      <div style={{ height: "350px", overflowY: "auto" }}>
+        <Container>
+          {comments.map((comment, index) => (
+            <ToastMessage key={index} comment={comment} />
+          ))}
+        </Container>
+      </div>
+
+      <br />
       <Form.Group controlId="formNewComment">
         <Form.Control
           as="textarea"

@@ -134,9 +134,12 @@ function DiscussionModal({ eventName }) {
         </svg>
       </Button>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal size="lg" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>{eventName}</Modal.Title>
+          <Modal.Title>
+            <strong>Discussion: </strong>
+            {eventName}{" "}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <DiscussionCard />
