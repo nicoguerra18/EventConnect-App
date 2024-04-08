@@ -2,18 +2,23 @@ import React, { useState } from "react";
 import { Toast, Button, Form, ToastBody } from "react-bootstrap";
 
 function ToastMessage({ comment }) {
+  const currDate = new Date().toLocaleDateString();
+  const currTime = new Date().toLocaleTimeString();
   return (
     <Toast>
       <Toast.Header closeButton={false}>
         <img></img>
-        <strong className="me-auto">username</strong>
-        <small className="text-muted">time posted</small>
+        <strong className="me-auto">usernameeee</strong>
+        <small className="text-muted">
+          {currTime} / {currDate},
+        </small>
       </Toast.Header>
       <ToastBody>{comment}</ToastBody>
     </Toast>
   );
 }
 
+// pass in event discussion view data
 function DiscussionCard() {
   const [newComment, setNewComment] = useState("");
   const [comments, setComments] = useState([]);
@@ -24,6 +29,9 @@ function DiscussionCard() {
       setNewComment(""); // Clear the new comment input field
     }
   };
+
+  // Fetch event discussion data to populate discussion card
+  // Be able to post a new comment to the eventDiscussion view
 
   return (
     <div>
