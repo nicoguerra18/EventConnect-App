@@ -142,7 +142,7 @@ function DiscussionModal({ eventName }) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <DiscussionCard />
+          <DiscussionCard eventName={eventName} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
