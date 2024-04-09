@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import UserProfile, Event, Attendance
+from .models import *
+from datetime import datetime
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,6 +11,14 @@ class EventSerializer(serializers.ModelSerializer):
 
     #profiles = ProfileSerializer(many = True, source = 'UserProfile')
 
+    def createDiscussion(self):
+        discussion = Discussion(
+            event = self,
+            created_at = datetime.now(),
+            body = self.description
+        )
+        discussion.save()
+
     class Meta:
         model = Event
         # I removed date and added profiles for now
@@ -19,3 +28,22 @@ class AttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attendance
         fields = ('event', 'attendee', 'is_attending')
+
+class DiscussionSerializer1(serializers.ModelSerializer):
+    class Meta:
+        model = Discussion
+        fields = ('event', 'created_at', 'body')
+
+class DiscussionSerializer2(serializers.ModelSerializer):
+    event = EventSerializer()
+    created_at = serializers.DateTimeField()
+    body = serializers.CharField(max_length = 500)
+
+    class Meta:
+        model = Discussion
+        fields = ('event', 'created_at', 'body')
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('discussion', 'body', 'parent_response', 'timestamp', 'author')

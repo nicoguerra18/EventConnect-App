@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from django.http import HttpRequest
 from rest_framework.decorators import api_view
 from rest_framework import status, viewsets
-from .serializers import ProfileSerializer, EventSerializer, AttendanceSerializer
-from .models import UserProfile, Event, Attendance
+from .serializers import *
+from .models import *
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 import json
@@ -81,12 +81,14 @@ def EventView(request):
         serializer = EventSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            #create discussion for that event now
+            serializer.createDiscussion()
             return Response(status = status.HTTP_201_CREATED)
         print(serializer.errors)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
     
     elif request.method == 'PUT':
-        serializer = EventSerializer(date = request.data)
+        serializer = EventSerializer(data = request.data)
 
 
 @ensure_csrf_cookie
@@ -166,6 +168,8 @@ def AttendingEvent(request, event_name):
 @api_view(['GET'])
 def EventsAttending(request, profile_name):
     queryset = Attendance.getEvents(profile_name)
+    #serializer = EventSerializer(queryset, many = True)
+    #this might also work for showing it as a list
     results =[ob.as_json() for ob in queryset]
     serialized_q = json.dumps(results, cls = DjangoJSONEncoder)
     return Response(serialized_q)
@@ -205,3 +209,17 @@ def eventCoords(request):
     results = [ob.as_json() for ob in events]
     serialized_q = json.dumps(results, cls = DjangoJSONEncoder)
     return Response(serialized_q)
+
+@api_view(['GET', 'POST'])
+def DiscussionView(request, event_name):
+    discussion = Discussion.getDiscussion(event_name)
+    serializer = DiscussionSerializer1(discussion)
+
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def CommentView(request, event_name):
+    comments = Comment.getComments(event_name)
+    comSerializer = CommentSerializer(comments, many = True)
+    
+    return Response(comSerializer.data)
