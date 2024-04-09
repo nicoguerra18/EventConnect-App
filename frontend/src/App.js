@@ -5,12 +5,10 @@ import LogoutButton from "./Components/LogoutButton";
 
 function App() {
   return (
-
-    <main className="column">
-      <h1>Auth0 Login</h1>
+    <div>
       <LoginButton />
       <LogoutButton />
-    </main>
+    </div>
 
   );
 }
