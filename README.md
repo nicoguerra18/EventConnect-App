@@ -17,7 +17,7 @@ On terminal:
 - npm install react-router-dom
 - npm install i
 
-Create .env file and copy and paste:
+Create .env file in frontend folder and copy and paste:
 
 REACT_APP_googleAPIKey=AIzaSyAfwuhpEPloICBoNSQKGBBEYVJzAYqyzYU
 
