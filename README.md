@@ -18,6 +18,7 @@ On terminal:
 - npm install i
 
 Create .env file and copy and paste:
+
 REACT_APP_googleAPIKey=AIzaSyAfwuhpEPloICBoNSQKGBBEYVJzAYqyzYU
 
 REACT_APP_AUTH0_DOMAIN=dev-bmdkw2alvze2t0ic.us.auth0.com
