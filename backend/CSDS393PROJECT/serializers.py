@@ -12,13 +12,13 @@ class EventSerializer(serializers.ModelSerializer):
     #profiles = ProfileSerializer(many = True, source = 'UserProfile')
 
     def createDiscussion(self):
-        print("event is: " + self)
+        print("event is: ")
         discussion = Discussion(
             event = self,
             created_at = datetime.now(),
-            body = self.description
+            body = "hurrrr"
         )
-        print("discussion is: " + discussion)
+        print("discussion is: ")
         discussion.save()
 
     class Meta:
