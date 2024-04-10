@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, Card, Button, CardFooter } from "react-bootstrap";
 import "./styles.css";
 import JoinedEventDialog from "./JoinedEventDialog";
+import DiscussionCard from "./DisucssionCard";
+import { Modal } from "react-bootstrap";
 
 function JoinedEvents() {
   const [myJoinedEvents, setMyJoinedEvents] = useState([]);
