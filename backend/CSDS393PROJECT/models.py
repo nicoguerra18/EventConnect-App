@@ -30,7 +30,7 @@ class UserProfile(models.Model):
 
 #Model for Events, primary key == id, same as above
 class Event(models.Model):
-    name = models.CharField(max_length = 150)
+    name = models.CharField(max_length = 150, unique = True)
     # date = models.DateField()
     date = models.CharField(max_length = 150)
     #location = LocationField(based_fields = ['city'], initial= Point(41.5043, 81.6084), zoom = 7) need to figure out installing gdal and getting it to work
@@ -102,7 +102,7 @@ class Attendance(models.Model):
 
 class Discussion(models.Model):
 
-    event = models.OneToOneField(Event, on_delete= models.CASCADE, unique = True)
+    event = models.OneToOneField(Event, on_delete= models.CASCADE, to_field = 'name', db_column="event")
     created_at = models.DateTimeField(auto_now_add=True)
     body = models.TextField()
 
@@ -114,7 +114,7 @@ class Discussion(models.Model):
         return discussion
 
 class Comment(models.Model):
-    discussion = models.ForeignKey(Discussion, on_delete = models.CASCADE)
+    discussion = models.ForeignKey(Discussion, on_delete = models.CASCADE, to_field = 'event', db_column= "discussion")
     body = models.CharField(max_length= 300)
     #parent_response = models.ForeignKey('self', null = True, blank = True, on_delete=models.CASCADE)
     # timestamp = models.DateTimeField(auto_now_add=True)
