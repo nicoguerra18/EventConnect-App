@@ -219,7 +219,14 @@ def DiscussionView(request, event_name):
 
 @api_view(['GET'])
 def CommentView(request, event_name):
-    comments = Comment.getComments(event_name)
-    comSerializer = CommentSerializer(comments, many = True)
-    
-    return Response(comSerializer.data)
+    if request.method == 'GET':
+        comments = Comment.getComments(event_name)
+        comSerializer = CommentSerializer(comments, many = True)
+        return Response(comSerializer.data)
+    elif request.method == 'POST':
+        serializer = CommentSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status= status.HTTP_201_CREATED)
+    print(serializer.errors)
+    return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
