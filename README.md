@@ -4,6 +4,7 @@
 - Python
 - Django
 - Google Maps API
+- Auth0
 
 ## Required package and library
 On terminal:
@@ -15,6 +16,12 @@ On terminal:
 - npm install 
 - npm install react-router-dom
 - npm install i
+
+Create .env file and copy and paste:
+REACT_APP_googleAPIKey=AIzaSyAfwuhpEPloICBoNSQKGBBEYVJzAYqyzYU
+
+REACT_APP_AUTH0_DOMAIN=dev-bmdkw2alvze2t0ic.us.auth0.com
+REACT_APP_AUTH0_CLIENT_ID=2pqYoCbTlqEzk4HhhONnyBVRnTRJKnj3
 
 ## Host the app and Testing:
 - cd to backend folder where manage.py is:
