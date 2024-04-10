@@ -13,33 +13,49 @@ import { useEffect } from "react";
 import Toast from "react-bootstrap/Toast";
 import defaultImage from "./default.jpg";
 import JoinedEvents from "./JoinedEvents";
+import LoginButton from "./LoginButton";
+import LogoutButton from "./LogoutButton";
+import { useAuth0 } from '@auth0/auth0-react';
 
 // NEED TO ADD A FILE IN ORDER FOR FOR THE PUT REQUEST TO GO THROUGH
 
+
 function ProfileTab() {
+  const { user, isAuthenticated } = useAuth0();
+
   return (
-    <Container>
-      <Row className="mx-auto">
-        <Col>
-          <Row>
-            <PersonalInfo />
-          </Row>
-        </Col>
-        <Col>
-          <Tabs defaultActiveKey="MyEvents" id="ProfileTabs" className="mb-3">
-            <Tab eventKey="MyEvents" title="Created Events">
-              <MyEvents />
-            </Tab>
-            <Tab eventKey="eventsJoined" title="Events Joined">
-              <JoinedEvents />
-            </Tab>
-            <Tab eventKey="MyGroups" title="My Groups">
-              Coming soon in feature 3!
-            </Tab>
-          </Tabs>
-        </Col>
-      </Row>
-    </Container>
+    isAuthenticated && (
+      <Container>
+      <LoginButton />
+      <LogoutButton />
+        <Row className="mx-auto">
+          <Col>
+            <Row>
+              <PersonalInfo />
+            </Row>
+          </Col>
+          <Col>
+            <Tabs defaultActiveKey="MyEvents" id="ProfileTabs" className="mb-3">
+              <Tab eventKey="MyEvents" title="Created Events">
+                <MyEvents />
+              </Tab>
+              <Tab eventKey="eventsJoined" title="Events Joined">
+                <JoinedEvents />
+              </Tab>
+              <Tab eventKey="MyGroups" title="My Groups">
+                Coming soon in feature 3!
+              </Tab>
+            </Tabs>
+          </Col>
+        </Row>
+      </Container>
+    ) 
+    
+    ||
+
+    !isAuthenticated && (
+      <LoginButton />
+    )
   );
 }
 

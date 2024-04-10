@@ -7,10 +7,7 @@ import Profile from "./Components/Profile"
 function App() {
   return (
     <div>
-      <h1>Auth0 Login</h1>
-      <LoginButton />
-      <LogoutButton />
-      <Profile />
+      <Page />
     </div>
 
   );

@@ -1,3 +1,4 @@
+/* Used for displaying information of profile currently not used for the application directly */
 import { useAuth0 } from '@auth0/auth0-react';
 
 const Profile = () => {
