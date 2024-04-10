@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Toast, Button, Form, ToastBody, Container } from "react-bootstrap";
+import CSRFToken from "./crftoken";
 
 function ToastMessage({ comment }) {
   const timestamp = new Date(comment.timestamp).toLocaleString();
@@ -14,9 +15,10 @@ function ToastMessage({ comment }) {
   );
 }
 
-function DiscussionCard({ eventName }) {
+function DiscussionCard({ eventName, eventId }) {
   const [newComment, setNewComment] = useState("");
   const [comments, setComments] = useState([]);
+  const [discussion, setDiscussion] = useState(null);
 
   // Get all comments for this discussion in order to populate the disucssion with previous comments
   useEffect(() => {
@@ -26,7 +28,7 @@ function DiscussionCard({ eventName }) {
   const fetchCommentData = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8000/discussion/${eventName}/comments`
+        `http://localhost:8000/discussion/${eventName}/comments/`
       );
       const commentData = await response.json();
       setComments(commentData);
@@ -35,32 +37,35 @@ function DiscussionCard({ eventName }) {
     }
   };
 
-  // be able to send comments to the discussion and have the disucssion compoent rerender
+  // // fetch disussion ID
+  // useEffect(() => {
+  //   fetchDiscussion();
+  // }, [eventName]); // Fetch comments when eventName changes
 
-  // const handleAddComment = () => {
-  //   if (newComment.trim() !== "") {
-  //     // Create a new comment object with required properties
-  //     const newCommentObj = {
-  //       body: newComment,
-  //       timestamp: new Date().toISOString(),
-  //       author: "usernameeee", // Change this to the actual username if available
-  //     };
-  //     setComments([...comments, newCommentObj]); // Add new comment object to the comments array
-  //     setNewComment(""); // Clear the new comment input field
+  // const fetchDiscussion = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       `http://localhost:8000/discussion/${eventName}/`
+  //     );
+  //     const data = await response.json();
+  //     setDiscussion(data);
+  //     console.log(discussion);
+  //   } catch (error) {
+  //     console.error("Error fetching event data:", error);
   //   }
   // };
 
   const handleAddComment = async () => {
     if (newComment.trim() !== "") {
       const newCommentObj = {
+        discussion: eventId,
         body: newComment,
-        timestamp: new Date().toISOString(),
-        author: "usernameeee", // Change this to the actual username if available
+        author: "nico",
+        // timestamp: new Date().toISOString(),
       };
-
       try {
         const response = await fetch(
-          `http://localhost:8000/discussion/${eventName}/comments`,
+          `http://localhost:8000/discussion/${eventName}/comments/`,
           {
             method: "POST",
             headers: {
@@ -69,14 +74,16 @@ function DiscussionCard({ eventName }) {
             body: JSON.stringify(newCommentObj),
           }
         );
+        console.log(newCommentObj);
 
         if (!response.ok) {
           throw new Error("Failed to add comment");
         }
 
-        // Add the new comment to the local state
-        setComments([...comments, newCommentObj]);
-        setNewComment(""); // Clear the new comment input field
+        // Refresh comments after adding
+        fetchCommentData();
+
+        setNewComment(""); // Clear the comment input
       } catch (error) {
         console.error("Error adding comment:", error);
       }
@@ -85,6 +92,7 @@ function DiscussionCard({ eventName }) {
 
   return (
     <div>
+      <CSRFToken />
       <div style={{ height: "350px", overflowY: "auto" }}>
         <Container>
           {comments.map((comment, index) => (

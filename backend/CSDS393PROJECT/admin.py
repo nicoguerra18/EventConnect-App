@@ -15,7 +15,7 @@ class DiscussionAdmin(admin.ModelAdmin):
     list_display = ('id', 'event', 'created_at', 'body' )
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'discussion', 'body', 'author', 'timestamp', 'parent_response')
+    list_display = ('id', 'discussion', 'body', 'author', 'timestamp')
 
 admin.site.register(UserProfile, ProfileAdmin)
 admin.site.register(Event, EventAdmin)

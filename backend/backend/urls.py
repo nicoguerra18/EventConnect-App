@@ -37,7 +37,7 @@ urlpatterns = [
     path('createdevents/<str:user_name>/', views.CreatedEvents),
     path('eventcoords/', views.eventCoords),
     path('discussion/<str:event_name>/', views.DiscussionView),
-    path('discussion/<str:event_name>/comments', views.CommentView),
+    path('discussion/<str:event_name>/comments/', views.CommentView),
     ]
 
 urlpatterns= format_suffix_patterns(urlpatterns)

@@ -217,7 +217,7 @@ def DiscussionView(request, event_name):
 
     return Response(serializer.data)
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def CommentView(request, event_name):
     if request.method == 'GET':
         comments = Comment.getComments(event_name)
