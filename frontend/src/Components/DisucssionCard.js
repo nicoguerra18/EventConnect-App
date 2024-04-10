@@ -18,7 +18,6 @@ function ToastMessage({ comment }) {
 function DiscussionCard({ eventName, eventId }) {
   const [newComment, setNewComment] = useState("");
   const [comments, setComments] = useState([]);
-  const [discussion, setDiscussion] = useState(null);
 
   // Get all comments for this discussion in order to populate the disucssion with previous comments
   useEffect(() => {
@@ -37,31 +36,13 @@ function DiscussionCard({ eventName, eventId }) {
     }
   };
 
-  // // fetch disussion ID
-  // useEffect(() => {
-  //   fetchDiscussion();
-  // }, [eventName]); // Fetch comments when eventName changes
-
-  // const fetchDiscussion = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       `http://localhost:8000/discussion/${eventName}/`
-  //     );
-  //     const data = await response.json();
-  //     setDiscussion(data);
-  //     console.log(discussion);
-  //   } catch (error) {
-  //     console.error("Error fetching event data:", error);
-  //   }
-  // };
-
   const handleAddComment = async () => {
     if (newComment.trim() !== "") {
       const newCommentObj = {
-        discussion: eventId,
+        discussion: eventName,
         body: newComment,
         author: "nico",
-        // timestamp: new Date().toISOString(),
+        timestamp: new Date().toISOString(),
       };
       try {
         const response = await fetch(
