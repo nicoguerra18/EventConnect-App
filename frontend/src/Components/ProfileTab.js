@@ -26,8 +26,6 @@ function ProfileTab() {
   return (
     isAuthenticated && (
       <Container>
-      <LoginButton />
-      <LogoutButton />
         <Row className="mx-auto">
           <Col>
             <Row>
@@ -54,7 +52,16 @@ function ProfileTab() {
     ||
 
     !isAuthenticated && (
-      <LoginButton />
+      <Container>
+        <Row>
+         <Col className="text-center" >
+         <Card style={{ width: '18rem' }}>
+          <LoginButton />
+          </Card>
+         </Col>
+        </Row>
+      </Container>
+      
     )
   );
 }
@@ -212,6 +219,7 @@ function PersonalInfo() {
           >
             Edit/Save
           </Button>
+          <LogoutButton />
         </Form>
       </Card>
 
