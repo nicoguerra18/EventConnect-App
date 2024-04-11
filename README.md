@@ -22,6 +22,8 @@ On terminal:
 REACT_APP_googleAPIKey=AIzaSyAfwuhpEPloICBoNSQKGBBEYVJzAYqyzYU
 REACT_APP_AUTH0_DOMAIN=dev-bmdkw2alvze2t0ic.us.auth0.com
 REACT_APP_AUTH0_CLIENT_ID=2pqYoCbTlqEzk4HhhONnyBVRnTRJKnj3
+```
+---
 
 ## Host the app and Testing:
 On terminal
