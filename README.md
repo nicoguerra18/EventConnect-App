@@ -17,22 +17,24 @@ On terminal:
 - npm install react-router-dom
 - npm install i
 
-Create .env file in frontend folder and copy and paste:
-
+* Create .env file in frontend folder and copy and paste:
+```env
 REACT_APP_googleAPIKey=AIzaSyAfwuhpEPloICBoNSQKGBBEYVJzAYqyzYU
-
 REACT_APP_AUTH0_DOMAIN=dev-bmdkw2alvze2t0ic.us.auth0.com
 REACT_APP_AUTH0_CLIENT_ID=2pqYoCbTlqEzk4HhhONnyBVRnTRJKnj3
 
 ## Host the app and Testing:
+On terminal
 - cd to backend folder where manage.py is:
-- python manage.py runserver
+  - python manage.py runserver
 
+Open another terminal
 - cd to frontend folder:
-- npm run start
+  - npm run start
 
 ## View Locally in browser:
 - backend:
   - http://127.0.0.1:8000/EventDatabase/
   - http://127.0.0.1:8000/profiles/
-- frontend:  http://localhost:3000
+- frontend:  
+  - http://localhost:3000
