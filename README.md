@@ -17,12 +17,9 @@ On terminal:
 - npm install react-router-dom
 - npm install i
 
-* Create .env file in frontend folder and copy and paste:
+* Create .env file in frontend folder and copy and paste :
 ```env
-REACT_APP_googleAPIKey=AIzaSyAfwuhpEPloICBoNSQKGBBEYVJzAYqyzYU
-REACT_APP_AUTH0_DOMAIN=dev-bmdkw2alvze2t0ic.us.auth0.com
-REACT_APP_AUTH0_CLIENT_ID=2pqYoCbTlqEzk4HhhONnyBVRnTRJKnj3
-```
+...ask for the variables
 ---
 
 ## Host the app and Testing:
