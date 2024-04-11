@@ -82,7 +82,8 @@ def EventView(request):
         if serializer.is_valid():
             serializer.save()
             #create discussion for that event now
-            serializer.createDiscussion()
+            event = serializer.create()
+            event.createDiscussion()
             return Response(status = status.HTTP_201_CREATED)
         print(serializer.errors)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
@@ -217,16 +218,22 @@ def DiscussionView(request, event_name):
 
     return Response(serializer.data)
 
-@api_view(['GET', 'POST'])
+@api_view(['GET'])
 def CommentView(request, event_name):
     if request.method == 'GET':
         comments = Comment.getComments(event_name)
-        comSerializer = CommentSerializer(comments, many = True)
-        return Response(comSerializer.data)
-    elif request.method == 'POST':
-        serializer = CommentSerializer(data = request.data)
+        serializer = CommentSerializer(comments, many = True)
+        return Response(serializer.data)
+    return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def PostComment(request, event_name, profile_name):
+    if request.method == 'POST':
+        serializer = CommentSerializer2(data = request.data)
         if serializer.is_valid():
-            serializer.save()
+            s_body = serializer.body()
+            c = Comment(discussion = Discussion.getDiscussion(event_name), body = s_body, author = UserProfile.objects.get(profileName = profile_name))
+            c.save()
             return Response(status= status.HTTP_201_CREATED)
     print(serializer.errors)
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)

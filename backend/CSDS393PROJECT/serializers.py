@@ -10,17 +10,8 @@ class ProfileSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
 
     #profiles = ProfileSerializer(many = True, source = 'UserProfile')
-
-    def createDiscussion(self):
-        print("event is: ")
-        discussion = Discussion(
-            event = self,
-            created_at = datetime.now(),
-            body = "hurrrr"
-        )
-        print("discussion is: ")
-        discussion.save()
-
+    def create(self):
+        return Event(**self.validated_data)
     class Meta:
         model = Event
         # I removed date and added profiles for now
@@ -46,8 +37,16 @@ class DiscussionSerializer2(serializers.ModelSerializer):
         model = Discussion
         fields = ('event', 'created_at', 'body')
 
+
 class CommentSerializer(serializers.ModelSerializer):
-    discussion = DiscussionSerializer1()
     class Meta:
         model = Comment
         fields = ('discussion', 'body', 'timestamp', 'author')
+
+class CommentSerializer2(serializers.ModelSerializer):
+
+    def body(self):
+        return (str(self.validated_data))
+    class Meta:
+        model = Comment
+        fields = ('body')

@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Count
 from geopy.geocoders import GoogleV3
+from datetime import datetime
 # Create your models here.
 
 #Model for UserProfile, primary key == id (premade by Django and auto set to primary_key == True)
@@ -42,7 +43,9 @@ class Event(models.Model):
     # add field for image file
     image = models.ImageField(default = 'default.jpg')    
 
-
+    def createDiscussion(self):
+        discussion = Discussion(event = self, body = "")
+        discussion.save()
 
     def latitude(self):
         geolocator = GoogleV3('AIzaSyAfwuhpEPloICBoNSQKGBBEYVJzAYqyzYU')
