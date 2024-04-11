@@ -208,6 +208,6 @@ def eventCoords(request):
 
 @api_view(['GET'])
 def profilesearch(request, user_name):
-    profile = UserProfile.objects.filter(username = user_name)
+    profile = UserProfile.objects.get(username = user_name)
     serializer = ProfileSerializer(profile)
     return Response (serializer.data)

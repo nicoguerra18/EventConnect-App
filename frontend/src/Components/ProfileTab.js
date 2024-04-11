@@ -21,10 +21,11 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 
 function ProfileTab() {
-  const { user, isAuthenticated } = useAuth0();
+  const { isAuthenticated } = useAuth0();
 
   return (
-    isAuthenticated && (
+    ( 
+      isAuthenticated && (
       <Container>
         <Row className="mx-auto">
           <Col>
@@ -47,26 +48,34 @@ function ProfileTab() {
           </Col>
         </Row>
       </Container>
-    ) 
+      ) 
+    )
     
     ||
 
-    !isAuthenticated && (
+    (
+      !isAuthenticated && (
       <Container>
         <Row>
          <Col className="text-center" >
-         <Card style={{ width: '18rem' }}>
-          <LoginButton />
+          <Card style={{margin: 50 }}>
+            <h1 style={{margin: 50 }}> You are not Signed in</h1>
+            <Row>
+              <Col>
+                <LoginButton />
+              </Col>
+            </Row>
           </Card>
          </Col>
         </Row>
       </Container>
-      
+      )
     )
   );
 }
 
 function PersonalInfo() {
+  
   // call to backend to update profile info
   // update profile info in user profile
   const [formData, setFormData] = useState({
@@ -82,12 +91,14 @@ function PersonalInfo() {
   const toggleShowSuccessToast = () => setShowSuccessToast(!showSuccessToast);
   const toggleShowErrorToast = () => setShowErrorToast(!showErrorToast);
 
+  const { user } = useAuth0();
+
   // DEAFULT PROFILE IS 1******
   // currently it always calls profile 1 data
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await fetch("http://localhost:8000/profiles/2/");
+        const response = await fetch("http://localhost:8000/profilesearch/" + user.given_name.toLowerCase());
         if (response.ok) {
           const profileData = await response.json();
           setFormData(profileData);
@@ -131,7 +142,7 @@ function PersonalInfo() {
       formDataToSend.append("profilePicture", formData.profilePicture);
       console.log(formData.profilePicture);
 
-      const response = await fetch("http://localhost:8000/profiles/2/", {
+      const response = await fetch("http://localhost:8000/profilesearch/" + user.given_name.toLowerCase(), {
         method: "PATCH",
         body: formDataToSend,
       });
@@ -219,6 +230,7 @@ function PersonalInfo() {
           >
             Edit/Save
           </Button>
+
           <LogoutButton />
         </Form>
       </Card>
