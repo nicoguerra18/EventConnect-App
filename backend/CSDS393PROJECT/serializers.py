@@ -10,7 +10,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
 
     #profiles = ProfileSerializer(many = True, source = 'UserProfile')
-    def create(self):
+    def toEvent(self):
         return Event(**self.validated_data)
     class Meta:
         model = Event
