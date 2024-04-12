@@ -10,9 +10,15 @@ import GoogleMapsComponent from "./GoogleMapsComponent";
 import DiscusionCard from "./DisucssionCard";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Card } from 'react-bootstrap';
+import { Container } from "react-bootstrap"
+import LoginButton  from "./LoginButton";
 
 function Page() {
-  const sampleComments = [
+  const { isAuthenticated } = useAuth0();
+
+    const sampleComments = [
     {
       username: "user1",
       comment: "This is the first comment.",
@@ -38,6 +44,7 @@ function Page() {
   };
 
   return (
+    isAuthenticated && (
     <div>
       <NavHeader />
       <Row>
@@ -67,6 +74,27 @@ function Page() {
         </Col>
       </Row>
     </div>
+    )
+    ||
+
+    (
+      !isAuthenticated && (
+      <Container>
+        <Row>
+         <Col className="text-center" >
+          <Card style={{margin: 50 }}>
+            <h1 style={{margin: 50 }}> You are not Signed in</h1>
+            <Row>
+              <Col>
+                <LoginButton />
+              </Col>
+            </Row>
+          </Card>
+         </Col>
+        </Row>
+      </Container>
+      )
+    )
   );
 }
 
