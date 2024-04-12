@@ -1,19 +1,24 @@
 import React, { useState } from "react";
-import { Toast, Button, Form, ToastBody } from "react-bootstrap";
+import { Toast, Button, Form, ToastBody, Container } from "react-bootstrap";
 
 function ToastMessage({ comment }) {
+  const currDate = new Date().toLocaleDateString();
+  const currTime = new Date().toLocaleTimeString();
   return (
     <Toast>
       <Toast.Header closeButton={false}>
         <img></img>
-        <strong className="me-auto">username</strong>
-        <small className="text-muted">time posted</small>
+        <strong className="me-auto">usernameeee</strong>
+        <small className="text-muted">
+          {currTime} / {currDate},
+        </small>
       </Toast.Header>
       <ToastBody>{comment}</ToastBody>
     </Toast>
   );
 }
 
+// pass in event discussion view data
 function DiscussionCard() {
   const [newComment, setNewComment] = useState("");
   const [comments, setComments] = useState([]);
@@ -25,12 +30,20 @@ function DiscussionCard() {
     }
   };
 
+  // Fetch event discussion data to populate discussion card
+  // Be able to post a new comment to the eventDiscussion view
+
   return (
     <div>
-      {/* Render toast messages for each comment */}
-      {comments.map((comment, index) => (
-        <ToastMessage key={index} comment={comment} />
-      ))}
+      <div style={{ height: "350px", overflowY: "auto" }}>
+        <Container>
+          {comments.map((comment, index) => (
+            <ToastMessage key={index} comment={comment} />
+          ))}
+        </Container>
+      </div>
+
+      <br />
       <Form.Group controlId="formNewComment">
         <Form.Control
           as="textarea"
