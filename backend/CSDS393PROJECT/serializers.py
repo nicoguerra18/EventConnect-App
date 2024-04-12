@@ -48,7 +48,9 @@ class CommentSerializer(serializers.ModelSerializer):
 class CommentSerializer2(serializers.ModelSerializer):
 
     def body(self):
-        return (str(self.validated_data))
+        body = str(self.validated_data)
+        body.replace('body: ', "")
+        return (body)
     class Meta:
         model = Comment
         fields = ('body',)
