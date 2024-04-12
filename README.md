@@ -20,7 +20,7 @@ On terminal:
 * Create .env file in frontend folder and copy and paste :
 ```env
 ...ask for the variables
----
+```
 
 ## Host the app and Testing:
 On terminal
