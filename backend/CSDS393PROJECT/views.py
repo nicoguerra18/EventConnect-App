@@ -82,7 +82,7 @@ def EventView(request):
         if serializer.is_valid():
             serializer.save()
             event_name = serializer.validated_data.get('name', '')
-            e = Event.get(name = event_name)
+            e = Event.objects.get(name = event_name)
             disc = Discussion(event = e, body = '')
             disc.save()
             return Response(status = status.HTTP_201_CREATED)
