@@ -7,7 +7,6 @@ import ProfileTab from "./ProfileTab";
 import Navbar from "react-bootstrap/Navbar";
 import LightModeToggle from "./LightModeToggle";
 import GoogleMapsComponent from "./GoogleMapsComponent";
-import DiscusionCard from "./DisucssionCard";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -63,12 +62,6 @@ function Page() {
             </Tab>
             <Tab eventKey="eventsMap" title="Events Map">
               <GoogleMapsComponent />
-            </Tab>
-            <Tab eventKey="discussionCard" title="Discussion">
-              <DiscusionCard
-                comments={comments}
-                onAddComment={handleAddComment}
-              />
             </Tab>
           </Tabs>
         </Col>

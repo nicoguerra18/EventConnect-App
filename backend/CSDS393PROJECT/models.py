@@ -4,12 +4,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Count
 from geopy.geocoders import GoogleV3
+from datetime import datetime
 # Create your models here.
 
 #Model for UserProfile, primary key == id (premade by Django and auto set to primary_key == True)
 class UserProfile(models.Model):
     #user = models.OneToOneField(User, on_delete = models.CASCADE)
-    profileName = models.CharField(max_length = 100, null = True, blank = True)
+    profileName = models.CharField(max_length = 100, null = True, blank = True, unique = True)
     username = models.CharField(max_length = 100, unique = True )
     password = models.CharField(max_length = 100, null = True, blank = True)
     bio = models.TextField()
@@ -30,7 +31,7 @@ class UserProfile(models.Model):
 
 #Model for Events, primary key == id, same as above
 class Event(models.Model):
-    name = models.CharField(max_length = 150)
+    name = models.CharField(max_length = 150, unique = True)
     # date = models.DateField()
     date = models.CharField(max_length = 150)
     #location = LocationField(based_fields = ['city'], initial= Point(41.5043, 81.6084), zoom = 7) need to figure out installing gdal and getting it to work
@@ -42,6 +43,9 @@ class Event(models.Model):
     # add field for image file
     image = models.ImageField(default = 'default.jpg')    
 
+    def createDiscussion(self):
+        discussion = Discussion(event = self, body = "")
+        discussion.save()
 
     def latitude(self):
         geolocator = GoogleV3('AIzaSyAfwuhpEPloICBoNSQKGBBEYVJzAYqyzYU')
@@ -97,3 +101,36 @@ class Attendance(models.Model):
     def changeAttendance(event_name, profile_name, input):
         attendance = Attendance.objects.get(attendee_profileName = profile_name, event__name = event_name)
         attendance.is_attending = input
+
+
+class Discussion(models.Model):
+
+    event = models.OneToOneField(Event, on_delete= models.CASCADE, to_field = 'name', db_column="event")
+    created_at = models.DateTimeField(auto_now_add=True)
+    body = models.TextField()
+
+    def __str__(self):
+        return self.event.__str__()
+    
+    def getDiscussion(event_name):
+        discussion = Discussion.objects.get(event__name = event_name)
+        return discussion
+
+class Comment(models.Model):
+    discussion = models.ForeignKey(Discussion, on_delete = models.CASCADE, to_field = 'event', db_column= "discussion")
+    body = models.CharField(max_length= 300)
+    #parent_response = models.ForeignKey('self', null = True, blank = True, on_delete=models.CASCADE)
+    #timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp =  models.CharField(max_length = 150)
+    author = models.ForeignKey(UserProfile, to_field = 'profileName', on_delete= models.CASCADE)
+
+    def __str__(self):
+        return self.body[:32]
+    
+    def getEventName(self):
+        return self.discussion.event.name
+
+    def getComments(event_name):
+        comments = Comment.objects.filter(discussion__event__name = event_name)
+        return comments
+
