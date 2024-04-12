@@ -224,6 +224,7 @@ def CommentView(request, event_name):
         comments = Comment.getComments(event_name)
         serializer = CommentSerializer(comments, many = True)
         return Response(serializer.data)
+    print(serializer.errors)
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])

@@ -120,7 +120,7 @@ class Comment(models.Model):
     discussion = models.ForeignKey(Discussion, on_delete = models.CASCADE, to_field = 'event', db_column= "discussion")
     body = models.CharField(max_length= 300)
     #parent_response = models.ForeignKey('self', null = True, blank = True, on_delete=models.CASCADE)
-    # timestamp = models.DateTimeField(auto_now_add=True)
+    #timestamp = models.DateTimeField(auto_now_add=True)
     timestamp =  models.CharField(max_length = 150)
     author = models.ForeignKey(UserProfile, to_field = 'profileName', on_delete= models.CASCADE)
 

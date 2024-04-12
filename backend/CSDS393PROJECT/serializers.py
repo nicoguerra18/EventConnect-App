@@ -39,6 +39,8 @@ class DiscussionSerializer2(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    
+    discussion = DiscussionSerializer1()
     class Meta:
         model = Comment
         fields = ('discussion', 'body', 'timestamp', 'author')
@@ -49,4 +51,4 @@ class CommentSerializer2(serializers.ModelSerializer):
         return (str(self.validated_data))
     class Meta:
         model = Comment
-        fields = ('body')
+        fields = ('body',)

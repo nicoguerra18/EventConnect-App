@@ -30,6 +30,7 @@ function DiscussionCard({ eventName, eventId }) {
         `http://localhost:8000/discussion/${eventName}/comments/`
       );
       const commentData = await response.json();
+      console.log("success getting comment data" + commentData);
       setComments(commentData);
     } catch (error) {
       console.error("Error fetching event data:", error);
@@ -39,14 +40,14 @@ function DiscussionCard({ eventName, eventId }) {
   const handleAddComment = async () => {
     if (newComment.trim() !== "") {
       const newCommentObj = {
-        discussion: eventName,
+        //discussion: eventName,
         body: newComment,
-        author: "nico",
+        //author: "nico",
         timestamp: new Date().toISOString(),
       };
       try {
         const response = await fetch(
-          `http://localhost:8000/discussion/${eventName}/comments/`,
+          `http://localhost:8000/comment/nico/${eventName}/`,
           {
             method: "POST",
             headers: {
