@@ -1,6 +1,6 @@
 # EventConnect-App Test Suite
 
-This document outlines the test cases for the EventConnect application. Each test case is designed based on the acceptance criteria of its respective user story.
+This document is the Test suite for sprint2 that outlines the test cases. Each test case is designed based on the acceptance criteria of its respective user story.
 
 ## Test Case: TC_Profile_01 - Profile Creation and Data Storage
 
@@ -27,9 +27,13 @@ This document outlines the test cases for the EventConnect application. Each tes
 - The profile picture is uploaded and visible.
 
 **Actual Results**:
-*(To be filled after execution)*
-
----
+- The frontend display correct fields: name, username, password, bio, and upload a profile picture.
+- Backend successfully response to update bio request
+[12/Apr/2024 00:26:21] "PATCH /profiles/2/ HTTP/1.1" 400 94
+[12/Apr/2024 00:26:21] "GET /eventcoords/ HTTP/1.1" 200 5575
+[12/Apr/2024 00:26:30] "PATCH /profiles/2/ HTTP/1.1" 200 203
+- The new information and profile picture were successufully updated.
+- 100% pass the test
 
 ## Test Case: TC_EventCreate_01 - Event Creation and Listing
 
@@ -53,9 +57,20 @@ This document outlines the test cases for the EventConnect application. Each tes
 - Upon submitting the form, the new event is visible in the public events list with the correct details.
 
 **Actual Results**:
-*(To be filled after execution)*
+- The event creation form is accessible and can be filled out.
+- Upon submitting the form, the new event is visible in the public events list with the correct details.
+- Frontend event is correctly displayed
+- The event is created after submitting the info
+[12/Apr/2024 01:50:47] "POST /EventDatabase/ HTTP/1.1" 400 139
+[12/Apr/2024 01:50:48] "GET /profiles/2/ HTTP/1.1" 200 203
+[12/Apr/2024 01:50:48] "GET /createdevents/nico/ HTTP/1.1" 200 2428
+[12/Apr/2024 01:50:48] "GET /EventDatabase/ HTTP/1.1" 200 4554
+[12/Apr/2024 01:50:48] "GET /media/profile_pics/CEMU_Screenshot_2022.08.23_-_01.22.21.75_TAXV94t.png HTTP/1.1" 200 3415214
+[12/Apr/2024 01:50:48] "GET /eventsattending/nico/ HTTP/1.1" 200 610
+[12/Apr/2024 01:50:52] "GET /eventcoords/ HTTP/1.1" 200 5575
+- 100% pass the test
 
-
+---
 **User Story**: Log in system
 **URL**: [Log in system Issue](https://github.com/nicoguerra18/EventConnect-App/issues/6)
 **Acceptance Criteria**:
@@ -76,7 +91,7 @@ This document outlines the test cases for the EventConnect application. Each tes
 - With invalid credentials, the user receives an appropriate error message and is not granted access.
 
 **Actual Results**:
-*(To be filled after execution)*
+- Still working
 
 ---
 
@@ -103,8 +118,16 @@ This document outlines the test cases for the EventConnect application. Each tes
 - Upon clicking an event, a detailed view is presented with more information.
 
 **Actual Results**:
-*(To be filled after execution)*
-
+- The event view window displays a list of current events.
+- Each event in the list shows relevant information such as title, date, and location.
+- Upon clicking an event, a detailed view is presented with more information.
+[12/Apr/2024 01:53:58] "GET /createdevents/nico/ HTTP/1.1" 200 2428
+[12/Apr/2024 01:53:58] "GET /profiles/2/ HTTP/1.1" 200 203
+[12/Apr/2024 01:53:58] "GET / HTTP/1.1" 404 5054
+[12/Apr/2024 01:53:58] "GET /EventDatabase/ HTTP/1.1" 200 4554
+[12/Apr/2024 01:53:58] "GET /eventsattending/nico/ HTTP/1.1" 200 610
+[12/Apr/2024 01:54:01] "GET /eventcoords/ HTTP/1.1" 200 5575
+- 100% pass the test
 ---
 
 ## Test Case: TC_HomePage_01 - Navigation to Various Sections
@@ -127,6 +150,10 @@ This document outlines the test cases for the EventConnect application. Each tes
 - Each link in the navigation bar redirects to the correct section without errors.
 
 **Actual Results**:
+- The home page includes a navigation bar or menu that is functional.
+- Each link in the navigation bar redirects to the correct section without errors.
+- 100% pass the test
+---
 **User Story**: Search function
 **URL**: [Search function Issue](https://github.com/nicoguerra18/EventConnect-App/issues/9)
 **Acceptance Criteria**:
@@ -148,7 +175,10 @@ This document outlines the test cases for the EventConnect application. Each tes
 - If no events match the search criteria, a 'No results found' message is displayed.
 
 **Actual Results**:
-*(To be filled after execution)*
+- Typing in the search bar filters the events list according to the input in real-time.
+
+- Enter full name of the existing event match the searching criteria
+- If no event match, the home page display default events
 
 ---
 
@@ -176,6 +206,9 @@ This document outlines the test cases for the EventConnect application. Each tes
 - The user's joined events list is updated instantly without needing to refresh the page.
 
 **Actual Results**:
+- frontend is 100% done
+- the even will be added in sprint4
+
 
 
 **User Story**: Existing events view
@@ -201,7 +234,9 @@ This document outlines the test cases for the EventConnect application. Each tes
 - The list of joined events updates in real-time when joining or leaving events.
 
 **Actual Results**:
-*(To be filled after execution)*
+- The profile page shows a list of events that the user has joined.
+- Detail buttons/links for each event are functional and display more information as expected.
+- The list of joined events updates in real-time when joining or leaving events.
 
 ---
 
@@ -226,7 +261,9 @@ This document outlines the test cases for the EventConnect application. Each tes
 - All application pages function correctly in both modes without any visual or functional issues.
 
 **Actual Results**:
-*(To be filled after execution)*
+- The dark mode toggle changes the interface between dark and light themes.
+- All application pages function correctly in both modes without any visual or functional issues.
+
 
 ---
 
@@ -252,6 +289,17 @@ This document outlines the test cases for the EventConnect application. Each tes
 - Invalid form data is not accepted, and the backend responds with appropriate error messages.
 
 **Actual Results**:
+- Valid form data is processed and stored correctly by the backend.
+- Invalid form data is not accepted, and the backend responds with appropriate error messages.
+[12/Apr/2024 00:26:21] "PATCH /profiles/2/ HTTP/1.1" 400 94
+[12/Apr/2024 00:26:21] "GET /eventcoords/ HTTP/1.1" 200 5575
+[12/Apr/2024 00:26:30] "PATCH /profiles/2/ HTTP/1.1" 200 203
+
+bad request:
+[12/Apr/2024 01:58:14] "GET /createdevents/nico/ HTTP/1.1" 200 2428
+Not Found: /
+
+---
 **User Story**: Backend database
 **URL**: [Backend database Issue](https://github.com/nicoguerra18/EventConnect-App/issues/14)
 **Acceptance Criteria**:
@@ -273,3 +321,18 @@ This document outlines the test cases for the EventConnect application. Each tes
 - Unauthorized access attempts are successfully blocked, ensuring data security.
 
 **Actual Results**:
+- The database stores data in a consistent, structured format.
+- Reports and analytics can be generated accurately based on database queries.
+- currently, the account function is not fully established
+
+[12/Apr/2024 01:53:58] "GET / HTTP/1.1" 404 5054
+[12/Apr/2024 01:53:58] "GET /EventDatabase/ HTTP/1.1" 200 4554
+[12/Apr/2024 01:53:58] "GET /eventsattending/nico/ HTTP/1.1" 200 610
+[12/Apr/2024 01:54:01] "GET /eventcoords/ HTTP/1.1" 200 5575
+[12/Apr/2024 01:57:56] "GET /profiles/2/ HTTP/1.1" 200 203
+[12/Apr/2024 01:57:56] "GET /createdevents/nico/ HTTP/1.1" 200 2428
+[12/Apr/2024 01:57:56] "GET /EventDatabase/ HTTP/1.1" 200 4554
+[12/Apr/2024 01:57:56] "GET /eventsattending/nico/ HTTP/1.1" 200 610
+[12/Apr/2024 01:57:59] "GET /eventcoords/ HTTP/1.1" 200 5575
+[12/Apr/2024 01:58:14] "GET /profiles/2/ HTTP/1.1" 200 203
+[12/Apr/2024 01:58:14] "GET /createdevents/nico/ HTTP/1.1" 200 2428
