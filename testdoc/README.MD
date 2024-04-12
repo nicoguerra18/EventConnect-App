@@ -1,6 +1,6 @@
 # Test Documentation for EventConnect-App
 
-This directory contains the test suites and test cases for the EventConnect application, organized by sprint iterations. Each markdown file within this directory corresponds to a specific sprint and includes test cases designed based on the user stories planned for that sprint.
+This directory contains the test suites and test cases for the EventConnect-App, organized by sprint iterations. Each markdown file within this directory corresponds to a specific sprint and includes test cases designed based on the user stories planned for that sprint.
 
 ## Overview
 
