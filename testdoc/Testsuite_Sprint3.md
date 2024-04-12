@@ -19,8 +19,10 @@
 - The event icon stands out from other icons, making it easily identifiable.
 
 **Actual Results**:
-*(To be filled after execution)*
-
+- An icon for the new event appears on the map exactly where the event is located.
+- The event icon stands out from other icons, making it easily identifiable.
+- the map api where call successfully
+- 100% pass
 ---
 
 ## Test Case: TC_EventDetailsFromMap_01 - Accessing Event Details from Map
@@ -43,8 +45,9 @@
 - The dialog box correctly displays the event's name, time, location, and a description.
 
 **Actual Results**:
-*(To be filled after execution)*
-
+- Clicking an event icon triggers a dialog box to appear without any issues.
+- The dialog box correctly displays the event's name, time, location, and a description.
+- 100% pass
 ---
 
 ## Test Case: TC_InteractionInEventDialog_01 - Interaction Component Functionality
@@ -67,7 +70,8 @@
 - Messages and requests are sent and received in real-time without any errors.
 
 **Actual Results**:
-*(To be filled after execution)*
+- The interaction component within the event dialog allows for smooth communication between event attendees.
+- Messages and requests are sent and received in real-time without any errors.
 
 ---
 
@@ -91,4 +95,4 @@
 - Events outside the specified radius are not shown, confirming the location-based search functionality.
 
 **Actual Results**:
-*(To be filled after execution)*
+-
