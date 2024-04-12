@@ -53,7 +53,7 @@ function DiscussionCard({ eventName, eventId }) {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(newCommentObj),
+            body: JSON.stringify(newCommentObj), // Stringify the object
           }
         );
         console.log(newCommentObj);

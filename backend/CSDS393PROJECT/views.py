@@ -238,3 +238,17 @@ def PostComment(request, event_name, profile_name):
             return Response(status= status.HTTP_201_CREATED)
     print(serializer.errors)
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def PostComment(request, event_name, profile_name):
+    if request.method == 'POST':
+        serializer = CommentSerializer2(data=request.data)
+        if serializer.is_valid():
+            # Extract the body from the validated data
+            body = serializer.validated_data.get('body', '')
+            # Create the comment object
+            c = Comment(discussion=Discussion.getDiscussion(event_name), body=body, author=UserProfile.objects.get(profileName=profile_name))
+            c.save()
+            return Response(status=status.HTTP_201_CREATED)
+        # If serializer is not valid, return errors
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
