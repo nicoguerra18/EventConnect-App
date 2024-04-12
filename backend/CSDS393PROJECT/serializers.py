@@ -49,7 +49,8 @@ class CommentSerializer2(serializers.ModelSerializer):
 
     def body(self):
         body = str(self.validated_data)
-        body.replace('body: ', "")
+        body.replace("{'body': '", "")
+        body.replace("'}", "")
         return (body)
     class Meta:
         model = Comment
