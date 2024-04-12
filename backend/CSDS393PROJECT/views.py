@@ -205,3 +205,9 @@ def eventCoords(request):
     results = [ob.as_json() for ob in events]
     serialized_q = json.dumps(results, cls = DjangoJSONEncoder)
     return Response(serialized_q)
+
+@api_view(['GET'])
+def profilesearch(request, user_name):
+    profile = UserProfile.objects.get(username = user_name)
+    serializer = ProfileSerializer(profile)
+    return Response (serializer.data)

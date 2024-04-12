@@ -35,7 +35,8 @@ urlpatterns = [
     path('eventsattending/<str:profile_name>/', views.EventsAttending),
     path('changeattendance/<str:event_name>/<str:profile_name>/', views.changeAttending),
     path('createdevents/<str:user_name>/', views.CreatedEvents),
-    path('eventcoords/', views.eventCoords)
+    path('eventcoords/', views.eventCoords),
+    path('profilesearch/<str:user_name>', views.profilesearch)
 ]
 
 urlpatterns= format_suffix_patterns(urlpatterns)

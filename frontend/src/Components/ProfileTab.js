@@ -13,37 +13,69 @@ import { useEffect } from "react";
 import Toast from "react-bootstrap/Toast";
 import defaultImage from "./default.jpg";
 import JoinedEvents from "./JoinedEvents";
+import LoginButton from "./LoginButton";
+import LogoutButton from "./LogoutButton";
+import { useAuth0 } from '@auth0/auth0-react';
 
 // NEED TO ADD A FILE IN ORDER FOR FOR THE PUT REQUEST TO GO THROUGH
 
+
 function ProfileTab() {
+  const { isAuthenticated } = useAuth0();
+
   return (
-    <Container>
-      <Row className="mx-auto">
-        <Col>
-          <Row>
-            <PersonalInfo />
-          </Row>
-        </Col>
-        <Col>
-          <Tabs defaultActiveKey="MyEvents" id="ProfileTabs" className="mb-3">
-            <Tab eventKey="MyEvents" title="Created Events">
-              <MyEvents />
-            </Tab>
-            <Tab eventKey="eventsJoined" title="Events Joined">
-              <JoinedEvents />
-            </Tab>
-            <Tab eventKey="MyGroups" title="My Groups">
-              Coming soon in feature 3!
-            </Tab>
-          </Tabs>
-        </Col>
-      </Row>
-    </Container>
+    ( 
+      isAuthenticated && (
+      <Container>
+        <Row className="mx-auto">
+          <Col>
+            <Row>
+              <PersonalInfo />
+            </Row>
+          </Col>
+          <Col>
+            <Tabs defaultActiveKey="MyEvents" id="ProfileTabs" className="mb-3">
+              <Tab eventKey="MyEvents" title="Created Events">
+                <MyEvents />
+              </Tab>
+              <Tab eventKey="eventsJoined" title="Events Joined">
+                <JoinedEvents />
+              </Tab>
+              <Tab eventKey="MyGroups" title="My Groups">
+                Coming soon in feature 3!
+              </Tab>
+            </Tabs>
+          </Col>
+        </Row>
+      </Container>
+      ) 
+    )
+    
+    ||
+
+    (
+      !isAuthenticated && (
+      <Container>
+        <Row>
+         <Col className="text-center" >
+          <Card style={{margin: 50 }}>
+            <h1 style={{margin: 50 }}> You are not Signed in</h1>
+            <Row>
+              <Col>
+                <LoginButton />
+              </Col>
+            </Row>
+          </Card>
+         </Col>
+        </Row>
+      </Container>
+      )
+    )
   );
 }
 
 function PersonalInfo() {
+  
   // call to backend to update profile info
   // update profile info in user profile
   const [formData, setFormData] = useState({
@@ -59,12 +91,14 @@ function PersonalInfo() {
   const toggleShowSuccessToast = () => setShowSuccessToast(!showSuccessToast);
   const toggleShowErrorToast = () => setShowErrorToast(!showErrorToast);
 
+  const { user } = useAuth0();
+
   // DEAFULT PROFILE IS 1******
   // currently it always calls profile 1 data
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await fetch("http://localhost:8000/profiles/2/");
+        const response = await fetch("http://localhost:8000/profilesearch/" + user.given_name.toLowerCase());
         if (response.ok) {
           const profileData = await response.json();
           setFormData(profileData);
@@ -108,7 +142,7 @@ function PersonalInfo() {
       formDataToSend.append("profilePicture", formData.profilePicture);
       console.log(formData.profilePicture);
 
-      const response = await fetch("http://localhost:8000/profiles/2/", {
+      const response = await fetch("http://localhost:8000/profilesearch/" + user.given_name.toLowerCase(), {
         method: "PATCH",
         body: formDataToSend,
       });
@@ -196,6 +230,8 @@ function PersonalInfo() {
           >
             Edit/Save
           </Button>
+
+          <LogoutButton />
         </Form>
       </Card>
 
