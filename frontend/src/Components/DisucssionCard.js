@@ -1,40 +1,80 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Toast, Button, Form, ToastBody, Container } from "react-bootstrap";
+import CSRFToken from "./crftoken";
 
 function ToastMessage({ comment }) {
-  const currDate = new Date().toLocaleDateString();
-  const currTime = new Date().toLocaleTimeString();
+  const timestamp = new Date(comment.timestamp).toLocaleString();
   return (
     <Toast>
       <Toast.Header closeButton={false}>
-        <img></img>
-        <strong className="me-auto">usernameeee</strong>
-        <small className="text-muted">
-          {currTime} / {currDate},
-        </small>
+        <strong className="me-auto">{comment.author}</strong>
+        <small className="text-muted">{timestamp}</small>
       </Toast.Header>
-      <ToastBody>{comment}</ToastBody>
+      <ToastBody>{comment.body}</ToastBody>
     </Toast>
   );
 }
 
-// pass in event discussion view data
-function DiscussionCard() {
+function DiscussionCard({ eventName, eventId }) {
   const [newComment, setNewComment] = useState("");
   const [comments, setComments] = useState([]);
 
-  const handleAddComment = () => {
-    if (newComment.trim() !== "") {
-      setComments([...comments, newComment]); // Add new comment to the comments array
-      setNewComment(""); // Clear the new comment input field
+  // Get all comments for this discussion in order to populate the disucssion with previous comments
+  useEffect(() => {
+    fetchCommentData();
+  }, [eventName]); // Fetch comments when eventName changes
+
+  const fetchCommentData = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/discussion/${eventName}/comments/`
+      );
+      const commentData = await response.json();
+      console.log("success getting comment data" + commentData);
+      setComments(commentData);
+    } catch (error) {
+      console.error("Error fetching event data:", error);
     }
   };
 
-  // Fetch event discussion data to populate discussion card
-  // Be able to post a new comment to the eventDiscussion view
+  const handleAddComment = async () => {
+    if (newComment.trim() !== "") {
+      const newCommentObj = {
+        //discussion: eventName,
+        body: newComment,
+        //author: "nico",
+        timestamp: new Date().toISOString(),
+      };
+      try {
+        const response = await fetch(
+          `http://localhost:8000/comment/nico/${eventName}/`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newCommentObj), // Stringify the object
+          }
+        );
+        console.log(newCommentObj);
+
+        if (!response.ok) {
+          throw new Error("Failed to add comment");
+        }
+
+        // Refresh comments after adding
+        fetchCommentData();
+
+        setNewComment(""); // Clear the comment input
+      } catch (error) {
+        console.error("Error adding comment:", error);
+      }
+    }
+  };
 
   return (
     <div>
+      <CSRFToken />
       <div style={{ height: "350px", overflowY: "auto" }}>
         <Container>
           {comments.map((comment, index) => (
