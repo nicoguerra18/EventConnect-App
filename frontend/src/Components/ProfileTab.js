@@ -17,7 +17,6 @@ import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import { useAuth0 } from '@auth0/auth0-react';
 
-
 // NEED TO ADD A FILE IN ORDER FOR FOR THE PUT REQUEST TO GO THROUGH
 
 
@@ -87,14 +86,6 @@ function PersonalInfo() {
     profilePicture: "",
   });
 
-  const [ newUser ] = useState({
-    profileName: "John",
-    username: '',
-    password: "password",
-    bio: "Hello World!",
-    profilePicture: defaultImage,
-  });
-
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [showErrorToast, setShowErrorToast] = useState(false);
   const toggleShowSuccessToast = () => setShowSuccessToast(!showSuccessToast);
@@ -107,43 +98,11 @@ function PersonalInfo() {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        console.log(user.email);
-        const response = await fetch("http://localhost:8000/profilesearch/" + user.email);
+        const response = await fetch("http://localhost:8000/profilesearch/" + user.given_name.toLowerCase());
         if (response.ok) {
           const profileData = await response.json();
           setFormData(profileData);
-        } else if (response.status === 500){
-          /* create new account*/
-          console.log("new user found!");
-          //send to database
-          const createNewProfile = async () => {
-            try {
-              const response = await fetch(`http://localhost:8000/profiles/`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                profileName: "John",
-                username: user.email, // Update username to user.email
-                password: "password",
-                bio: "Hello World!",
-                profilePicture: defaultImage,
-              }),
-            });
-          
-              if (response.ok) {
-                window.location.reload(); // Reload the page after joining the event
-              } else {
-                console.error("Failed to join create new Profile");
-              }
-            } catch (error) {
-              console.error("Error creating new Profile:", error);
-            }
-          };
-
-
-        }else {
+        } else {
           console.error("Failed to fetch profile data");
         }
       } catch (error) {
