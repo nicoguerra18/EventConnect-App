@@ -16,16 +16,15 @@ import JoinedEvents from "./JoinedEvents";
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import { useAuth0 } from '@auth0/auth0-react';
+import InvitesDisplay from "./InvitesDisplay";
 
 // NEED TO ADD A FILE IN ORDER FOR FOR THE PUT REQUEST TO GO THROUGH
-
 
 function ProfileTab() {
   const { isAuthenticated } = useAuth0();
 
   return (
-    ( 
-      isAuthenticated && (
+    (isAuthenticated && (
       <Container>
         <Row className="mx-auto">
           <Col>
@@ -41,6 +40,9 @@ function ProfileTab() {
               <Tab eventKey="eventsJoined" title="Events Joined">
                 <JoinedEvents />
               </Tab>
+              <Tab eventKey="PendingInvites" title="Pending Invites">
+                <InvitesDisplay />
+              </Tab>
               <Tab eventKey="MyGroups" title="My Groups">
                 Coming soon in feature 3!
               </Tab>
@@ -48,34 +50,27 @@ function ProfileTab() {
           </Col>
         </Row>
       </Container>
-      ) 
-    )
-    
-    ||
-
-    (
-      !isAuthenticated && (
+    )) ||
+    (!isAuthenticated && (
       <Container>
         <Row>
-         <Col className="text-center" >
-          <Card style={{margin: 50 }}>
-            <h1 style={{margin: 50 }}> You are not Signed in</h1>
-            <Row>
-              <Col>
-                <LoginButton />
-              </Col>
-            </Row>
-          </Card>
-         </Col>
+          <Col className="text-center">
+            <Card style={{ margin: 50 }}>
+              <h1 style={{ margin: 50 }}> You are not Signed in</h1>
+              <Row>
+                <Col>
+                  <LoginButton />
+                </Col>
+              </Row>
+            </Card>
+          </Col>
         </Row>
       </Container>
-      )
-    )
+    ))
   );
 }
 
 function PersonalInfo() {
-  
   // call to backend to update profile info
   // update profile info in user profile
   const [formData, setFormData] = useState({
@@ -98,7 +93,9 @@ function PersonalInfo() {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await fetch("http://localhost:8000/profilesearch/" + user.given_name.toLowerCase());
+        const response = await fetch(
+          "http://localhost:8000/profilesearch/" + user.given_name.toLowerCase()
+        );
         if (response.ok) {
           const profileData = await response.json();
           setFormData(profileData);
@@ -142,10 +139,13 @@ function PersonalInfo() {
       formDataToSend.append("profilePicture", formData.profilePicture);
       console.log(formData.profilePicture);
 
-      const response = await fetch("http://localhost:8000/profilesearch/" + user.given_name.toLowerCase(), {
-        method: "PATCH",
-        body: formDataToSend,
-      });
+      const response = await fetch(
+        "http://localhost:8000/profilesearch/" + user.given_name.toLowerCase(),
+        {
+          method: "PATCH",
+          body: formDataToSend,
+        }
+      );
 
       if (response.ok) {
         // Profile updated successfully
@@ -170,7 +170,7 @@ function PersonalInfo() {
   return (
     <Row className="mx-auto">
       <Card style={{ width: "34rem" }}>
-        <Card.Title>Your Profile</Card.Title>
+        <Card.Title>Profile</Card.Title>
         <Card.Img
           src={profilePictureUrl || defaultImage}
           alt="Profile Picture"
