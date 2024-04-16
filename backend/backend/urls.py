@@ -36,8 +36,11 @@ urlpatterns = [
     path('changeattendance/<str:event_name>/<str:profile_name>/', views.changeAttending),
     path('createdevents/<str:user_name>/', views.CreatedEvents),
     path('eventcoords/', views.eventCoords),
-    path('profilesearch/<str:user_name>', views.profilesearch)
-]
+    path('profilesearch/<str:user_name>', views.profilesearch),
+    path('discussion/<str:event_name>/', views.DiscussionView),
+    path('discussion/<str:event_name>/comments/', views.CommentView),
+    path('comment/<str:profile_name>/<str:event_name>/', views.PostComment),
+    ]
 
 urlpatterns= format_suffix_patterns(urlpatterns)
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

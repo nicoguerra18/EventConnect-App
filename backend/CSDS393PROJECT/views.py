@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from django.http import HttpRequest
 from rest_framework.decorators import api_view
 from rest_framework import status, viewsets
-from .serializers import ProfileSerializer, EventSerializer, AttendanceSerializer
-from .models import UserProfile, Event, Attendance
+from .serializers import *
+from .models import *
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 import json
@@ -81,12 +81,16 @@ def EventView(request):
         serializer = EventSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            event_name = serializer.validated_data.get('name', '')
+            e = Event.objects.get(name = event_name)
+            disc = Discussion(event = e, body = '')
+            disc.save()
             return Response(status = status.HTTP_201_CREATED)
         print(serializer.errors)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
     
     elif request.method == 'PUT':
-        serializer = EventSerializer(date = request.data)
+        serializer = EventSerializer(data = request.data)
 
 
 @ensure_csrf_cookie
@@ -166,6 +170,8 @@ def AttendingEvent(request, event_name):
 @api_view(['GET'])
 def EventsAttending(request, profile_name):
     queryset = Attendance.getEvents(profile_name)
+    #serializer = EventSerializer(queryset, many = True)
+    #this might also work for showing it as a list
     results =[ob.as_json() for ob in queryset]
     serialized_q = json.dumps(results, cls = DjangoJSONEncoder)
     return Response(serialized_q)
@@ -211,3 +217,32 @@ def profilesearch(request, user_name):
     profile = UserProfile.objects.get(username = user_name)
     serializer = ProfileSerializer(profile)
     return Response (serializer.data)
+@api_view(['GET', 'POST'])
+def DiscussionView(request, event_name):
+    discussion = Discussion.getDiscussion(event_name)
+    serializer = DiscussionSerializer1(discussion)
+
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def CommentView(request, event_name):
+    if request.method == 'GET':
+        comments = Comment.getComments(event_name)
+        serializer = CommentSerializer(comments, many = True)
+        return Response(serializer.data)
+    print(serializer.errors)
+    return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def PostComment(request, event_name, profile_name):
+    if request.method == 'POST':
+        serializer = CommentSerializer2(data=request.data)
+        if serializer.is_valid():
+            # Extract the body from the validated data
+            body = serializer.validated_data.get('body', '')
+            # Create the comment object
+            c = Comment(discussion=Discussion.getDiscussion(event_name), body=body, author=UserProfile.objects.get(profileName=profile_name))
+            c.save()
+            return Response(status=status.HTTP_201_CREATED)
+        # If serializer is not valid, return errors
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

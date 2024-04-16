@@ -7,95 +7,76 @@ import ProfileTab from "./ProfileTab";
 import Navbar from "react-bootstrap/Navbar";
 import LightModeToggle from "./LightModeToggle";
 import GoogleMapsComponent from "./GoogleMapsComponent";
-import DiscusionCard from "./DisucssionCard";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Card } from 'react-bootstrap';
 import { Container } from "react-bootstrap"
 import LoginButton  from "./LoginButton";
+import { Spinner } from "react-bootstrap";
 
 function Page() {
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
+  if (isLoading) {
+    // Display loading spinner while checking authentication status
+    return (
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
+        <Spinner animation="border" role="status" size="md">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
+    );
+  }
 
-    const sampleComments = [
-    {
-      username: "user1",
-      comment: "This is the first comment.",
-    },
-    {
-      username: "user2",
-      comment: "This is the second comment.",
-    },
-    {
-      username: "user3",
-      comment: "This is the third comment.",
-    },
-  ];
-
-  const [comments, setComments] = useState([]);
-
-  useEffect(() => {
-    setComments([...comments, ...sampleComments]);
-  }, []);
-
-  const handleAddComment = (newComment) => {
-    setComments([...comments, newComment]);
-  };
-
-  return (
-    isAuthenticated && (
-    <div>
-      <NavHeader />
-      <Row>
-        <Col>
-          <Tabs
-            defaultActiveKey="home"
-            id="uncontrolled-tab-example"
-            className="mb-3"
-            fill
-          >
-            <Tab eventKey="profile" title="Profile">
-              <ProfileTab />
-            </Tab>
-            <Tab eventKey="home" title="Home">
-              <HomeTab />
-            </Tab>
-            <Tab eventKey="eventsMap" title="Events Map">
-              <GoogleMapsComponent />
-            </Tab>
-            <Tab eventKey="discussionCard" title="Discussion">
-              <DiscusionCard
-                comments={comments}
-                onAddComment={handleAddComment}
-              />
-            </Tab>
-          </Tabs>
-        </Col>
-      </Row>
-    </div>
-    )
-    ||
-
-    (
-      !isAuthenticated && (
+  // Check if the user is authenticated
+  if (isAuthenticated) {
+    return (
+      <div>
+        <NavHeader />
+        <Row>
+          <Col>
+            <Tabs
+              defaultActiveKey="home"
+              id="uncontrolled-tab-example"
+              className="mb-3"
+              fill
+            >
+              <Tab eventKey="profile" title="Profile">
+                <ProfileTab />
+              </Tab>
+              <Tab eventKey="home" title="Home">
+                <HomeTab />
+              </Tab>
+              <Tab eventKey="eventsMap" title="Events Map">
+                <GoogleMapsComponent />
+              </Tab>
+            </Tabs>
+          </Col>
+        </Row>
+      </div>
+    );
+  } else {
+    // Render the sign-in message and login button if the user is not authenticated
+    return (
       <Container>
         <Row>
-         <Col className="text-center" >
-          <Card style={{margin: 50 }}>
-            <h1 style={{margin: 50 }}> You are not Signed in</h1>
-            <Row>
-              <Col>
-                <LoginButton />
-              </Col>
-            </Row>
-          </Card>
-         </Col>
+          <Col className="text-center">
+            <Card style={{ margin: 50 }}>
+              <h1 style={{ margin: 50 }}> You are not Signed in</h1>
+              <Row>
+                <Col>
+                  <LoginButton />
+                </Col>
+              </Row>
+            </Card>
+          </Col>
         </Row>
       </Container>
-      )
-    )
-  );
+    );
+  }
 }
 
 function NavHeader() {

@@ -13,6 +13,7 @@ function EventDialog({
   eventDate,
   eventCreator,
   eventLocation,
+  eventId,
 }) {
   const [show, setShow] = useState(false);
   // const [attendees, setAttendees] = useState(0); // State for number of attendees
@@ -91,7 +92,7 @@ function EventDialog({
           <Row>
             <Modal.Title>Discussion</Modal.Title>
 
-            <DiscussionModal eventName={eventName} />
+            <DiscussionModal eventName={eventName} eventId={eventId} />
           </Row>
         </Modal.Body>
         <Modal.Footer>
@@ -110,7 +111,7 @@ function EventDialog({
   );
 }
 
-function DiscussionModal({ eventName }) {
+function DiscussionModal({ eventName, eventId }) {
   const [show, setShow] = React.useState(false);
 
   const handleClose = () => setShow(false);
@@ -142,7 +143,7 @@ function DiscussionModal({ eventName }) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <DiscussionCard />
+          <DiscussionCard eventName={eventName} eventId={eventId} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

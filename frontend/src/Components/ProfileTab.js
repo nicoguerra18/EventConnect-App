@@ -16,17 +16,15 @@ import JoinedEvents from "./JoinedEvents";
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import { useAuth0 } from '@auth0/auth0-react';
-
+import InvitesDisplay from "./InvitesDisplay";
 
 // NEED TO ADD A FILE IN ORDER FOR FOR THE PUT REQUEST TO GO THROUGH
-
 
 function ProfileTab() {
   const { isAuthenticated } = useAuth0();
 
   return (
-    ( 
-      isAuthenticated && (
+    (isAuthenticated && (
       <Container>
         <Row className="mx-auto">
           <Col>
@@ -42,6 +40,9 @@ function ProfileTab() {
               <Tab eventKey="eventsJoined" title="Events Joined">
                 <JoinedEvents />
               </Tab>
+              <Tab eventKey="PendingInvites" title="Pending Invites">
+                <InvitesDisplay />
+              </Tab>
               <Tab eventKey="MyGroups" title="My Groups">
                 Coming soon in feature 3!
               </Tab>
@@ -49,34 +50,27 @@ function ProfileTab() {
           </Col>
         </Row>
       </Container>
-      ) 
-    )
-    
-    ||
-
-    (
-      !isAuthenticated && (
+    )) ||
+    (!isAuthenticated && (
       <Container>
         <Row>
-         <Col className="text-center" >
-          <Card style={{margin: 50 }}>
-            <h1 style={{margin: 50 }}> You are not Signed in</h1>
-            <Row>
-              <Col>
-                <LoginButton />
-              </Col>
-            </Row>
-          </Card>
-         </Col>
+          <Col className="text-center">
+            <Card style={{ margin: 50 }}>
+              <h1 style={{ margin: 50 }}> You are not Signed in</h1>
+              <Row>
+                <Col>
+                  <LoginButton />
+                </Col>
+              </Row>
+            </Card>
+          </Col>
         </Row>
       </Container>
-      )
-    )
+    ))
   );
 }
 
 function PersonalInfo() {
-  
   // call to backend to update profile info
   // update profile info in user profile
   const [formData, setFormData] = useState({
@@ -85,14 +79,6 @@ function PersonalInfo() {
     password: "",
     bio: "",
     profilePicture: "",
-  });
-
-  const [ newUser ] = useState({
-    profileName: "John",
-    username: '',
-    password: "password",
-    bio: "Hello World!",
-    profilePicture: defaultImage,
   });
 
   const [showSuccessToast, setShowSuccessToast] = useState(false);
@@ -107,43 +93,13 @@ function PersonalInfo() {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        console.log(user.email);
-        const response = await fetch("http://localhost:8000/profilesearch/" + user.email);
+        const response = await fetch(
+          "http://localhost:8000/profilesearch/" + user.given_name.toLowerCase()
+        );
         if (response.ok) {
           const profileData = await response.json();
           setFormData(profileData);
-        } else if (response.status === 500){
-          /* create new account*/
-          console.log("new user found!");
-          //send to database
-          const createNewProfile = async () => {
-            try {
-              const response = await fetch(`http://localhost:8000/profiles/`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                profileName: "John",
-                username: user.email, // Update username to user.email
-                password: "password",
-                bio: "Hello World!",
-                profilePicture: defaultImage,
-              }),
-            });
-          
-              if (response.ok) {
-                window.location.reload(); // Reload the page after joining the event
-              } else {
-                console.error("Failed to join create new Profile");
-              }
-            } catch (error) {
-              console.error("Error creating new Profile:", error);
-            }
-          };
-
-
-        }else {
+        } else {
           console.error("Failed to fetch profile data");
         }
       } catch (error) {
@@ -183,10 +139,13 @@ function PersonalInfo() {
       formDataToSend.append("profilePicture", formData.profilePicture);
       console.log(formData.profilePicture);
 
-      const response = await fetch("http://localhost:8000/profilesearch/" + user.given_name.toLowerCase(), {
-        method: "PATCH",
-        body: formDataToSend,
-      });
+      const response = await fetch(
+        "http://localhost:8000/profilesearch/" + user.given_name.toLowerCase(),
+        {
+          method: "PATCH",
+          body: formDataToSend,
+        }
+      );
 
       if (response.ok) {
         // Profile updated successfully
@@ -211,7 +170,7 @@ function PersonalInfo() {
   return (
     <Row className="mx-auto">
       <Card style={{ width: "34rem" }}>
-        <Card.Title>Your Profile</Card.Title>
+        <Card.Title>Profile</Card.Title>
         <Card.Img
           src={profilePictureUrl || defaultImage}
           alt="Profile Picture"
