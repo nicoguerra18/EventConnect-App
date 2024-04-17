@@ -73,42 +73,67 @@ function ProfileTab() {
 function PersonalInfo() {
   // call to backend to update profile info
   // update profile info in user profile
+  const { user } = useAuth0();
   const [formData, setFormData] = useState({
-    profileName: "",
-    username: "",
-    password: "",
-    bio: "",
-    profilePicture: "",
+    profileName: "ryan2",
+    username: user.email,
+    password: "password",
+    bio: "Enter bio here",
+    
   });
+  
 
+  
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [showErrorToast, setShowErrorToast] = useState(false);
   const toggleShowSuccessToast = () => setShowSuccessToast(!showSuccessToast);
   const toggleShowErrorToast = () => setShowErrorToast(!showErrorToast);
 
-  const { user } = useAuth0();
+  
 
   // DEAFULT PROFILE IS 1******
   // currently it always calls profile 1 data
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:8000/profilesearch/" + user.given_name.toLowerCase()
-        );
-        if (response.ok) {
-          const profileData = await response.json();
+        const profileResponse = await fetch(`http://localhost:8000/profilesearch/${encodeURIComponent(user.email)}`);
+        if (profileResponse.ok) {
+          const profileData = await profileResponse.json();
           setFormData(profileData);
         } else {
-          console.error("Failed to fetch profile data");
+          // If the profile does not exist, create a new one
+          console.error('Profile not found, creating a new user profile.');
+          const newProfile = {
+            ...formData
+            // Populate with other default fields if necessary
+          };
+          const createResponse = await fetch('http://localhost:8000/profiles/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newProfile), 
+          });
+  
+          if (createResponse.ok) {
+            console.log('New profile created successfully');
+            const newProfileData = await createResponse.json();
+            setFormData(newProfileData);
+          } else {
+            // If the POST request fails, log the response for debugging
+            console.error('Failed to create a new profile:', await createResponse.text());
+          }
         }
       } catch (error) {
-        console.error("Error fetching profile data:", error);
+        console.error('There was an error fetching or creating the profile:', error);
       }
     };
-
-    fetchProfileData();
-  }, []);
+  
+    if (user?.email) {
+      fetchProfileData();
+    }
+  }, [user?.email]); // Re-run effect if user's email changes
+  
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -130,6 +155,15 @@ function PersonalInfo() {
   // Update profile method
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+
+      // Check if all required fields except profilePicture are filled
+    const { profileName, username, password, bio } = formData;
+    if (!profileName || !username || !password || !bio) {
+      // If any of the fields are empty, display an error toast and do not submit
+      setShowErrorToast(true);
+      return;
+    }
+
     try {
       const formDataToSend = new FormData();
       formDataToSend.append("profileName", formData.profileName);
@@ -140,7 +174,7 @@ function PersonalInfo() {
       console.log(formData.profilePicture);
 
       const response = await fetch(
-        "http://localhost:8000/profilesearch/" + user.given_name.toLowerCase(),
+        "http://localhost:8000/profilesearch/" + user.email,
         {
           method: "PATCH",
           body: formDataToSend,
