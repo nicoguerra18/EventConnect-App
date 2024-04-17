@@ -75,7 +75,7 @@ function PersonalInfo() {
   // update profile info in user profile
   const { user } = useAuth0();
   const [formData, setFormData] = useState({
-    profileName: "ryan2",
+    profileName: "Enter name here",
     username: user.email,
     password: "password",
     bio: "Enter bio here",
