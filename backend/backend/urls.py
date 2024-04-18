@@ -40,6 +40,8 @@ urlpatterns = [
     path('discussion/<str:event_name>/', views.DiscussionView),
     path('discussion/<str:event_name>/comments/', views.CommentView),
     path('comment/<str:profile_name>/<str:event_name>/', views.PostComment),
+    path('group/<str:group_name>/<str:creator_name>', views.GroupView),
+    path('group/<str:group_name>/<str:creator_name>/<str:member_name>', views.AddToGroup)
     ]
 
 urlpatterns= format_suffix_patterns(urlpatterns)

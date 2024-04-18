@@ -51,8 +51,7 @@ class CommentSerializer2(serializers.ModelSerializer):
         fields = ('body',)
 
 class GroupSerializer(serializers.ModelSerializer):
-    members = ProfileSerializer()
-    creator = ProfileSerializer()
+    members = ProfileSerializer(many = True)
 
     class Meta:
         model = Group

@@ -247,9 +247,28 @@ def PostComment(request, event_name, profile_name):
         # If serializer is not valid, return errors
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-@api_view('GET')
+@api_view(['GET', 'POST', 'DELETE'])
 def GroupView(request, group_name, creator_name):
-    group = Group.objects.get(name = group_name,
-                              creator = creator_name )#UserProfile.objects.get(profileName = creator_name)) <-- can try this if it doesnt work initially
-    serializer = GroupSerializer(group)
-    return Response(serializer.data)
+    if request.method == 'GET':
+        group = Group.objects.get(name = group_name,
+                              creator = creator_name)#UserProfile.objects.get(profileName = creator_name)) <-- can try this if it doesnt work initially
+        serializer = GroupSerializer(group)
+        return Response(serializer.data)
+    if request.method == 'POST':
+        group = Group(name = group_name, creator = creator_name, members = [UserProfile.objects.get(profileName = creator_name)])
+        group.save()
+        return Response(status = status.HTTP_201_CREATED)
+    if request.method == 'DELETE':
+        group = Group.objects.get(name = group_name, creator = creator_name)
+        group.delete()
+        return Response(status = status.HTTP_202_ACCEPTED)
+    return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+@api_view(['PATCH'])
+def AddToGroup(request, group_name, creator_name, member_name):
+    profile_to_add = UserProfile.objects.get(profileName = member_name)
+    group_to_change = Group.objects.get(name = group_name, creator = creator_name)
+    if not group_to_change.members.contains(profile_to_add):
+        group_to_change.members.add(profile_to_add)
+        return Response(status = status.HTTP_202_ACCEPTED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+

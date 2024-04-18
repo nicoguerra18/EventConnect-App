@@ -18,10 +18,11 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = ('id', 'discussion', 'body', 'author', 'timestamp')
 
 class GroupAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'members', 'creator')
+    list_display = ('id', 'name', 'creator')
 
 admin.site.register(UserProfile, ProfileAdmin)
 admin.site.register(Event, EventAdmin)
 admin.site.register(Attendance, AttendanceAdmin )
 admin.site.register(Discussion, DiscussionAdmin )
 admin.site.register(Comment, CommentAdmin)
+admin.site.register(Group, GroupAdmin)

@@ -137,8 +137,9 @@ class Comment(models.Model):
 
 class Group(models.Model):
     name = models.CharField(max_length= 200, default="Our Group")
-    creator = models.ForeignKey(UserProfile, to_field = "profileName", db_column = "creator", on_delete = models.CASCADE)
-    members = models.ManyToManyField(UserProfile, on_delete = models.CASCADE, to_field = 'profileName', db_column = 'members')
+    creator = models.ForeignKey(UserProfile, to_field = "profileName", db_column = "creator", on_delete = models.CASCADE, related_name='creator')
+    members = models.ManyToManyField(UserProfile)
 
     def __str__(self):
         return self.name
+#might need join table like with Attendees called GroupMembers or something 
