@@ -36,9 +36,9 @@ def ProfileView(request):
     
 @ensure_csrf_cookie
 @api_view(['GET', 'PUT', 'DELETE', 'PATCH'])
-def ProfileUpdate(request, pk):
+def ProfileUpdate(request, user_name):
     try:
-        profile = UserProfile.objects.get(pk=pk)
+        profile = UserProfile.objects.get(username=user_name)
     except UserProfile.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     
@@ -246,3 +246,10 @@ def PostComment(request, event_name, profile_name):
             return Response(status=status.HTTP_201_CREATED)
         # If serializer is not valid, return errors
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view('GET')
+def GroupView(request, group_name, creator_name):
+    group = Group.objects.get(name = group_name,
+                              creator = creator_name )#UserProfile.objects.get(profileName = creator_name)) <-- can try this if it doesnt work initially
+    serializer = GroupSerializer(group)
+    return Response(serializer.data)

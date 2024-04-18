@@ -41,7 +41,8 @@ class Event(models.Model):
     # add field for accpeting a keyword
     keyword = models.CharField(max_length = 100, blank = True, null = True )
     # add field for image file
-    image = models.ImageField(default = 'default.jpg')    
+    image = models.ImageField(default = 'default.jpg')
+    is_private = models.BooleanField(default = False)    
 
     def createDiscussion(self):
         discussion = Discussion(event = self, body = "")
@@ -134,3 +135,10 @@ class Comment(models.Model):
         comments = Comment.objects.filter(discussion__event__name = event_name)
         return comments
 
+class Group(models.Model):
+    name = models.CharField(max_length= 200, default="Our Group")
+    creator = models.ForeignKey(UserProfile, to_field = "profileName", db_column = "creator", on_delete = models.CASCADE)
+    members = models.ManyToManyField(UserProfile, on_delete = models.CASCADE, to_field = 'profileName', db_column = 'members')
+
+    def __str__(self):
+        return self.name
