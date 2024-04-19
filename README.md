@@ -47,6 +47,8 @@ Open another terminal
 ![Screenshot 2024-04-19 at 1 57 00 PM Medium](https://github.com/nicoguerra18/EventConnect-App/assets/139820627/879a2063-6f45-4021-b328-946ee6dfaa85)
 ![Screenshot 2024-04-19 at 1 56 52 PM Medium](https://github.com/nicoguerra18/EventConnect-App/assets/139820627/8e5cc58a-dc52-4faa-932e-64ccf1d2b177)
 ![Screenshot 2024-04-19 at 1 56 26 PM Medium](https://github.com/nicoguerra18/EventConnect-App/assets/139820627/1e9aa7d6-5c2d-42a1-aa5e-c3e8dc4337a3)
+![Screenshot 2024-04-19 at 2 03 21 PM Medium](https://github.com/nicoguerra18/EventConnect-App/assets/139820627/e022a5fc-672d-40c6-b942-67dbf8da07d0)
+![Screenshot 2024-04-19 at 2 03 07 PM Medium](https://github.com/nicoguerra18/EventConnect-App/assets/139820627/069e8ada-c4b6-4bc4-b576-94c595bf1a36)
 
 
 
