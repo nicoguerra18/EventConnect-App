@@ -1,4 +1,6 @@
 # EventConnect-App
+A web platform for people to join and create groups and event, offering a dynamic and user-friendly environment to facilitate community building and event management
+
 ## Technologies Used
 - JavaScript/React
 - Python
