@@ -281,12 +281,12 @@ def InviteView(request, profile_name):
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PATCH'])
-def InviteResponse(request,  profile_name, event_name, response):
+def InviteResponse(request,  profile_name, event_name, r):
     try:
         attendance = Attendance.objects.get(event__name = event_name, attendee__profileName = profile_name)
     except Attendance.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    is_attending = eval(response)
+    is_attending = eval(r)
     Attendance.InviteResponse(profile_name, event_name, is_attending)
     return Response(status = status.HTTP_202_ACCEPTED)
 
