@@ -30,7 +30,7 @@ function InvitesDisplay() {
       const response = await fetch(
         `http://localhost:8000/invites/nico/${eventName}/True/`,
         {
-          method: "POST",
+          method: "PATCH",
         }
       );
       if (response.ok) {

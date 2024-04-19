@@ -270,7 +270,7 @@ def AddToGroup(request, group_name, creator_name, member_name):
     if not group_to_change.members.contains(profile_to_add):
         group_to_change.members.add(profile_to_add)
         return Response(status = status.HTTP_202_ACCEPTED)
-    return Response(status=status.HTTP_400_BAD_REQUEST)
+    return Response(status=status.HTTP_400_BAD_REQUEST) 
 
 @api_view(['GET'])
 def InviteView(request, profile_name):
@@ -281,12 +281,11 @@ def InviteView(request, profile_name):
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PATCH'])
-def InviteResponse(request,  profile_name, event_name, r):
+def InviteResponse(request,  profile_name, event_name, response):
     try:
         attendance = Attendance.objects.get(event__name = event_name, attendee__profileName = profile_name)
     except Attendance.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    is_attending = eval(r)
+    is_attending = eval(response)
     Attendance.InviteResponse(profile_name, event_name, is_attending)
     return Response(status = status.HTTP_202_ACCEPTED)
-
