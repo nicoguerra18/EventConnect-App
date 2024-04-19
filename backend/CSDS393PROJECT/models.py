@@ -106,11 +106,11 @@ class Attendance(models.Model):
         attendance.save()
 
     def getInvites(profile_name):
-        invites = Attendance.objects.filter(attendee_profileName = profile_name, responded = True)
+        invites = Attendance.objects.filter(attendee__profileName = profile_name, responded = False)
         return invites
     
     def InviteResponse(profile_name, event_name, is_attending):
-        invite = Attendance.objects.get(attendee_profileName = profile_name, attending__event__name = event_name)
+        invite = Attendance.objects.get(attendee__profileName = profile_name, attending__event__name = event_name)
         invite.is_attending = is_attending
         invite.responded = True
         invite.save()

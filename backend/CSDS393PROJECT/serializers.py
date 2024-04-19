@@ -18,6 +18,8 @@ class EventSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'location', 'description', 'creator', 'keyword', 'image', 'date', 'is_private')
 
 class AttendanceSerializer(serializers.ModelSerializer):
+    event = EventSerializer()
+    attendee = ProfileSerializer()
     class Meta:
         model = Attendance
         fields = ('event', 'attendee', 'is_attending', 'responded')
