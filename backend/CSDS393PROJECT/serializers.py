@@ -20,7 +20,7 @@ class EventSerializer(serializers.ModelSerializer):
 class AttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attendance
-        fields = ('event', 'attendee', 'is_attending')
+        fields = ('event', 'attendee', 'is_attending', 'responded')
 
 class DiscussionSerializer1(serializers.ModelSerializer):
     event = EventSerializer()

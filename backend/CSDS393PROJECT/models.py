@@ -83,6 +83,7 @@ class Attendance(models.Model):
     event = models.ForeignKey(Event, on_delete = models.CASCADE, related_name = 'attendants')
     attendee = models.ForeignKey(UserProfile, on_delete = models.CASCADE, related_name = 'attending')
     is_attending = models.BooleanField(default = False)
+    responded = models.BooleanField(default = False)
 
     def __str__(self):
         return "%s - %s" %(self.event, self.attendee)
@@ -102,7 +103,17 @@ class Attendance(models.Model):
     def changeAttendance(event_name, profile_name, input):
         attendance = Attendance.objects.get(attendee_profileName = profile_name, event__name = event_name)
         attendance.is_attending = input
+        attendance.save()
 
+    def getInvites(profile_name):
+        invites = Attendance.objects.filter(attendee_profileName = profile_name, responded = True)
+        return invites
+    
+    def InviteResponse(profile_name, event_name, is_attending):
+        invite = Attendance.objects.get(attendee_profileName = profile_name, attending__event__name = event_name)
+        invite.is_attending = is_attending
+        invite.responded = True
+        invite.save()
 
 class Discussion(models.Model):
 
