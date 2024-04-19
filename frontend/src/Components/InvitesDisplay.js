@@ -23,9 +23,12 @@ function InvitesDisplay() {
   // Function to handle accepting the invitation for a specific event
   const handleAcceptInvite = async (eventId) => {
     try {
-      // Send a request to the backend to update the user's accepted events list
-      // and remove the event from the invitation list
-      // Example: await fetch(`http://localhost:8000/username/acceptInvite/${eventId}`, { method: 'POST' });
+      // Send a request to join the event
+      // alse send a request to delte the invite from the list
+      const response = await fetch(
+        `http://localhost:8000/username/acceptInvite/${eventId}`,
+        { method: "POST" }
+      );
 
       // Assuming the above fetch request updates the frontend data as well
       setInviteEventData(
@@ -69,14 +72,14 @@ function InvitesDisplay() {
             <div>
               <Button
                 onClick={() => handleAcceptInvite(event.id)}
-                variant="success"
+                variant="outline-success"
               >
                 Accept
               </Button>
               &nbsp;
               <Button
                 onClick={() => handleDeclineInvite(event.id)}
-                variant="danger"
+                variant="outline-danger"
               >
                 Decline
               </Button>
