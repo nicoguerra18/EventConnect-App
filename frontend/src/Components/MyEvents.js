@@ -10,6 +10,7 @@ import { Button } from "react-bootstrap";
 import { FormGroup } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import { Modal } from "react-bootstrap";
+import CSRFToken from "./crftoken";
 
 // Order events based on Time, done on the backed tho?
 
@@ -74,6 +75,7 @@ function MyEvents() {
 
   return (
     <div className="event-cards-container">
+      <CSRFToken />
       <Row className="g-4">
         {myCreatedEvents.map((event, index) => (
           <Col key={index}>
@@ -117,7 +119,7 @@ function MyEvents() {
                 <Button
                   size="sm"
                   variant="success"
-                  onClick={() => handleOpenModal(event.id, event.name)} // Pass eventName to handleOpenModal
+                  onClick={() => handleOpenModal(event.name)} // Pass eventName to handleOpenModal
                 >
                   Send Invite{" "}
                   <svg
@@ -159,7 +161,6 @@ function SendInviteComponent({ eventName }) {
   // Function to send an invitation to another user
   const sendInvite = async () => {
     try {
-      // Send a request to the backend to send the invitation to the specified email
       const response = await fetch(`http://localhost:8000/attendance/`, {
         method: "POST",
         headers: {
@@ -168,12 +169,12 @@ function SendInviteComponent({ eventName }) {
         body: JSON.stringify({
           event: eventName,
           attendee: inviteEmail,
-          is_attending: false, // Set default value for is_attending
+          is_attending: false,
         }),
       });
+
       if (response.ok) {
         console.log(`Invite sent to ${inviteEmail}`);
-        // Clear the inviteEmail field after sending the invite
         setInviteEmail("");
       } else {
         console.error("Failed to send invite");
@@ -185,6 +186,7 @@ function SendInviteComponent({ eventName }) {
 
   return (
     <div>
+      <CSRFToken />
       <Form.Group controlId="formInviteEmail">
         <Form.Control
           type="text"

@@ -132,6 +132,7 @@ def EventUpdate(request, pk):
     #serializer = ~~~
     #return Response (serializer.data)
 
+@ensure_csrf_cookie
 @api_view(['GET', 'POST'])
 def AttendanceView(request):
     if request.method == 'GET':
@@ -140,20 +141,23 @@ def AttendanceView(request):
         return Response(serializer.data)
       
     elif request.method == 'POST':
+        print("trying")
         try:
+            print("entered try")
+            print(request.data)
             attendance_data = request.data  # Directly use request.data
             event_name = attendance_data.get('event')
             attendee_name = attendance_data.get('attendee')
             is_attending = attendance_data.get('is_attending')
 
-            if not all([event_name, attendee_name, is_attending]):
-                return Response({'error': 'Missing required fields'}, status=status.HTTP_400_BAD_REQUEST)
+            # if not all([event_name, attendee_name, is_attending]):
+            #     return Response({'error': 'Missing required fields'}, status=status.HTTP_400_BAD_REQUEST)
 
             event = Event.objects.get(name=event_name)
             attendee = UserProfile.objects.get(username=attendee_name)
 
             # Create and save Attendance object
-            attendance = Attendance.objects.create(event=event, attendee=attendee, is_attending=is_attending)
+            attendance = Attendance.objects.create(event=event, attendee=attendee, is_attending=is_attending, responded=False)
             serializer = AttendanceSerializer(attendance)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except Exception as e:

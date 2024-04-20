@@ -156,6 +156,7 @@ function EventCards({ events }) {
               />
               <Card.Body>
                 <Card.Title>{event.name}</Card.Title>
+                <Card.Text>{event.date}</Card.Text>
                 <Card.Text>{truncateDescription(event.description)}</Card.Text>
                 <EventDialog
                   eventName={event.name}
