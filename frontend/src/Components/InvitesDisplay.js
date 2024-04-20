@@ -48,15 +48,24 @@ function InvitesDisplay() {
   };
 
   // Function to handle declining the invitation for a specific event
-  const handleDeclineInvite = async (eventId) => {
+  const handleDeclineInvite = async (eventName) => {
     try {
-      // Remove the event from the invitation list
-      // Example: await fetch(`http://localhost:8000/username/declineInvite/${eventId}`, { method: 'DELETE' });
-
-      // Assuming the above fetch request updates the frontend data as well
-      setInviteEventData(
-        inviteEventData.filter((event) => event.id !== eventId)
+      // Send a request to decline the invitation
+      const response = await fetch(
+        `http://localhost:8000/invites/nico/${eventName}/False/`,
+        {
+          method: "PATCH",
+        }
       );
+      if (response.ok) {
+        // If the request is successful, remove the event from the invitation list
+        setInviteEventData(
+          inviteEventData.filter((event) => event.event.name !== eventName)
+        );
+      } else {
+        // Handle errors if any
+        console.error("Error declining invite:", response.statusText);
+      }
     } catch (error) {
       console.error("Error declining invite:", error);
     }
@@ -86,7 +95,7 @@ function InvitesDisplay() {
               </Button>
               &nbsp;
               <Button
-                onClick={() => handleDeclineInvite(eventData.event.id)}
+                onClick={() => handleDeclineInvite(eventData.event.name)}
                 variant="outline-danger"
               >
                 Decline
