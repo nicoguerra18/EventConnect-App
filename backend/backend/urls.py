@@ -43,7 +43,7 @@ urlpatterns = [
     path('group/<str:group_name>/<str:creator_name>/', views.GroupView),
     path('group/<str:group_name>/<str:creator_name>/<str:member_name>/', views.AddToGroup),
     path('invites/<str:profile_name>/', views.InviteView),
-    path('invites/<str:profile_name>/<str:event_name>/<str:response>/', views.InviteResponse)
+    path('invites/<str:profile_name>/<str:event_name>/<str:r>/', views.InviteResponse)
     ]
 
 urlpatterns= format_suffix_patterns(urlpatterns)

@@ -101,7 +101,7 @@ class Attendance(models.Model):
         return events
     #event_name and profile_name string, input is boolean
     def changeAttendance(event_name, profile_name, input):
-        attendance = Attendance.objects.get(attendee_profileName = profile_name, event__name = event_name)
+        attendance = Attendance.objects.get(attendee__profileName = profile_name, event__name = event_name)
         attendance.is_attending = input
         attendance.save()
 
@@ -110,7 +110,7 @@ class Attendance(models.Model):
         return invites
     
     def InviteResponse(profile_name, event_name, is_attending):
-        invite = Attendance.objects.get(attendee__profileName = profile_name, attending__event__name = event_name)
+        invite = Attendance.objects.get(attendee__profileName = profile_name, event__name = event_name)
         invite.is_attending = is_attending
         invite.responded = True
         invite.save()
