@@ -16,7 +16,7 @@ import { Modal } from "react-bootstrap";
 function MyEvents() {
   const [myCreatedEvents, setMyCreatedEvents] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [selectedEventId, setSelectedEventId] = useState(null);
+  const [selectedEventName, setSelectedEventName] = useState(null); // Add selectedEventName state
 
   // All the events that I've created show up here need to make the call to the api and then pass that into myEvents
   useEffect(() => {
@@ -62,8 +62,8 @@ function MyEvents() {
   };
 
   // Function to handle opening the modal
-  const handleOpenModal = (eventId) => {
-    setSelectedEventId(eventId);
+  const handleOpenModal = (eventName) => {
+    setSelectedEventName(eventName); // Set selectedEventName
     setShowModal(true);
   };
 
@@ -117,7 +117,7 @@ function MyEvents() {
                 <Button
                   size="sm"
                   variant="success"
-                  onClick={() => handleOpenModal(event.id)}
+                  onClick={() => handleOpenModal(event.id, event.name)} // Pass eventName to handleOpenModal
                 >
                   Send Invite{" "}
                   <svg
@@ -142,7 +142,7 @@ function MyEvents() {
           <Modal.Title>Send An Invite</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <SendInviteComponent eventId={selectedEventId} />
+          <SendInviteComponent eventName={selectedEventName} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseModal}>
@@ -153,18 +153,31 @@ function MyEvents() {
     </div>
   );
 }
-
-function SendInviteComponent({ eventId }) {
+function SendInviteComponent({ eventName }) {
   const [inviteEmail, setInviteEmail] = useState("");
 
   // Function to send an invitation to another user
-  const sendInvite = async (eventId) => {
+  const sendInvite = async () => {
     try {
       // Send a request to the backend to send the invitation to the specified email
-      // Example: await fetch(`http://localhost:8000/sendInvite/${eventId}/${inviteEmail}`, { method: 'POST' });
-      console.log(`Invite sent to ${inviteEmail}`);
-      // Clear the inviteEmail field after sending the invite
-      setInviteEmail("");
+      const response = await fetch(`http://localhost:8000/attendance/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          event: eventName,
+          attendee: inviteEmail,
+          is_attending: false, // Set default value for is_attending
+        }),
+      });
+      if (response.ok) {
+        console.log(`Invite sent to ${inviteEmail}`);
+        // Clear the inviteEmail field after sending the invite
+        setInviteEmail("");
+      } else {
+        console.error("Failed to send invite");
+      }
     } catch (error) {
       console.error("Error sending invite:", error);
     }
@@ -174,8 +187,8 @@ function SendInviteComponent({ eventId }) {
     <div>
       <Form.Group controlId="formInviteEmail">
         <Form.Control
-          type="email"
-          placeholder="Enter email"
+          type="text"
+          placeholder="Enter user"
           value={inviteEmail}
           onChange={(e) => setInviteEmail(e.target.value)}
         />
@@ -185,7 +198,8 @@ function SendInviteComponent({ eventId }) {
       <Button
         size="sm"
         variant="primary"
-        onClick={() => sendInvite("event.id")}
+        onClick={sendInvite}
+        disabled={!inviteEmail} // Disable button if inviteEmail is empty
       >
         Send Invite{" "}
         <svg
@@ -202,5 +216,4 @@ function SendInviteComponent({ eventId }) {
     </div>
   );
 }
-
 export default MyEvents;
