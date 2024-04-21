@@ -73,12 +73,12 @@ def ProfileUpdate(request, user_name):
 @api_view(['GET','POST', 'PUT'])
 def EventView(request):
     if request.method == 'GET':
-        data = Event.objects.all()
+        data = Event.objects.filter(is_private = False)
         serializer = EventSerializer (data, context = {'request':request}, many = True)
         return Response(serializer.data)
     
     elif request.method == 'POST':
-        serializer = EventSerializer(data=request.data)
+        serializer = EventSerializer2(data=request.data)
         if serializer.is_valid():
             serializer.save()
             event_name = serializer.validated_data.get('name', '')
@@ -86,23 +86,28 @@ def EventView(request):
             disc = Discussion(event = e, body = '')
             disc.save()
             return Response(status = status.HTTP_201_CREATED)
+        print(request.data)
         print(serializer.errors)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
     
     elif request.method == 'PUT':
         serializer = EventSerializer(data = request.data)
-
+@api_view(['GET'])
+def PersonalEvents(request, user_name):
+    events = Attendance.objects.filter(attendee = UserProfile.objects.get(username = user_name))
+    serializer = EventSerializer(events, many = True)
+    return Response(serializer.data)
 
 @ensure_csrf_cookie
 @api_view (['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
-def EventUpdate(request, pk):
+def EventUpdate(request, event_name):
     try:
-        event = Event.objects.get(pk=pk)
+        event = Event.objects.get(name = event_name)
     except Event.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     
     if request.method == 'PATCH':
-        serializer = ProfileSerializer(event, data= request.data, partial = True)
+        serializer = EventSerializer2(event, data= request.data, partial = True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

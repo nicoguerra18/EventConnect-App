@@ -7,6 +7,18 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = UserProfile
         fields = ('id', 'profileName' , 'username', 'password', 'bio', 'profilePicture')
 
+
+class BooleanFieldFromString(serializers.BooleanField):
+#turns string to bool for event serializer 
+    def to_internal_value(self, data):
+        if isinstance(data, str):
+            data = data.lower()
+            if data == 'true':
+                return True
+            elif data == 'false':
+                return False
+        return super().to_internal_value(data)
+
 class EventSerializer(serializers.ModelSerializer):
 
     #profiles = ProfileSerializer(many = True, source = 'UserProfile')
@@ -16,6 +28,12 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         # I removed date and added profiles for now
         fields = ('id', 'name', 'location', 'description', 'creator', 'keyword', 'image', 'date', 'is_private')
+
+class EventSerializer2(serializers.ModelSerializer):
+    is_private = BooleanFieldFromString()
+    class Meta:
+        model = Event
+        fields = ('id', 'name', 'location', 'description', 'creator', 'keyword', 'image', 'date', 'is_private') 
 
 class AttendanceSerializer(serializers.ModelSerializer):
     event = EventSerializer()
