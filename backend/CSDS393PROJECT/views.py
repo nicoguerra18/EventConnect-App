@@ -78,7 +78,7 @@ def EventView(request):
         return Response(serializer.data)
     
     elif request.method == 'POST':
-        serializer = EventSerializer(data=request.data)
+        serializer = EventSerializer2(data=request.data)
         if serializer.is_valid():
             serializer.save()
             event_name = serializer.validated_data.get('name', '')
@@ -95,14 +95,14 @@ def EventView(request):
 
 @ensure_csrf_cookie
 @api_view (['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
-def EventUpdate(request, pk):
+def EventUpdate(request, event_name):
     try:
-        event = Event.objects.get(pk=pk)
+        event = Event.objects.get(name = event_name)
     except Event.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     
     if request.method == 'PATCH':
-        serializer = ProfileSerializer(event, data= request.data, partial = True)
+        serializer = EventSerializer2(event, data= request.data, partial = True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
