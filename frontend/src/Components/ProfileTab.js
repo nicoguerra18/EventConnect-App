@@ -84,7 +84,7 @@ function PersonalInfo() {
         } else {
           console.error("User Not Found! Creating a new profile...");
           const newProfile = {
-            profileName: "Name", username: user.email, password: "password", bio: "Enter bio here"
+            profileName: user.email, username: user.email, password: "password", bio: "Enter bio here"
           }
           const createResponse = await fetch('http://localhost:8000/profiles/',{
             method:'POST',
@@ -100,7 +100,7 @@ function PersonalInfo() {
             setFormData(newProfileData);
           }
           else{
-            console.log("failed to create profile", await createResponse.text());
+            console.log("failed to create profile" + JSON.stringify(formData));
           }
         }
       } catch (error) {
@@ -109,7 +109,7 @@ function PersonalInfo() {
     };
 
     fetchProfileData();
-  }, [user.given_name]);
+  }, [user.email]);
 
   const handleFormChange = e => {
     const { name, value } = e.target;
@@ -135,7 +135,7 @@ function PersonalInfo() {
       formDataToSend.append("bio", formData.bio);
       formDataToSend.append("profilePicture", formData.profilePicture);
 
-      const response = await fetch(`http://localhost:8000/profilesearch/${user.given_name.toLowerCase()}`, {
+      const response = await fetch(`http://localhost:8000/profilesearch/${user.email}`, {
         method: "PATCH",
         body: formDataToSend,
       });
