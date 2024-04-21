@@ -117,7 +117,7 @@ function DiscussionModal({ eventName, eventId }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // fetch discussion data to populate discussion board
+  // fetch discussion data to populate discussion boarddd
 
   return (
     <>
