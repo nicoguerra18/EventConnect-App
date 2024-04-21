@@ -15,12 +15,14 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         # I removed date and added profiles for now
-        fields = ('id', 'name', 'location', 'description', 'creator', 'keyword', 'image', 'date')
+        fields = ('id', 'name', 'location', 'description', 'creator', 'keyword', 'image', 'date', 'is_private')
 
 class AttendanceSerializer(serializers.ModelSerializer):
+    event = EventSerializer()
+    attendee = ProfileSerializer()
     class Meta:
         model = Attendance
-        fields = ('event', 'attendee', 'is_attending')
+        fields = ('event', 'attendee', 'is_attending', 'responded')
 
 class DiscussionSerializer1(serializers.ModelSerializer):
     event = EventSerializer()
@@ -46,12 +48,13 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = ('discussion', 'body', 'timestamp', 'author')
 
 class CommentSerializer2(serializers.ModelSerializer):
-
-    def body(self):
-        body = str(self.validated_data)
-        body.replace("{'body': '", "")
-        body.replace("'}", "")
-        return (body)
     class Meta:
         model = Comment
         fields = ('body',)
+
+class GroupSerializer(serializers.ModelSerializer):
+    members = ProfileSerializer(many = True)
+
+    class Meta:
+        model = Group
+        fields = ('name', 'members', 'creator')

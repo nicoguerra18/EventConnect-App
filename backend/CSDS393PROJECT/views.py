@@ -36,9 +36,9 @@ def ProfileView(request):
     
 @ensure_csrf_cookie
 @api_view(['GET', 'PUT', 'DELETE', 'PATCH'])
-def ProfileUpdate(request, pk):
+def ProfileUpdate(request, user_name):
     try:
-        profile = UserProfile.objects.get(pk=pk)
+        profile = UserProfile.objects.get(username=user_name)
     except UserProfile.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     
@@ -132,6 +132,7 @@ def EventUpdate(request, pk):
     #serializer = ~~~
     #return Response (serializer.data)
 
+@ensure_csrf_cookie
 @api_view(['GET', 'POST'])
 def AttendanceView(request):
     if request.method == 'GET':
@@ -140,20 +141,23 @@ def AttendanceView(request):
         return Response(serializer.data)
       
     elif request.method == 'POST':
+        print("trying")
         try:
+            print("entered try")
+            print(request.data)
             attendance_data = request.data  # Directly use request.data
             event_name = attendance_data.get('event')
             attendee_name = attendance_data.get('attendee')
             is_attending = attendance_data.get('is_attending')
 
-            if not all([event_name, attendee_name, is_attending]):
-                return Response({'error': 'Missing required fields'}, status=status.HTTP_400_BAD_REQUEST)
+            # if not all([event_name, attendee_name, is_attending]):
+            #     return Response({'error': 'Missing required fields'}, status=status.HTTP_400_BAD_REQUEST)
 
             event = Event.objects.get(name=event_name)
             attendee = UserProfile.objects.get(username=attendee_name)
 
             # Create and save Attendance object
-            attendance = Attendance.objects.create(event=event, attendee=attendee, is_attending=is_attending)
+            attendance = Attendance.objects.create(event=event, attendee=attendee, is_attending=is_attending, responded=False)
             serializer = AttendanceSerializer(attendance)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except Exception as e:
@@ -246,3 +250,44 @@ def PostComment(request, event_name, profile_name):
             return Response(status=status.HTTP_201_CREATED)
         # If serializer is not valid, return errors
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['GET', 'POST', 'DELETE'])
+def GroupView(request, group_name, creator_name):
+    if request.method == 'GET':
+        group = Group.objects.get(name = group_name,
+                              creator = creator_name)#UserProfile.objects.get(profileName = creator_name)) <-- can try this if it doesnt work initially
+        serializer = GroupSerializer(group)
+        return Response(serializer.data)
+    if request.method == 'POST':
+        group = Group(name = group_name, creator = creator_name, members = [UserProfile.objects.get(profileName = creator_name)])
+        group.save()
+        return Response(status = status.HTTP_201_CREATED)
+    if request.method == 'DELETE':
+        group = Group.objects.get(name = group_name, creator = creator_name)
+        group.delete()
+        return Response(status = status.HTTP_202_ACCEPTED)
+    return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+@api_view(['PATCH'])
+def AddToGroup(request, group_name, creator_name, member_name):
+    profile_to_add = UserProfile.objects.get(profileName = member_name)
+    group_to_change = Group.objects.get(name = group_name, creator = creator_name)
+    if not group_to_change.members.contains(profile_to_add):
+        group_to_change.members.add(profile_to_add)
+        return Response(status = status.HTTP_202_ACCEPTED)
+    return Response(status=status.HTTP_400_BAD_REQUEST) 
+
+@api_view(['GET'])
+def InviteView(request, profile_name):
+    if request.method == 'GET':
+        queryset = Attendance.getInvites(profile_name)
+        serializer = AttendanceSerializer(queryset, many = True)
+        return Response(serializer.data)
+    return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+@api_view(['PATCH'])
+def InviteResponse(request,  profile_name, event_name, r):
+    if request.method == 'PATCH':
+        is_attending = eval(r)
+        Attendance.InviteResponse(profile_name, event_name, is_attending)
+        return Response(status = status.HTTP_202_ACCEPTED)
+    return Response(status = status.HTTP_400_BAD_REQUEST)

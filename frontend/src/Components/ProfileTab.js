@@ -17,11 +17,28 @@ import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import { useAuth0 } from '@auth0/auth0-react';
 import InvitesDisplay from "./InvitesDisplay";
+import { ListGroup } from "react-bootstrap";
 
 // NEED TO ADD A FILE IN ORDER FOR FOR THE PUT REQUEST TO GO THROUGH
 
 function ProfileTab() {
   const { isAuthenticated } = useAuth0();
+
+  const [groups, setGroups] = useState([
+    { id: 1, name: "Group 1", joined: true },
+    { id: 2, name: "Group 2", joined: false },
+    { id: 3, name: "Group 3", joined: true },
+  ]); // Sample group data, replace with actual data from your backend
+
+  const filteredGroups = groups.filter((group) => group.joined);
+
+  const toggleJoinGroup = (groupId) => {
+    setGroups((prevGroups) =>
+      prevGroups.map((group) =>
+        group.id === groupId ? { ...group, joined: !group.joined } : group
+      )
+    );
+  };
 
   return (
     (isAuthenticated && (
@@ -44,7 +61,31 @@ function ProfileTab() {
                 <InvitesDisplay />
               </Tab>
               <Tab eventKey="MyGroups" title="My Groups">
-                Coming soon in feature 3!
+                <ListGroup>
+                  {filteredGroups.map((group) => (
+                    <ListGroup.Item
+                      className="d-flex justify-content-between align-items-center"
+                      key={group.id}
+                    >
+                      {group.name}{" "}
+                      {group.joined ? (
+                        <Button
+                          variant="outline-secondary"
+                          onClick={() => toggleJoinGroup(group.id)}
+                        >
+                          Leave
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="outline-primary"
+                          onClick={() => toggleJoinGroup(group.id)}
+                        >
+                          Join
+                        </Button>
+                      )}
+                    </ListGroup.Item>
+                  ))}
+                </ListGroup>
               </Tab>
             </Tabs>
           </Col>

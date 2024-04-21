@@ -14,6 +14,7 @@ import { Card } from 'react-bootstrap';
 import { Container } from "react-bootstrap"
 import LoginButton  from "./LoginButton";
 import { Spinner } from "react-bootstrap";
+import GroupPage from "./GroupsPage";
 
 function Page() {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -52,6 +53,9 @@ function Page() {
               </Tab>
               <Tab eventKey="eventsMap" title="Events Map">
                 <GoogleMapsComponent />
+              </Tab>
+              <Tab eventKey="groups" title="Groups">
+                <GroupPage />
               </Tab>
             </Tabs>
           </Col>

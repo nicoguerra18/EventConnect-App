@@ -41,7 +41,8 @@ class Event(models.Model):
     # add field for accpeting a keyword
     keyword = models.CharField(max_length = 100, blank = True, null = True )
     # add field for image file
-    image = models.ImageField(default = 'default.jpg')    
+    image = models.ImageField(default = 'default.jpg')
+    is_private = models.BooleanField(default = False)    
 
     def createDiscussion(self):
         discussion = Discussion(event = self, body = "")
@@ -82,6 +83,7 @@ class Attendance(models.Model):
     event = models.ForeignKey(Event, on_delete = models.CASCADE, related_name = 'attendants')
     attendee = models.ForeignKey(UserProfile, on_delete = models.CASCADE, related_name = 'attending')
     is_attending = models.BooleanField(default = False)
+    responded = models.BooleanField(default = False)
 
     def __str__(self):
         return "%s - %s" %(self.event, self.attendee)
@@ -99,9 +101,19 @@ class Attendance(models.Model):
         return events
     #event_name and profile_name string, input is boolean
     def changeAttendance(event_name, profile_name, input):
-        attendance = Attendance.objects.get(attendee_profileName = profile_name, event__name = event_name)
+        attendance = Attendance.objects.get(attendee__profileName = profile_name, event__name = event_name)
         attendance.is_attending = input
+        attendance.save()
 
+    def getInvites(profile_name):
+        invites = Attendance.objects.filter(attendee__profileName = profile_name, responded = False)
+        return invites
+    
+    def InviteResponse(profile_name, event_name, is_attending):
+        invite = Attendance.objects.get(attendee__profileName = profile_name, event__name = event_name)
+        invite.is_attending = is_attending
+        invite.responded = True
+        invite.save()
 
 class Discussion(models.Model):
 
@@ -134,3 +146,11 @@ class Comment(models.Model):
         comments = Comment.objects.filter(discussion__event__name = event_name)
         return comments
 
+class Group(models.Model):
+    name = models.CharField(max_length= 200, default="Our Group")
+    creator = models.ForeignKey(UserProfile, to_field = "profileName", db_column = "creator", on_delete = models.CASCADE, related_name='creator')
+    members = models.ManyToManyField(UserProfile)
+
+    def __str__(self):
+        return self.name
+#might need join table like with Attendees called GroupMembers or something 

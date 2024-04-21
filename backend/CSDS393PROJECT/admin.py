@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserProfile, Event, Attendance, Discussion, Comment
+from .models import UserProfile, Event, Attendance, Discussion, Comment, Group
 # Register your models here.
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('username', 'bio', 'profilePicture')
@@ -17,8 +17,12 @@ class DiscussionAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('id', 'discussion', 'body', 'author', 'timestamp')
 
+class GroupAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'creator')
+
 admin.site.register(UserProfile, ProfileAdmin)
 admin.site.register(Event, EventAdmin)
 admin.site.register(Attendance, AttendanceAdmin )
 admin.site.register(Discussion, DiscussionAdmin )
 admin.site.register(Comment, CommentAdmin)
+admin.site.register(Group, GroupAdmin)
