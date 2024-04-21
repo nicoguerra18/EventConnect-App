@@ -26,8 +26,9 @@ function CreateEvents() {
   });
 
   const handleChange = (e) => {
-    const { id, value } = e.target;
-    setFormData({ ...formData, [id]: value });
+    const { id, value, name, type } = e.target;
+    const val = type === "checkbox" ? e.target.checked : value;
+    setFormData({ ...formData, [id || name]: val });
   };
 
   const handleFileChange = (e) => {
@@ -45,8 +46,7 @@ function CreateEvents() {
       formdata.append("description", formData.description);
       formdata.append("image", formData.image);
       formdata.append("selectedEvent", formData.selectedEvent);
-      formdata.append("privacy", formData.privacy);
-
+      formdata.append("is_private", formData.privacy);
       // send event form data to backend
       const response = await fetch("http://localhost:8000/EventDatabase/", {
         method: "POST",
@@ -193,8 +193,8 @@ function CreateEvents() {
                     label="Public"
                     type="radio"
                     id={`inline-radio-1`}
-                    value="true"
-                    name="privacy"
+                    value="False"
+                    name="is_private" // Use name attribute for radio buttons
                     onChange={handleChange}
                   />
                   <Form.Check
@@ -202,8 +202,8 @@ function CreateEvents() {
                     label="Private"
                     type="radio"
                     id={`inline-radio-2`}
-                    value="false"
-                    name="privacy"
+                    value="True"
+                    name="is_private" // Use name attribute for radio buttons
                     onChange={handleChange}
                   />
                 </div>

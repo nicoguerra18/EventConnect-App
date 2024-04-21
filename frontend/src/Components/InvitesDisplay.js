@@ -73,37 +73,41 @@ function InvitesDisplay() {
 
   return (
     <div>
-      <ListGroup>
-        {inviteEventData.map((eventData, index) => (
-          <ListGroup.Item
-            key={index} // Use index or a unique identifier from your data as the key
-            className="d-flex justify-content-between align-items-center"
-          >
-            <div>
+      {inviteEventData.length === 0 ? (
+        <p>No pending invites</p>
+      ) : (
+        <ListGroup>
+          {inviteEventData.map((eventData, index) => (
+            <ListGroup.Item
+              key={index} // Use index or a unique identifier from your data as the key
+              className="d-flex justify-content-between align-items-center"
+            >
               <div>
-                <b>{eventData.event.name}</b>
+                <div>
+                  <b>{eventData.event.name}</b>
+                </div>
+                <div>Invited by: {eventData.event.creator}</div>
+                {/* Display other event details as needed */}
               </div>
-              <div>Invited by: {eventData.event.creator}</div>
-              {/* Display other event details as needed */}
-            </div>
-            <div>
-              <Button
-                onClick={() => handleAcceptInvite(eventData.event.name)}
-                variant="outline-success"
-              >
-                Accept
-              </Button>
-              &nbsp;
-              <Button
-                onClick={() => handleDeclineInvite(eventData.event.name)}
-                variant="outline-danger"
-              >
-                Decline
-              </Button>
-            </div>
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
+              <div>
+                <Button
+                  onClick={() => handleAcceptInvite(eventData.event.name)}
+                  variant="outline-success"
+                >
+                  Accept
+                </Button>
+                &nbsp;
+                <Button
+                  onClick={() => handleDeclineInvite(eventData.event.name)}
+                  variant="outline-danger"
+                >
+                  Decline
+                </Button>
+              </div>
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
+      )}
     </div>
   );
 }
