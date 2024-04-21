@@ -23,12 +23,18 @@ function CreateEvents() {
     keyword: "",
     creator: "",
     description: "",
+    is_private: "",
   });
 
   const handleChange = (e) => {
     const { id, value, name, type } = e.target;
     const val = type === "checkbox" ? e.target.checked : value;
     setFormData({ ...formData, [id || name]: val });
+  };
+
+  const handleRadioChange = (e) => {
+    const { value, name } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleFileChange = (e) => {
@@ -46,7 +52,8 @@ function CreateEvents() {
       formdata.append("description", formData.description);
       formdata.append("image", formData.image);
       formdata.append("selectedEvent", formData.selectedEvent);
-      formdata.append("is_private", formData.privacy);
+      formdata.append("is_private", formData.is_private);
+      console.log(formData);
       // send event form data to backend
       const response = await fetch("http://localhost:8000/EventDatabase/", {
         method: "POST",
@@ -185,7 +192,7 @@ function CreateEvents() {
                 />
               </Form.Group>
               <br />
-              <Form.Group controlId="privacy">
+              <Form.Group controlId="is_private">
                 <Form.Label>Event Privacy</Form.Label>
                 <div key={"inline-radio"} className="mb-3">
                   <Form.Check
@@ -195,7 +202,7 @@ function CreateEvents() {
                     id={`inline-radio-1`}
                     value="False"
                     name="is_private" // Use name attribute for radio buttons
-                    onChange={handleChange}
+                    onChange={handleRadioChange}
                   />
                   <Form.Check
                     inline
@@ -204,7 +211,7 @@ function CreateEvents() {
                     id={`inline-radio-2`}
                     value="True"
                     name="is_private" // Use name attribute for radio buttons
-                    onChange={handleChange}
+                    onChange={handleRadioChange}
                   />
                 </div>
               </Form.Group>

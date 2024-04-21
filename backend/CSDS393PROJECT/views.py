@@ -86,6 +86,7 @@ def EventView(request):
             disc = Discussion(event = e, body = '')
             disc.save()
             return Response(status = status.HTTP_201_CREATED)
+        print(request.data)
         print(serializer.errors)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
     
