@@ -29,6 +29,7 @@ urlpatterns = [
     path('profiles/', views.ProfileView),
     path('EventDatabase/', views.EventView),
     path('EventDatabase/<str:event_name>/', views.EventUpdate),
+    path('myevents/<str:user_name>/', views.PersonalEvents),
     path('profiles/<str:user_name>/', views.ProfileUpdate),
     path('attendance/', views.AttendanceView),
     path('attendingevent/<str:event_name>/', views.AttendingEvent),

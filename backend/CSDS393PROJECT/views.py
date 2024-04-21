@@ -73,7 +73,7 @@ def ProfileUpdate(request, user_name):
 @api_view(['GET','POST', 'PUT'])
 def EventView(request):
     if request.method == 'GET':
-        data = Event.objects.all()
+        data = Event.objects.filter(is_private = False)
         serializer = EventSerializer (data, context = {'request':request}, many = True)
         return Response(serializer.data)
     
@@ -92,7 +92,11 @@ def EventView(request):
     
     elif request.method == 'PUT':
         serializer = EventSerializer(data = request.data)
-
+@api_view(['GET'])
+def PersonalEvents(request, user_name):
+    events = Attendance.objects.filter(attendee = UserProfile.objects.get(username = user_name))
+    serializer = EventSerializer(events, many = True)
+    return Response(serializer.data)
 
 @ensure_csrf_cookie
 @api_view (['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
