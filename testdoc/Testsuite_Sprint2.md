@@ -91,7 +91,10 @@ This document is the Test suite for sprint2 that outlines the test cases. Each t
 - With invalid credentials, the user receives an appropriate error message and is not granted access.
 
 **Actual Results**:
-- Still working
+- The Login is react based, user is able to sign up and use credentials to sign in.
+- Without sign in, user won't be able to view the private event and profile
+- Log out function work
+- User are not able to update profile
 
 ---
 
