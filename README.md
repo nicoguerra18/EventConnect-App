@@ -24,7 +24,7 @@ On terminal:
 ...ask for the variables
 ```
 
-* You can view all required library under /backend/requirements.txt
+You can view all required library under /backend/requirements.txt
 or on terrminal(host backend first):
 - pip freeze > requirements.txt
 
