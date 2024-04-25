@@ -20,8 +20,9 @@
 - After joining, the user is able to interact with other group members within the designated area.
 
 **Actual Results**:
-*(To be filled after execution)*
-
+- The user can submit a request to join the group successfully.
+- After joining, the user is able to interact with other group members within the designated area.
+- search
 ---
 
 ## Test Case: TC_CreateGroup_01 - Creating a New Group
@@ -42,12 +43,13 @@
 4. Check that the group details match the information entered during creation.
 
 **Expected Results**:
-- The group creation page is accessible and functional.
+- The joining group page is accessible and functional.
 - Upon form submission, a new group is created with the specified details.
 - Group details are correct and reflect the creator's input.
 
 **Actual Results**:
-*(To be filled after execution)*
+- The joining group page is accessible and functional.
+- user are not able to edit the group detail
 
 ---
 
@@ -74,7 +76,9 @@
 - The event is only visible to members of the group and not to outsiders.
 
 **Actual Results**:
-*(To be filled after execution)*
+- User within the group can chat with each other.
+- The private event includes all standard event functionalities.
+- The event is only visible to members of the group and not to outsiders.
 
 ---
 
@@ -98,7 +102,8 @@
 - Each group link directs the user to the correct group page.
 
 **Actual Results**:
-*(To be filled after execution)*
+- The application presents a navigable list of all groups the user is a member of.
+- Each group link directs the user to the correct group page.
 
 ---
 
@@ -124,4 +129,6 @@
 - The user can request to join groups directly from the search results.
 
 **Actual Results**:
-*(To be filled after execution)*
+- The search returns the correct group when the full name is entered, regardless of case.
+- The search returns groups does not apply the partial match
+- The user can request to join groups directly from the search results.
