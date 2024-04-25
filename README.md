@@ -24,6 +24,10 @@ On terminal:
 ...ask for the variables
 ```
 
+* You can view all required library under /backend/requirements.txt
+or on terrminal(host backend first):
+- pip freeze > requirements.txt
+
 ## Host the app and Testing:
 On terminal
 - cd to backend folder where manage.py is:
