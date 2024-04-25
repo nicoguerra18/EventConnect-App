@@ -8,7 +8,7 @@ jobs:
   deploy-backend:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Deploy Django backend
       uses: appleboy/ssh-action@master
       with:
@@ -16,7 +16,7 @@ jobs:
         username: ${{ secrets.SERVER_USER }}
         password: ${{ secrets.SERVER_PASSWORD }}
         script: |
-          cd /backend
+          cd /backend  # Update this path as needed
           git pull
           pip install -r requirements.txt
           python manage.py migrate
@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy-backend
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Deploy React frontend
       uses: appleboy/ssh-action@master
       with:
@@ -34,7 +34,7 @@ jobs:
         username: ${{ secrets.SERVER_USER }}
         password: ${{ secrets.SERVER_PASSWORD }}
         script: |
-          cd /frontend
+          cd /frontend  # Update this path as needed
           git pull
           npm install
           npm run build
