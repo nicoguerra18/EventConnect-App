@@ -21,8 +21,8 @@ jobs:
           pip install -r requirements.txt
           python manage.py migrate
           sudo systemctl restart gunicorn
-
-  deploy-frontend:
+          
+deploy-frontend:
   runs-on: ubuntu-latest
   needs: deploy-backend
   steps:
@@ -35,7 +35,9 @@ jobs:
       password: ${{ secrets.SERVER_PASSWORD }}
       script: |
         cd frontend
-        ls -la  # Debug: List what's in the directory
+        pwd
+        ls -la
+        cat package.json
         npm install
         npm run build
         sudo systemctl restart nginx
