@@ -10,11 +10,8 @@ A web platform for people to join and create groups and event, offering a dynami
 
 ## Required package and library
 On terminal:
-- pip install django
-- pip install djangorestframework
-- pip install django-cors-headers
-- pip install django-location-field
-- pip install geopy 
+- pip install pipenv (will install all dependencies and packages needed)
+- pipenv shell
 - npm install 
 - npm install react-router-dom
 - npm install i
