@@ -35,9 +35,10 @@ deploy-frontend:
       password: ${{ secrets.SERVER_PASSWORD }}
       script: |
         cd frontend
-        pwd
-        ls -la
-        cat package.json
         npm install
-        npm run build
+        if ! npm run build; then
+          echo "Build failed, printing npm debug log..."
+          cat /home/runner/.npm/_logs/*-debug.log
+        fi
         sudo systemctl restart nginx
+
