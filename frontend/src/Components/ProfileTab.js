@@ -97,7 +97,7 @@ function ProfileTab() {
         <Row>
           <Col className="text-center">
             <Card style={{ margin: 50 }}>
-              <h1 style={{ margin: 50 }}> You are not Signed in</h1>
+              <h1 style={{ margin: 50 }}> Welcome to EventConnect!</h1>
               <Row>
                 <Col>
                   <LoginButton />

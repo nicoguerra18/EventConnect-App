@@ -15,6 +15,9 @@ import { Container } from "react-bootstrap"
 import LoginButton  from "./LoginButton";
 import { Spinner } from "react-bootstrap";
 import GroupPage from "./GroupsPage";
+import mapthing from "./mapthing.jpg";
+import intramuralsoccer from "./intramuralsoccer.jpg";
+import hosting from "./hosting.jpg"
 
 function Page() {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -66,19 +69,107 @@ function Page() {
     // Render the sign-in message and login button if the user is not authenticated
     return (
       <Container>
-        <Row>
-          <Col className="text-center">
-            <Card style={{ margin: 50 }}>
-              <h1 style={{ margin: 50 }}> You are not Signed in</h1>
-              <Row>
-                <Col>
-                  <LoginButton />
-                </Col>
-              </Row>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+    <Row>
+      <Col className="text-center">
+        <Card style={{ margin: 50, padding: 50 }}>
+          <h1>Welcome to EventConnect!</h1>
+          {/* Card for finding local events */}
+          <Row>
+            <Col className="text-center">
+              <Card style={{ 
+                margin: '20px', 
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', 
+                borderRadius: '15px',
+                overflow: 'hidden'
+              }}>
+                <Row>
+                  <Col md={3} style={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                    padding: '20px'
+                  }}>
+                    <Card.Title>Find Local Events Near You!</Card.Title>
+                    <Card.Text>
+                      Discover events happening around you right now and meet new people!
+                    </Card.Text>
+                  </Col>
+                  <Col md={9} style={{
+                    backgroundImage: `url(${mapthing})`, // Ensure mapthing is the correct image URL
+                    backgroundSize: 'cover'
+                  }}>
+                  </Col>
+                </Row>
+              </Card>
+            </Col>
+          </Row>
+
+          {/* Card for exploring hobbies - Text on the left */}
+          <Row>
+            <Col className="text-center">
+              <Card style={{ 
+                margin: '20px', 
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', 
+                borderRadius: '15px',
+                overflow: 'hidden'
+              }}>
+                <Row>
+                  <Col md={9} style={{
+                    backgroundImage: `url(${intramuralsoccer})`, // Change to appropriate hobby image URL
+                    backgroundSize: 'cover'
+                  }}>
+                  </Col>
+                  <Col md={3} style={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                    padding: '20px'
+                  }}>
+                    <Card.Title>Explore Different Hobbies</Card.Title>
+                    <Card.Text>
+                      Engage in new and exciting activities to broaden your horizons and unleash your creativity.
+                    </Card.Text>
+                  </Col>
+                </Row>
+              </Card>
+            </Col>
+          </Row>
+          
+          {/* Card for hosting events */}
+          <Row>
+            <Col className="text-center">
+              <Card style={{ 
+                margin: '20px', 
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', 
+                borderRadius: '15px',
+                overflow: 'hidden'
+              }}>
+                <Row>
+                  <Col md={3} style={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                    padding: '20px'
+                  }}>
+                    <Card.Title>Host your own Events!</Card.Title>
+                    <Card.Text>
+                      Coordinate your events with EventConnect! Host Private and Public events with our built-in invitation system!
+                    </Card.Text>
+                  </Col>
+                  <Col md={9} style={{
+                    backgroundImage: `url(${hosting})`, // Change to an image suitable for event hosting
+                    backgroundSize: 'cover'
+                  }}>s
+                  </Col>
+                </Row>
+              </Card>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col>
+              <LoginButton />
+            </Col>
+          </Row>
+        </Card>
+      </Col>
+    </Row>
+</Container>
+
     );
   }
 }
