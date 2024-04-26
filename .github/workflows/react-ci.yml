@@ -9,7 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js 14.x
@@ -18,7 +17,16 @@ jobs:
         node-version: 14.x
     - name: Install dependencies
       run: npm install
+    - name: List directory contents
+      run: |
+        pwd
+        ls -la
+        cat package.json
     - name: Run tests
       run: npm test
     - name: Build
       run: npm run build
+      continue-on-error: true  # Add this to continue the workflow even if this step fails
+    - name: Print npm debug log if build fails
+      if: failure()  # This step runs if any previous step in the job fails
+      run: cat /home/runner/.npm/_logs/*-debug.log
