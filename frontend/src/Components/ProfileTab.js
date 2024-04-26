@@ -181,7 +181,7 @@ function PersonalInfo() {
       console.log(formData.profilePicture);
 
       const response = await fetch(
-        "http://localhost:8000/profilesearch/" + user.given_name.toLowerCase(),
+        "http://localhost:8000/profiles/" + user.given_name.toLowerCase() + "/",
         {
           method: "PATCH",
           body: formDataToSend,
@@ -210,13 +210,14 @@ function PersonalInfo() {
 
   return (
     <Row className="mx-auto">
+      <CSRFToken />
       <Card style={{ width: "34rem" }}>
         <Card.Title>Profile</Card.Title>
         <Card.Img
           src={profilePictureUrl || defaultImage}
           alt="Profile Picture"
         />
-        <Form onSubmit={handleFormSubmit}>
+        <Form onSubmit={handleFormSubmit} enctype="multipart/form-data">
           <CSRFToken />
           <Form.Group className="mb-3" controlId="formName">
             <Form.Label>Name</Form.Label>
