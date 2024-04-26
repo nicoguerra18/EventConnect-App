@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Toast, Button, Form, ToastBody, Container } from "react-bootstrap";
 import CSRFToken from "./crftoken";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function ToastMessage({ comment }) {
   const timestamp = new Date(comment.timestamp).toLocaleString();
+  console.log(JSON.toString(timestamp));
   return (
     <Toast>
       <Toast.Header closeButton={false}>
         <strong className="me-auto">{comment.author}</strong>
-        <small className="text-muted">{timestamp}</small>
+        <small className="text-muted">{comment.timestamp}</small>
       </Toast.Header>
       <ToastBody>{comment.body}</ToastBody>
     </Toast>
@@ -37,17 +39,22 @@ function DiscussionCard({ eventName, eventId }) {
     }
   };
 
+  const {user} = useAuth0();
+  const username = user.given_name.toLowerCase();
+
   const handleAddComment = async () => {
     if (newComment.trim() !== "") {
       const newCommentObj = {
         //discussion: eventName,
         body: newComment,
-        //author: "nico",
+        author: username,
         timestamp: new Date().toISOString(),
       };
       try {
+        console.log(JSON.stringify(newCommentObj));
         const response = await fetch(
-          `http://localhost:8000/comment/nico/${eventName}/`,
+
+          `http://localhost:8000/comment/${user.given_name.toLowerCase()}/${eventName}/`,
           {
             method: "POST",
             headers: {
@@ -56,7 +63,6 @@ function DiscussionCard({ eventName, eventId }) {
             body: JSON.stringify(newCommentObj), // Stringify the object
           }
         );
-        console.log(newCommentObj);
 
         if (!response.ok) {
           throw new Error("Failed to add comment");
