@@ -1,17 +1,18 @@
-**User Story**: Join a Group
+## Test Case: TC_CreateGroup_01 - Invitation System
+**User Story**: Invitation System
 **URL**: [Join a Group Issue](https://github.com/nicoguerra18/EventConnect-App/issues/19)
 **Acceptance Criteria**:
-1. Users can search for groups by name and request to join as a member.
+1. Users should be able to select an event and choose to invite other users
 2. Members can interact with each other within the group's designated area.
 
 **Preconditions**:
 - User is logged in to the application.
-- At least one group is available to join.
+- Users should be able to search for other users by username or email to send invitations.
 
 **Test Steps**:
 1. Navigate to the group search feature.
 2. Search for an existing group by name.
-3. Request to join the group.
+3. Request to join 
 4. Once accepted, use the group's designated area to interact with other members.
 
 **Expected Results**:
@@ -22,16 +23,16 @@
 **Actual Results**:
 - The user can submit a request to join the group successfully.
 - After joining, the user is able to interact with other group members within the designated area.
-- search
+
 ---
 
-## Test Case: TC_CreateGroup_01 - Creating a New Group
+## Test Case: TC_CreateGroup_01 - Acceptance System
 
-**User Story**: Create a Group
+**User Story**: Acceptance System
 **URL**: [Create a Group Issue](https://github.com/nicoguerra18/EventConnect-App/issues/20)
 **Acceptance Criteria**:
-1. Users have the option to create a new group.
-2. The creator can set up group details such as name, description, and privacy settings.
+1. Invited users should receive a notification about the invitation.
+2. Invited users must have the option to accept or decline the invitation.
 
 **Preconditions**:
 - User is logged in to the application and has permissions to create a group.
@@ -49,17 +50,17 @@
 
 **Actual Results**:
 - The joining group page is accessible and functional.
-- user are not able to edit the group detail
+- Group details are correct and reflect the creator's input.
 
 ---
 
-## Test Case: TC_CreatePrivateEvent_01 - Creating Private Events in a Group
+## Test Case: TC_CreatePrivateEvent_01 - Public and Private Event Creation
 
-**User Story**: Create Private Events in Group
+**User Story**: Public and Private Event Creation
 **URL**: [Create Private Events in Group Issue](https://github.com/nicoguerra18/EventConnect-App/issues/21)
 **Acceptance Criteria**:
-1. Creators of a group can create private events that are only visible to group members.
-2. Private events have all the functionalities of public events but are hidden from non-members.
+1. During the event creation process, the creator must have a clear option to mark the event as public or private. 
+2. Private events should not be visible in the general 'All Events' listing.
 
 **Preconditions**:
 - User is logged in, owns a group, and is on the group's page.
@@ -87,8 +88,8 @@
 **User Story**: Navigate Through Groups
 **URL**: [Navigate Through Groups Issue](https://github.com/nicoguerra18/EventConnect-App/issues/22)
 **Acceptance Criteria**:
-1. Users can navigate through a list of groups they are a part of on a separate page.
-2. Each group in the list provides a direct link to the group's page.
+1. The user’s profile page should list all events the user has created or joined.
+2. The list must update in real-time when a user accepts an invitation to a private event.
 
 **Preconditions**:
 - User is logged in and is a member of multiple groups.
@@ -107,13 +108,14 @@
 
 ---
 
-## Test Case: TC_SearchJoinGroup_01 - Search and Join Groups by Name
+## Test Case: TC_SearchJoinGroup_01 -Handling Invitations for Events
 
 **User Story**: Search and Join Groups by Name
 **URL**: [Search and Join Groups by Name Issue](https://github.com/nicoguerra18/EventConnect-App/issues/23)
 **Acceptance Criteria**:
-1. Users can join groups by searching for the exact group name.
-2. Search for groups is case-insensitive and allows partial name matching.
+1. Users should receive a notification for an event invitation with options to accept or decline.
+2. Upon accepting an invitation, the event should be marked as 'attending' in the user's event list.
+3. Upon declining an invitation, the event should be removed from the user's pending invitations list. AC4: The number of confirmed attendees should update accordingly for the event organizer.
 
 **Preconditions**:
 - User is logged in and on the group search page.
@@ -126,9 +128,9 @@
 **Expected Results**:
 - The search returns the correct group when the full name is entered, regardless of case.
 - The search returns groups that partially match the input.
-- The user can request to join groups directly from the search results.
+- The user  can receieve invitation to join groups directly from the search results.
 
 **Actual Results**:
 - The search returns the correct group when the full name is entered, regardless of case.
 - The search returns groups does not apply the partial match
-- The user can request to join groups directly from the search results.
+- The user can receieve invitation to join groups directly from the search results.
