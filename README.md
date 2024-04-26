@@ -17,9 +17,8 @@ On terminal:
 - npm install i
 
 * Create .env file in frontend folder and copy and paste :
-```env
 ...ask for the variables
-```
+
 
 You can view all required library under /backend/requirements.txt
 or on terrminal(host backend first):
@@ -40,16 +39,19 @@ Open another terminal
   - http://127.0.0.1:8000/profiles/
 - frontend:  
   - http://localhost:3000
- 
-## Some Current Screenshots of our application (Application still in progress)
-![Screenshot 2024-04-19 at 1 58 15 PM Medium](https://github.com/nicoguerra18/EventConnect-App/assets/139820627/f8ea73c7-e45e-432f-84ad-321e2296c4e3)
-![Screenshot 2024-04-19 at 1 57 39 PM Medium](https://github.com/nicoguerra18/EventConnect-App/assets/139820627/2dd8b8b6-4b89-4c2c-a657-7b54a41dd638)
-![Screenshot 2024-04-19 at 1 57 09 PM Medium](https://github.com/nicoguerra18/EventConnect-App/assets/139820627/e47646aa-26a3-4d18-8469-d0eade40d06b)
-![Screenshot 2024-04-19 at 1 57 00 PM Medium](https://github.com/nicoguerra18/EventConnect-App/assets/139820627/879a2063-6f45-4021-b328-946ee6dfaa85)
-![Screenshot 2024-04-19 at 1 56 52 PM Medium](https://github.com/nicoguerra18/EventConnect-App/assets/139820627/8e5cc58a-dc52-4faa-932e-64ccf1d2b177)
-![Screenshot 2024-04-19 at 1 56 26 PM Medium](https://github.com/nicoguerra18/EventConnect-App/assets/139820627/1e9aa7d6-5c2d-42a1-aa5e-c3e8dc4337a3)
-![Screenshot 2024-04-19 at 2 03 21 PM Medium](https://github.com/nicoguerra18/EventConnect-App/assets/139820627/e022a5fc-672d-40c6-b942-67dbf8da07d0)
-![Screenshot 2024-04-19 at 2 03 07 PM Medium](https://github.com/nicoguerra18/EventConnect-App/assets/139820627/069e8ada-c4b6-4bc4-b576-94c595bf1a36)
+
+## Screenshot and DEMO
+<img width="1373" alt="Screenshot 2024-04-26 at 6 09 31 PM" src="https://github.com/nicoguerra18/EventConnect-App/assets/139820627/a40fd56f-5ea3-4255-8365-e8e5e38fbd2a">
+<img width="1374" alt="Screenshot 2024-04-26 at 6 16 45 PM" src="https://github.com/nicoguerra18/EventConnect-App/assets/139820627/c9f8d0d2-6eb8-443a-8049-b99cbdd990c5">
+<img width="1368" alt="Screenshot 2024-04-26 at 6 16 54 PM" src="https://github.com/nicoguerra18/EventConnect-App/assets/139820627/5b91f5b0-6e4f-4483-a9aa-2ca5bd9fa012">
+<img width="1369" alt="Screenshot 2024-04-26 at 6 17 25 PM" src="https://github.com/nicoguerra18/EventConnect-App/assets/139820627/40b9d1c0-134e-4862-b3cb-6a9f3d82efb8">
+<img width="1370" alt="Screenshot 2024-04-26 at 6 17 34 PM" src="https://github.com/nicoguerra18/EventConnect-App/assets/139820627/6c95ba53-f195-4a97-bf1a-eabf0e690717">
+<img width="1366" alt="Screenshot 2024-04-26 at 6 17 51 PM" src="https://github.com/nicoguerra18/EventConnect-App/assets/139820627/f52ef737-9eb3-46a5-9083-4a352793736e">
+<img width="1367" alt="Screenshot 2024-04-26 at 6 18 00 PM" src="https://github.com/nicoguerra18/EventConnect-App/assets/139820627/e9e15c3e-da68-458f-9f6c-ad048b55261e">
+<img width="1374" alt="Screenshot 2024-04-26 at 6 18 13 PM" src="https://github.com/nicoguerra18/EventConnect-App/assets/139820627/ea155d5e-7aec-4dea-90e5-f994212f1049">
+<img width="1376" alt="Screenshot 2024-04-26 at 6 18 35 PM" src="https://github.com/nicoguerra18/EventConnect-App/assets/139820627/0cc07c0a-b1f2-4d01-a750-8f1c4110cafc">
+<img width="1377" alt="Screenshot 2024-04-26 at 6 18 49 PM" src="https://github.com/nicoguerra18/EventConnect-App/assets/139820627/83648da9-0e25-426e-9761-81a9a8fda33e">
+<img width="1368" alt="Screenshot 2024-04-26 at 6 18 58 PM" src="https://github.com/nicoguerra18/EventConnect-App/assets/139820627/eed3ee46-33f7-4699-9bca-5dc787e86dcb">
 
 
 
