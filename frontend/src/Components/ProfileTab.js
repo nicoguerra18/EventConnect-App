@@ -60,33 +60,6 @@ function ProfileTab() {
               <Tab eventKey="PendingInvites" title="Pending Invites">
                 <InvitesDisplay />
               </Tab>
-              <Tab eventKey="MyGroups" title="My Groups">
-                <ListGroup>
-                  {filteredGroups.map((group) => (
-                    <ListGroup.Item
-                      className="d-flex justify-content-between align-items-center"
-                      key={group.id}
-                    >
-                      {group.name}{" "}
-                      {group.joined ? (
-                        <Button
-                          variant="outline-secondary"
-                          onClick={() => toggleJoinGroup(group.id)}
-                        >
-                          Leave
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="outline-primary"
-                          onClick={() => toggleJoinGroup(group.id)}
-                        >
-                          Join
-                        </Button>
-                      )}
-                    </ListGroup.Item>
-                  ))}
-                </ListGroup>
-              </Tab>
             </Tabs>
           </Col>
         </Row>
