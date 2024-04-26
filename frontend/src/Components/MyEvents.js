@@ -41,10 +41,10 @@ function MyEvents() {
 
   // Function to Delete an Event from the databse (STILL NEED TO DO)
   // Function to delete an event from the database
-  const deleteEvent = async (eventId) => {
+  const deleteEvent = async (eventName) => {
     try {
       const response = await fetch(
-        `http://localhost:8000/EventDatabase/${eventId}/`,
+        `http://localhost:8000/EventDatabase/${eventName}/`,
         {
           method: "DELETE",
         }
@@ -52,7 +52,7 @@ function MyEvents() {
       if (response.ok) {
         // Remove the deleted event from the state
         setMyCreatedEvents(
-          myCreatedEvents.filter((event) => event.id !== eventId)
+          myCreatedEvents.filter((event) => event.name !== eventName)
         );
       } else {
         console.error("Failed to delete event");
@@ -101,7 +101,7 @@ function MyEvents() {
                 <Button
                   size="sm"
                   variant="danger"
-                  onClick={() => deleteEvent(event.id)}
+                  onClick={() => deleteEvent(event.name)}
                 >
                   Delete Event&nbsp;
                   <svg
