@@ -8,38 +8,6 @@ A web platform for people to join and create groups and event, offering a dynami
 - Google Maps API
 - Auth0
 
-## Required package and library
-On terminal:
-- pip install pipenv (will install all dependencies and packages needed)
-- pipenv shell
-- npm install 
-- npm install react-router-dom
-- npm install i
-
-* Create .env file in frontend folder and copy and paste :
-...ask for the variables
-
-
-You can view all required library under /backend/requirements.txt
-or on terrminal(host backend first):
-- pip freeze > requirements.txt
-
-## Host the app and Testing:
-On terminal
-- cd to backend folder where manage.py is:
-  - python manage.py runserver
-
-Open another terminal
-- cd to frontend folder:
-  - npm run start
-
-## View Locally in browser:
-- backend:
-  - http://127.0.0.1:8000/EventDatabase/
-  - http://127.0.0.1:8000/profiles/
-- frontend:  
-  - http://localhost:3000
-
 ## Screenshot and DEMO
 <img width="1374" alt="Screenshot 2024-04-26 at 6 16 45 PM" src="https://github.com/nicoguerra18/EventConnect-App/assets/139820627/c9f8d0d2-6eb8-443a-8049-b99cbdd990c5">
 <img width="1368" alt="Screenshot 2024-04-26 at 6 16 54 PM" src="https://github.com/nicoguerra18/EventConnect-App/assets/139820627/5b91f5b0-6e4f-4483-a9aa-2ca5bd9fa012">
