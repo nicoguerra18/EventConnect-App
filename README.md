@@ -1,5 +1,5 @@
 # EventConnect-App
-A web platform for people to join and create groups and event, offering a dynamic and user-friendly environment to facilitate community building and event management
+A full-stck web application for people to join and create groups and event, offering a dynamic and user-friendly environment to facilitate community building and event management
 
 ## Technologies Used
 - JavaScript/React
